@@ -1423,7 +1423,7 @@ let items=[], prods=[], pimgs={};
 
 /* ── Page switch ── */
 function showPage(which) {
-  var pageList = ['home', 'edit', 'preview'];
+  var pageList = ['home', 'edit', 'preview', 'config'];
   pageList.forEach(function(p) {
     var pg = document.getElementById('page-' + p);
     if (pg) pg.style.display = (p === which) ? 'block' : 'none';
@@ -1434,6 +1434,7 @@ function showPage(which) {
     }
   });
   if (which === 'home') homeRefresh();
+  if (which === 'config') cfgInit();
 }
 /* ── Items ── */
 function aG(n='') { items.push({t:'g',n}); ri(); }
@@ -1749,7 +1750,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ── Config ──
 // ─────────────────────────────────────────────────
 // CONFIGURATION — edit these two lines:
-const GAS_WEB_APP_URL  = 'https://script.google.com/macros/s/AKfycbw_BxSmTlGWVe6342R-rA6rH_OyDvK5ROwskhKbfVMv79O1k4lttuPW6WKaqmgvLCrj/exec';
+const GAS_WEB_APP_URL  = 'https://script.google.com/macros/s/AKfycby53T15pmMIKMIwH2wfe8_K4utc9rxpxQcFUdmnAM3GYMntEHH3xkmQGaUaFdXEFxAZ/exec';
 const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1mynEsl3xz8F8Od_m5yoTaqXwThZOaYbMWKAhUe9CEh8/edit';
 
 // ─────────────────────────────────────────────────
@@ -2557,7 +2558,7 @@ async function homeDelete(rowId) {
 
 <script>
 function showPage(which) {
-  var pageList = ['home', 'edit', 'preview'];
+  var pageList = ['home', 'edit', 'preview', 'config'];
   pageList.forEach(function(p) {
     var pg = document.getElementById('page-' + p);
     if (pg) pg.style.display = (p === which) ? 'block' : 'none';
@@ -2568,6 +2569,7 @@ function showPage(which) {
     }
   });
   if (which === 'home' && typeof homeRefresh === 'function') homeRefresh();
+  if (which === 'config' && typeof cfgInit === 'function') cfgInit();
 }
 </script>
 
@@ -2600,6 +2602,12 @@ function showPage(which) {
         <circle cx="12" cy="12" r="3"/>
       </svg>
       Preview
+    </button>
+    <button class="nav-tab" id="tab-config" onclick="showPage('config')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+      Config
     </button>
   </div>
 
@@ -2642,7 +2650,7 @@ function showPage(which) {
       Refresh
     </button>
 
-    <button onclick="showPage('edit');localStorage.removeItem('doc_current_rowid');" style="display:flex;align-items:center;gap:6px;padding:8px 16px;background:#22a060;border:none;border-radius:7px;color:#fff;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.04em;">
+    <button onclick="showPage('edit');localStorage.removeItem('doc_current_rowid');resetEditPage();" style="display:flex;align-items:center;gap:6px;padding:8px 16px;background:#22a060;border:none;border-radius:7px;color:#fff;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.04em;">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       New Estimate
     </button>
@@ -2683,7 +2691,13 @@ function showPage(which) {
           <div class="e-card-dot"></div>
           <div class="e-card-title">Client Information</div>
         </div>
-        <div class="e-card-badge">Page 4</div>
+        <div style="display:flex;align-items:center;gap:8px">
+        <div class="e-card-badge" id="edit-mode-badge" style="background:rgba(34,160,96,0.15);color:#22a060;border-color:rgba(34,160,96,0.3);">New Estimate</div>
+        <button id="edit-load-btn" onclick="showLoadModal()" style="display:flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.25);border-radius:6px;color:#c9a84c;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;cursor:pointer;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Load Saved
+        </button>
+      </div>
       </div>
       <div class="e-card-body">
         <div class="client-grid">
@@ -2797,10 +2811,25 @@ function showPage(which) {
           <tbody id="prods-tbody-edit"></tbody>
         </table>
       </div>
-      <div class="t-actions">
-        <button class="abtn ap" onclick="aP()">
+      <div class="t-actions" style="flex-wrap:wrap;gap:10px;align-items:flex-end;">
+        <!-- Kitchen Accessory Dropdown -->
+        <div style="display:flex;align-items:center;gap:7px;">
+          <select id="dd-kitchen" onchange="ddKitchenChange()"
+            style="padding:7px 10px;background:#1e1d2b;border:1px solid rgba(255,255,255,0.15);border-radius:7px;color:#e8e6f0;font-family:'Montserrat',sans-serif;font-size:11px;cursor:pointer;min-width:240px;outline:none;">
+            <option value="">— Select Kitchen Accessory —</option>
+          </select>
+          <button class="abtn ap" onclick="ddAddKitchen()">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Accessory
+          </button>
+        </div>
+        <button class="abtn ap" onclick="aP()" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);color:#9e9bb5;">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Product
+          Add Manually
+        </button>
+        <button onclick="loadKitchenData()" title="Refresh kitchen accessories from Google Sheet"
+          style="padding:6px 12px;background:transparent;border:1px solid rgba(255,255,255,0.12);border-radius:7px;color:#7a788a;font-family:'Montserrat',sans-serif;font-size:10px;cursor:pointer;">
+          ↻ Refresh
         </button>
       </div>
       <div style="padding:0 22px 22px">
@@ -2974,7 +3003,7 @@ function showPage(which) {
     </table>
 
     <div style="margin-top:40px;">
-      <div class="section-heading">Hardware Accessories</div>
+      <div class="section-heading">Kitchen Accessories With Installation Charge</div>
       <table class="estimate-table">
         <thead>
           <tr>
@@ -3176,6 +3205,472 @@ function showPage(which) {
 
 
 
+
+
+<!-- ══ LOAD SAVED RECORD MODAL ══ -->
+<div id="load-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div style="background:#1e1d2b;border:1px solid rgba(201,168,76,0.3);border-radius:16px;width:680px;max-width:95vw;max-height:80vh;display:flex;flex-direction:column;font-family:'Montserrat',sans-serif;">
+    <div style="padding:20px 24px 16px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:14px;font-weight:700;color:#e8e6f0;display:flex;align-items:center;gap:10px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Load Saved Estimate
+      </div>
+      <button onclick="closeLoadModal()" style="background:none;border:none;color:#7a788a;cursor:pointer;font-size:18px;line-height:1;">✕</button>
+    </div>
+    <div style="padding:14px 24px;border-bottom:1px solid rgba(255,255,255,0.06);">
+      <input id="load-modal-search" type="text" placeholder="Search client, estimate no, site…" oninput="loadModalFilter(this.value)"
+        style="width:100%;padding:9px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#e8e6f0;font-family:'Montserrat',sans-serif;font-size:12px;outline:none;box-sizing:border-box;">
+    </div>
+    <div id="load-modal-list" style="overflow-y:auto;flex:1;padding:8px 0;">
+      <div style="padding:40px;text-align:center;color:#7a788a;font-size:12px;">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONFIG PAGE ══ -->
+<div id="page-config" style="display:none;position:fixed;top:52px;left:0;right:0;bottom:0;background:#0f0e18;overflow-y:auto;">
+
+  <!-- Toolbar -->
+  <div style="position:sticky;top:0;z-index:10;background:#0d0c18;border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+    <div style="font-size:14px;font-weight:700;color:#e8e6f0;letter-spacing:.04em;display:flex;align-items:center;gap:10px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Configuration
+    </div>
+  </div>
+
+  <div style="padding:24px 28px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1400px;">
+
+    <!-- ── PANEL 1: Items Master (Category-A) ── -->
+    <div style="background:#1e1d2b;border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#ff9980;box-shadow:0 0 6px rgba(192,83,58,0.6);flex-shrink:0;"></div>
+          <div style="font-size:13px;font-weight:700;color:#ff9980;letter-spacing:.04em;">Category-A Items Master</div>
+        </div>
+        <button onclick="cfgLoadMaster()" style="padding:5px 12px;background:transparent;border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#7a788a;font-family:'Montserrat',sans-serif;font-size:10px;cursor:pointer;">↻ Refresh</button>
+      </div>
+
+      <!-- Add new item form -->
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7a788a;margin-bottom:10px;">Add New Item</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+          <input id="cfg-m-group"    type="text" placeholder="Group (e.g. Wardrobe)"   class="cfg-inp">
+          <input id="cfg-m-item"     type="text" placeholder="Item name"                class="cfg-inp">
+          <input id="cfg-m-unit"     type="text" placeholder="Unit (e.g. Sqft)"         class="cfg-inp">
+          <input id="cfg-m-price"    type="number" placeholder="Default Price"          class="cfg-inp">
+          <input id="cfg-m-shutter"  type="text" placeholder="Shutter Finish"           class="cfg-inp">
+          <input id="cfg-m-material" type="text" placeholder="Material"                 class="cfg-inp">
+        </div>
+        <button onclick="cfgAddMasterItem()" style="width:100%;padding:9px;background:rgba(255,153,128,0.15);border:1px solid rgba(255,153,128,0.3);border-radius:7px;color:#ff9980;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.04em;">
+          + Add to Sheet
+        </button>
+      </div>
+
+      <!-- Existing items list -->
+      <div id="cfg-master-list" style="flex:1;overflow-y:auto;max-height:380px;">
+        <div style="padding:30px;text-align:center;color:#7a788a;font-size:12px;">Click Refresh to load items</div>
+      </div>
+    </div>
+
+    <!-- ── PANEL 2: Kitchen Accessories Master ── -->
+    <div style="background:#1e1d2b;border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#80d4a0;box-shadow:0 0 6px rgba(90,158,114,0.6);flex-shrink:0;"></div>
+          <div style="font-size:13px;font-weight:700;color:#80d4a0;letter-spacing:.04em;">Kitchen Accessories Master</div>
+        </div>
+        <button onclick="cfgLoadKitchen()" style="padding:5px 12px;background:transparent;border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#7a788a;font-family:'Montserrat',sans-serif;font-size:10px;cursor:pointer;">↻ Refresh</button>
+      </div>
+
+      <!-- Add new kitchen accessory form -->
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7a788a;margin-bottom:10px;">Add New Accessory</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+          <input id="cfg-k-product"  type="text"   placeholder="Product Name"          class="cfg-inp" style="grid-column:1/-1;">
+          <input id="cfg-k-brand"    type="text"   placeholder="Brand"                 class="cfg-inp">
+          <input id="cfg-k-article"  type="text"   placeholder="Article No."           class="cfg-inp">
+          <input id="cfg-k-price"    type="number" placeholder="Default Price (₹)"     class="cfg-inp">
+          <input id="cfg-k-qty"      type="number" placeholder="Default Qty"           class="cfg-inp" value="1">
+        </div>
+        <!-- Image upload -->
+        <div style="margin-bottom:8px;">
+          <label style="font-size:10px;color:#7a788a;display:block;margin-bottom:6px;">Product Image (stored in Google Drive)</label>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <label for="cfg-k-img" style="flex:1;padding:8px 12px;background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15);border-radius:7px;color:#7a788a;font-size:11px;cursor:pointer;text-align:center;">
+              📷 Click to choose image
+            </label>
+            <input type="file" id="cfg-k-img" accept="image/*" style="display:none;" onchange="cfgKitchenImgPreview(this)">
+            <div id="cfg-k-img-preview" style="width:50px;height:50px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:#17161f;display:flex;align-items:center;justify-content:center;color:#7a788a;font-size:18px;overflow:hidden;">🖼</div>
+          </div>
+        </div>
+        <button onclick="cfgAddKitchenItem()" style="width:100%;padding:9px;background:rgba(128,212,160,0.15);border:1px solid rgba(128,212,160,0.3);border-radius:7px;color:#80d4a0;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.04em;">
+          + Add to Sheet
+        </button>
+      </div>
+
+      <!-- Existing kitchen items list -->
+      <div id="cfg-kitchen-list" style="flex:1;overflow-y:auto;max-height:380px;">
+        <div style="padding:30px;text-align:center;color:#7a788a;font-size:12px;">Click Refresh to load items</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.cfg-inp {
+  width:100%; padding:8px 10px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:6px; color:#e8e6f0;
+  font-family:'Montserrat',sans-serif; font-size:11px;
+  outline:none; box-sizing:border-box;
+  transition:border-color .15s;
+}
+.cfg-inp:focus { border-color:#c9a84c; }
+.cfg-inp::placeholder { color:#555; }
+.cfg-row {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 16px; border-bottom:1px solid rgba(255,255,255,0.05);
+  font-family:'Montserrat',sans-serif; font-size:11px; color:#c8c5d8;
+}
+.cfg-row:last-child { border-bottom:none; }
+.cfg-row:hover { background:rgba(255,255,255,0.03); }
+.cfg-row-del {
+  margin-left:auto; flex-shrink:0;
+  padding:4px 8px; background:transparent;
+  border:1px solid rgba(255,100,100,0.2); border-radius:5px;
+  color:rgba(255,100,100,0.5); font-size:10px; cursor:pointer;
+  transition:all .15s;
+}
+.cfg-row-del:hover { background:rgba(255,100,100,0.15); color:#ff6b6b; border-color:rgba(255,100,100,0.4); }
+</style>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+//   LOAD SAVED RECORD MODAL (for Edit page)
+// ════════════════════════════════════════════════════════════════
+let loadModalRows = [];
+
+function showLoadModal() {
+  const modal = document.getElementById('load-modal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  document.getElementById('load-modal-search').value = '';
+  loadModalFetch();
+}
+
+function closeLoadModal() {
+  const modal = document.getElementById('load-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function loadModalFetch() {
+  const cfg = getCfg();
+  const list = document.getElementById('load-modal-list');
+  if (!cfg.url || cfg.url.includes('YOUR_APPS_SCRIPT')) {
+    list.innerHTML = '<div style="padding:40px;text-align:center;color:#7a788a;font-size:12px;">Apps Script URL not configured.</div>';
+    return;
+  }
+  list.innerHTML = '<div style="padding:40px;text-align:center;color:#7a788a;font-size:12px;">Loading…</div>';
+  try {
+    const res = await fetch(cfg.url, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'}, body: JSON.stringify({action:'list'}) });
+    const raw = await res.text();
+    const json = JSON.parse(raw);
+    if (!json.ok) throw new Error(json.error||'Failed');
+    loadModalRows = (json.rows||[]);
+    renderLoadModal(loadModalRows);
+  } catch(e) {
+    list.innerHTML = `<div style="padding:40px;text-align:center;color:#ff6b6b;font-size:12px;">❌ ${e.message}</div>`;
+  }
+}
+
+function loadModalFilter(q) {
+  const ql = q.toLowerCase();
+  renderLoadModal(loadModalRows.filter(r =>
+    (r.client||'').toLowerCase().includes(ql) ||
+    (r.estNo||'').toLowerCase().includes(ql) ||
+    (r.site||'').toLowerCase().includes(ql)
+  ));
+}
+
+function renderLoadModal(rows) {
+  const list = document.getElementById('load-modal-list');
+  if (!rows.length) {
+    list.innerHTML = '<div style="padding:40px;text-align:center;color:#7a788a;font-size:12px;">No estimates found.</div>';
+    return;
+  }
+  list.innerHTML = rows.map(r => `
+    <div class="cfg-row" style="cursor:pointer;" onclick="loadModalSelect('${r.rowId}')">
+      <div style="min-width:0;flex:1;">
+        <div style="font-weight:700;color:#e8e6f0;margin-bottom:2px;">${r.client||'—'}</div>
+        <div style="font-size:10px;color:#7a788a;">#${r.estNo||'—'} &nbsp;·&nbsp; ${r.date||'—'} &nbsp;·&nbsp; ${r.site||'—'}</div>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:#22a060;white-space:nowrap;">${r.grand ? '₹'+Math.round(r.grand).toLocaleString('en-IN') : '—'}</div>
+      <button style="padding:5px 14px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.25);border-radius:6px;color:#c9a84c;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;cursor:pointer;">Load</button>
+    </div>`).join('');
+}
+
+async function loadModalSelect(rowId) {
+  closeLoadModal();
+  const cfg = getCfg();
+  toast('Loading estimate…', 'loading');
+  try {
+    const res = await fetch(cfg.url, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'}, body: JSON.stringify({action:'load', rowId}) });
+    const json = JSON.parse(await res.text());
+    if (!json.ok) throw new Error(json.error||'Load failed');
+    const c = json.client||{};
+    const setF = (id,val) => { const el=document.getElementById(id); if(el) el.value=val||''; };
+    const parseDt = d => { if(!d)return''; const p=d.split('-'); return(p.length===3&&p[2].length===4)?p[2]+'-'+p[1].padStart(2,'0')+'-'+p[0].padStart(2,'0'):d; };
+    setF('f_date', parseDt(c.date)); setF('f_est',c.est); setF('f_client',c.name);
+    setF('f_bdo',c.bdo); setF('f_site',c.site); setF('f_mob',c.mobile);
+    setF('f_ec',c.emailC); setF('f_eb',c.emailB); setF('f_contact',c.contact);
+    setF('f_designer',c.designer); setF('f_prepared',c.preparedBy); setF('f_care',c.care);
+    items = json.items||[]; prods = json.prods||[]; pimgs = {};
+    ri(); rp(); upd();
+    localStorage.setItem('doc_current_rowid', rowId);
+    // Update badge to show we're editing a saved record
+    const badge = document.getElementById('edit-mode-badge');
+    if (badge) { badge.textContent = '✏️ Editing Saved'; badge.style.background='rgba(201,168,76,0.15)'; badge.style.color='#c9a84c'; badge.style.borderColor='rgba(201,168,76,0.3)'; }
+    toast('✓ Estimate loaded — edit and Save to update', 'success');
+    showPage('edit');
+  } catch(e) {
+    toast('❌ Load failed: ' + e.message, 'error');
+  }
+}
+
+function resetEditPage() {
+  // Called on "New Estimate" — reset badge + clear form
+  const badge = document.getElementById('edit-mode-badge');
+  if (badge) { badge.textContent = 'New Estimate'; badge.style.background='rgba(34,160,96,0.15)'; badge.style.color='#22a060'; badge.style.borderColor='rgba(34,160,96,0.3)'; }
+  // Clear all fields
+  ['f_date','f_est','f_client','f_bdo','f_site','f_mob','f_ec','f_eb','f_contact','f_designer','f_prepared','f_care'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value = '';
+  });
+  items = []; prods = []; pimgs = {};
+  ri(); rp(); upd();
+}
+
+// Close modal on backdrop click
+document.addEventListener('click', function(e) {
+  const modal = document.getElementById('load-modal');
+  if (modal && e.target === modal) closeLoadModal();
+});
+
+
+// ════════════════════════════════════════════════════════════════
+//   KITCHEN ACCESSORIES — master data & dropdown
+// ════════════════════════════════════════════════════════════════
+let kitchenData = [];   // [{product, brand, article, price, qty, imageUrl}]
+let kitchenImgBase64 = '';
+
+async function loadKitchenData() {
+  const cfg = getCfg();
+  if (!cfg.url || cfg.url.includes('YOUR_APPS_SCRIPT')) return;
+  try {
+    const res = await fetch(cfg.url, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'}, body: JSON.stringify({action:'kitchenList'}) });
+    const json = JSON.parse(await res.text());
+    if (!json.ok) throw new Error(json.error||'Failed');
+    kitchenData = json.rows||[];
+    populateKitchenDropdown();
+  } catch(e) {
+    console.warn('Kitchen data load failed:', e.message);
+  }
+}
+
+function populateKitchenDropdown() {
+  const sel = document.getElementById('dd-kitchen');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">— Select Kitchen Accessory —</option>' +
+    kitchenData.map((r,i) => `<option value="${i}">${r.product}${r.brand?' ('+r.brand+')':''}</option>`).join('');
+}
+
+function ddKitchenChange() { /* preview could go here */ }
+
+function ddAddKitchen() {
+  const sel = document.getElementById('dd-kitchen');
+  const idx = sel ? parseInt(sel.value) : NaN;
+  if (isNaN(idx) || !kitchenData[idx]) { aP(); return; }
+  const k = kitchenData[idx];
+  prods.push({ product:k.product||'', brand:k.brand||'', article:k.article||'', qty:k.qty||'1', price:k.price||'' });
+  // Store Drive image URL to be used in preview
+  const pidx = prods.length - 1;
+  if (k.imageUrl) pimgs[pidx] = k.imageUrl;
+  rp();
+}
+
+
+// ════════════════════════════════════════════════════════════════
+//   CONFIG PAGE LOGIC
+// ════════════════════════════════════════════════════════════════
+let cfgMasterRows  = [];
+let cfgKitchenRows = [];
+
+function cfgInit() {
+  cfgLoadMaster();
+  cfgLoadKitchen();
+}
+
+// ── Category-A Items Master ──
+async function cfgLoadMaster() {
+  const cfg = getCfg();
+  const el = document.getElementById('cfg-master-list');
+  if (!el) return;
+  el.innerHTML = '<div style="padding:30px;text-align:center;color:#7a788a;font-size:12px;">Loading…</div>';
+  try {
+    const res = await fetch(cfg.url, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'}, body: JSON.stringify({action:'masterList'}) });
+    const json = JSON.parse(await res.text());
+    if (!json.ok) throw new Error(json.error);
+    cfgMasterRows = json.rows||[];
+    masterData = cfgMasterRows; // sync with dropdown
+    populateGroupDropdown();
+    renderCfgMasterList();
+  } catch(e) {
+    el.innerHTML = `<div style="padding:30px;text-align:center;color:#ff6b6b;font-size:12px;">❌ ${e.message}</div>`;
+  }
+}
+
+function renderCfgMasterList() {
+  const el = document.getElementById('cfg-master-list');
+  if (!el) return;
+  if (!cfgMasterRows.length) {
+    el.innerHTML = '<div style="padding:30px;text-align:center;color:#7a788a;font-size:12px;">No items yet.</div>';
+    return;
+  }
+  el.innerHTML = cfgMasterRows.map((r,i) => `
+    <div class="cfg-row">
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:700;color:#e8e6f0;font-size:11px;">${r.item||'—'}</div>
+        <div style="font-size:10px;color:#7a788a;margin-top:2px;">${r.group||''} &nbsp;·&nbsp; ${r.unit||''} &nbsp;·&nbsp; ${r.price?'₹'+r.price:''}</div>
+      </div>
+      <button class="cfg-row-del" onclick="cfgDeleteMasterItem(${i})">🗑</button>
+    </div>`).join('');
+}
+
+async function cfgAddMasterItem() {
+  const v = id => (document.getElementById(id)||{}).value||'';
+  const group=v('cfg-m-group'), item=v('cfg-m-item');
+  if (!group||!item) { toast('❌ Group and Item name are required', 'error'); return; }
+  const cfg = getCfg();
+  toast('Adding item…', 'loading');
+  try {
+    const res = await fetch(cfg.url, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({ action:'masterAdd', group, item, unit:v('cfg-m-unit'), price:v('cfg-m-price'), shutter:v('cfg-m-shutter'), material:v('cfg-m-material') }) });
+    const json = JSON.parse(await res.text());
+    if (!json.ok) throw new Error(json.error);
+    ['cfg-m-group','cfg-m-item','cfg-m-unit','cfg-m-price','cfg-m-shutter','cfg-m-material'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+    toast('✓ Item added to sheet', 'success');
+    cfgLoadMaster();
+  } catch(e) { toast('❌ '+e.message, 'error'); }
+}
+
+async function cfgDeleteMasterItem(idx) {
+  if (!confirm('Delete this item from the master list?')) return;
+  const r = cfgMasterRows[idx];
+  if (!r) return;
+  const cfg = getCfg();
+  toast('Deleting…', 'loading');
+  try {
+    const res = await fetch(cfg.url, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({ action:'masterDelete', item:r.item, group:r.group }) });
+    const json = JSON.parse(await res.text());
+    if (!json.ok) throw new Error(json.error);
+    toast('✓ Deleted', 'success');
+    cfgLoadMaster();
+  } catch(e) { toast('❌ '+e.message, 'error'); }
+}
+
+// ── Kitchen Accessories Master ──
+function cfgKitchenImgPreview(inp) {
+  if (!inp.files[0]) return;
+  const r = new FileReader();
+  r.onload = e => {
+    kitchenImgBase64 = e.target.result;
+    const prev = document.getElementById('cfg-k-img-preview');
+    if (prev) prev.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;">`;
+    const lbl = document.querySelector('label[for="cfg-k-img"]');
+    if (lbl) lbl.textContent = '✅ ' + inp.files[0].name;
+  };
+  r.readAsDataURL(inp.files[0]);
+}
+
+async function cfgLoadKitchen() {
+  const cfg = getCfg();
+  const el = document.getElementById('cfg-kitchen-list');
+  if (!el) return;
+  el.innerHTML = '<div style="padding:30px;text-align:center;color:#7a788a;font-size:12px;">Loading…</div>';
+  try {
+    const res = await fetch(cfg.url, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'}, body: JSON.stringify({action:'kitchenList'}) });
+    const json = JSON.parse(await res.text());
+    if (!json.ok) throw new Error(json.error);
+    cfgKitchenRows = json.rows||[];
+    kitchenData = cfgKitchenRows;
+    populateKitchenDropdown();
+    renderCfgKitchenList();
+  } catch(e) {
+    el.innerHTML = `<div style="padding:30px;text-align:center;color:#ff6b6b;font-size:12px;">❌ ${e.message}</div>`;
+  }
+}
+
+function renderCfgKitchenList() {
+  const el = document.getElementById('cfg-kitchen-list');
+  if (!el) return;
+  if (!cfgKitchenRows.length) {
+    el.innerHTML = '<div style="padding:30px;text-align:center;color:#7a788a;font-size:12px;">No items yet.</div>';
+    return;
+  }
+  el.innerHTML = cfgKitchenRows.map((r,i) => `
+    <div class="cfg-row">
+      ${r.imageUrl ? `<img src="${r.imageUrl}" style="width:36px;height:36px;object-fit:cover;border-radius:5px;flex-shrink:0;">` : '<div style="width:36px;height:36px;background:#17161f;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#555;font-size:14px;">🖼</div>'}
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:700;color:#e8e6f0;font-size:11px;">${r.product||'—'}</div>
+        <div style="font-size:10px;color:#7a788a;margin-top:2px;">${r.brand||''} &nbsp;·&nbsp; ${r.article||''} &nbsp;·&nbsp; ${r.price?'₹'+r.price:''}</div>
+      </div>
+      <button class="cfg-row-del" onclick="cfgDeleteKitchenItem(${i})">🗑</button>
+    </div>`).join('');
+}
+
+async function cfgAddKitchenItem() {
+  const v = id => (document.getElementById(id)||{}).value||'';
+  const product = v('cfg-k-product');
+  if (!product) { toast('❌ Product name is required', 'error'); return; }
+  const cfg = getCfg();
+  toast('Uploading & saving…', 'loading');
+  try {
+    const res = await fetch(cfg.url, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({ action:'kitchenAdd', product, brand:v('cfg-k-brand'), article:v('cfg-k-article'), price:v('cfg-k-price'), qty:v('cfg-k-qty')||'1', imageBase64: kitchenImgBase64 }) });
+    const json = JSON.parse(await res.text());
+    if (!json.ok) throw new Error(json.error);
+    ['cfg-k-product','cfg-k-brand','cfg-k-article','cfg-k-price','cfg-k-qty'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=id==='cfg-k-qty'?'1':''; });
+    kitchenImgBase64 = '';
+    const prev = document.getElementById('cfg-k-img-preview'); if(prev) prev.innerHTML='🖼';
+    const lbl = document.querySelector('label[for="cfg-k-img"]'); if(lbl) lbl.textContent='📷 Click to choose image';
+    toast('✓ Kitchen accessory added', 'success');
+    cfgLoadKitchen();
+  } catch(e) { toast('❌ '+e.message, 'error'); }
+}
+
+async function cfgDeleteKitchenItem(idx) {
+  if (!confirm('Delete this kitchen accessory?')) return;
+  const r = cfgKitchenRows[idx];
+  if (!r) return;
+  const cfg = getCfg();
+  toast('Deleting…', 'loading');
+  try {
+    const res = await fetch(cfg.url, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({ action:'kitchenDelete', product:r.product }) });
+    const json = JSON.parse(await res.text());
+    if (!json.ok) throw new Error(json.error);
+    toast('✓ Deleted', 'success');
+    cfgLoadKitchen();
+  } catch(e) { toast('❌ '+e.message, 'error'); }
+}
+
+// Auto-load kitchen data on startup
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(loadKitchenData, 1200);
+});
+</script>
 
 <!-- ══ TOAST ══ -->
 <div id="toast"><span class="toast-icon" id="toast-icon"></span><span id="toast-msg"></span></div>
