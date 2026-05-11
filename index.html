@@ -131,13 +131,41 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .loading-overlay.show{display:flex}
 .spinner{width:40px;height:40px;border-radius:50%;border:4px solid rgba(183,156,125,.3);border-top-color:var(--gold);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+
 @media print{
-  .navbar,.screen-hdr .hdr-btns,.config-banner,.status-bar,.toast,.loading-overlay{display:none!important}
-  body{background:#f0f0f0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .screen.active{padding:0}
-  .preview-wrap{background:none!important;padding:0!important}
-  @page{size:A4;margin:0}
+  /* Hide all UI chrome */
+  .navbar,.screen-hdr,.config-banner,.status-bar,.toast,.loading-overlay{display:none!important}
+
+  /* Force colour printing */
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+
+  /* Kill ALL backgrounds/shadows that create the shaded rectangle */
+  html,body{background:#fff!important;margin:0!important;padding:0!important}
+  .screen,.screen.active{background:#fff!important;padding:0!important;margin:0!important}
+  .preview-wrap{background:#fff!important;padding:0!important;margin:0!important;border-radius:0!important}
+
+  /* Each .page = exactly one A4 sheet — no shadow, no margin, no border */
+  .page,.page-auto{
+    width:210mm!important;
+    margin:0!important;
+    padding:0!important;
+    box-shadow:none!important;
+    border:none!important;
+    border-radius:0!important;
+    overflow:hidden!important;
+    page-break-after:always!important;
+    break-after:page!important;
+    display:block!important;
+  }
+  /* No extra blank page at the very end */
+  .page:last-child,.page-auto:last-child{
+    page-break-after:avoid!important;
+    break-after:avoid!important;
+  }
+
+  @page{size:A4 portrait;margin:0;padding:0}
 }
+
 @media(max-width:768px){
   .nav-tabs .nav-tab{padding:6px 9px;font-size:11px}
   .screen{padding:12px}
@@ -147,7 +175,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 /* === PREVIEW TEMPLATE STYLES (from der_1.html) === */
 .page {
             width: 210mm;
-            height: 290mm;
+            height: 297mm;
             margin: 20px auto;
             background: white;
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
@@ -219,6 +247,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
                 font-family: Arial;
                 font-weight: normal;  
         }
+
+        .sub-header{
+          font-size: 12px;
+          text-align: center;
+          height: 35px;
+          font-weight:6px;
+          padding: 10px 0 0 0;
+
+
+        }  
 
         .first-letter {
             color: #b79c7d;
@@ -306,7 +344,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
             margin: 50px 0 0 0;
             position: relative;
             width: 100%;
-            height: 65mm;
+            height: 60mm;
             background: #fffefe;
         }
 
@@ -628,6 +666,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     padding:8mm 4mm 18mm 4mm;
     box-sizing:border-box;
     background:#efede8;
+    height: 100%;
 }
 
 .page4-hero{
@@ -1233,6 +1272,7 @@ td{
     </div>
   </div>
   <div id="previewWrap" class="preview-wrap">
+    
   </div>
 </div>
 
