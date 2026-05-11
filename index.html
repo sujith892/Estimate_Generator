@@ -143,6 +143,909 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
   .screen{padding:12px}
   .form-grid{grid-template-columns:1fr}
 }
+
+/* === PREVIEW TEMPLATE STYLES (from der_1.html) === */
+.page {
+            width: 210mm;
+            height: 290mm;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;  /* 🔴 THIS FIXES EVERYTHING */
+        }
+
+        /* Auto-height page for estimate tables that may overflow */
+        .page-auto {
+            width: 210mm;
+            min-height: 297mm;
+            height: auto;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            box-sizing: border-box;
+            position: relative;
+            overflow: visible;
+        }
+
+        .header-img {
+            width: 100%;
+            height: 170mm; /* 🔴 adjust height here */
+            
+            background-image: url('Picture1.jpg'); /* 🔴 set image */
+            background-size: cover;
+           
+            background-repeat: no-repeat;
+            position: relative;
+        
+        }
+
+        .overlay-text h1 {
+            margin: 120px 0 0 0;
+            font-size: 36px;
+            
+            line-height: 1.3;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            letter-spacing: 2px;
+        }
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%); /* center vertically */
+            background: rgba(0, 0, 0, 0.4); /* 🔴 semi-transparent */
+            color: white;
+            padding: 30px 40px;
+            width: 50%;
+            height: 170mm;
+            box-sizing: border-box;
+        }
+
+        .title-text {
+                margin: 120px 0 15px 0;
+                font-size: 36px;       /* 🔴 same as your h1 */
+                line-height: 1.3;
+                font-family: serif;
+                font-weight: normal;   /* 🔴 removes bold look */
+                letter-spacing: 0.5px; /* 🔴 reduce width/spacing */
+                z-index: 10; 
+            }   
+
+        .title-text_1{
+
+                font-size: 45px;       /* 🔴 same as your h1 */
+                line-height: 1.3;
+                font-family: Arial;
+                font-weight: normal;  
+        }
+
+        .first-letter {
+            color: #b79c7d;
+        }
+        /* Full-width image */
+        /*
+        .header-img {
+            width: 100%;
+            height: 100mm; /* adjust height */
+            /*
+            background-image: url('Picture1.jpg'); 
+            background-image: url('your-image.jpg'); /* 🔴 set image */
+            /*
+            background-size: cover;
+
+            background-position: center 50%; /* 🔴 CONTROL Y POSITION HERE */
+            /*
+            background-repeat: no-repeat;
+           object-fit: cover;
+            object-position: middle 50%; /* 🔴 THIS LINE CONTROLS Y POSITION */
+            /*
+            display: block;
+        } 
+        
+       .top-header {
+    position: relative;
+    width: 100%;
+    height: 60mm;
+    background: #f5f5f5;
+}
+
+        /* Left Rectangle */
+        .left-rect {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12mm;
+            height: 100%;
+            background: #b79c7d; /* beige */
+        }
+
+        /* Right Rectangle */
+        .right-rect {
+            
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 12mm;
+            height: 50%;
+            background: #b79c7d;
+        }
+
+        /* Logo Section */
+        .logo-section {
+            position: absolute;
+            left: 25mm;   /* move right from left bar */
+            top: 15mm;
+        }
+
+        /* Logo Image */
+        .logo {
+            width: 100px;
+            display: block;
+        }
+
+        /* Logo Text */
+        .logo-text {
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            font-family: Arial;
+        } 
+
+        /* Content with padding */
+        .content {
+            
+            padding: 15mm;
+            font-family:Arial;
+            margin: 0 0 0 430px;
+            font-size: 40px;
+            z-index: 10; 
+        }
+
+        .bottom-section {
+            margin: 50px 0 0 0;
+            position: relative;
+            width: 100%;
+            height: 65mm;
+            background: #fffefe;
+        }
+
+        /* Left vertical bar */
+        .left-rect-bottom {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12mm;
+            height: 100%;
+            background: #b79c7d;
+        }
+
+        /* Center content */
+        .bottom-content {
+            text-align: center;
+            padding-top: 15mm;
+            font-family: 'Times New Roman', serif;
+            color: #333;
+        }
+
+        /* Tagline */
+        .tagline {
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        /* Categories */
+        .categories {
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        .categories span {
+            color: #b79c7d;
+            margin: 0 8px;
+        }
+
+        /* Website (right aligned) */
+        .website {
+            margin: 0 0 0 0;
+            position: absolute;
+            right: 0mm;
+            bottom: 10mm;
+            font-size: 14px;
+            font-family: Arial;
+            
+        }
+
+        /* Underline */
+        .underline {
+            height: 2px;
+            width: 150px;
+            background: #b79c7d;
+            margin-top: 5px;
+        }
+
+
+        /* Print styling */
+        @media print {
+             body {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin:0;
+        }
+
+        /* second page */
+                    /* IMAGE GRID */
+            .image-grid {
+                margin: 35px 0 0 0;
+                display: flex;
+                height: 150mm;
+                gap: 6px;                 /* 🔴 space between left & right */
+                padding: 6px;  
+            }
+
+            .left-images {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;      
+            }
+
+            .left-images .img {
+                height: 50%;
+                background-size: cover;
+                background-position: center;
+            }
+
+            .top-img {
+                background-image: url('Image1.jpeg');
+                
+            }
+
+            .bottom-img {
+                
+                background-image: url('Image2.jpeg');
+            }
+
+            .right-image {
+                width: 50%;
+                
+                background-image: url('Image3.jpeg');
+                background-size: cover;
+                background-position: center;
+            }
+
+            /* TEXT SECTION */
+            .text-section {
+                padding: 15mm;
+                font-family: Arial;
+            }
+
+            .text-section h3 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .sub-text {
+                font-size: 14px;
+                color: #444;
+                line-height: 1.6;
+            }
+
+            /* PROCESS SECTION */
+            .process-section {
+                padding: 10mm 15mm;   /* 🔴 SAME as .text-section */
+                background: #fffefe;
+                position: absolute;
+                bottom: 25mm;
+                width: 100%;
+                box-sizing: border-box;  /* 🔴 ensures padding doesn't overflow */
+            }
+
+            /* TITLE ALIGNMENT */
+            .process-title {
+                text-align: left;        /* 🔴 align with text above */
+                font-size: 13px;
+                color: #444;
+                margin-bottom: 12px;
+                letter-spacing: 1px;
+            }
+
+                        /* STEPS ROW */
+            .process-steps {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                text-align: center;
+                gap: 10px;               /* 🔴 spacing between steps */
+            }
+
+            /* EACH STEP */
+            .step {
+                width: 16%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* ICON FIX */
+            .step img {
+                width: 50px;
+                height: 50px;
+                object-fit: contain;
+                margin-bottom: 10px;
+            }
+
+            /* TEXT FIX */
+            .step p {
+                font-size: 9px;
+                line-height: 1.4;
+                text-align: center;
+                min-height: 30px;
+                
+            }
+            /* 3rd page */
+
+                        /* HERO SECTION */
+                        /* OUTER CONTAINER (creates gap) */
+            .hero-section {
+                             /* padding: 8mm;     🔴 GAP around image */
+                box-sizing: border-box;
+            }
+
+            /* INNER IMAGE */
+            .hero-section-inner {
+                width: 100%;
+                height: 170mm;
+                background-image: url('Image4.jpeg');
+                background-size: cover;
+                background-position: center;
+                position: relative;
+                overflow: hidden;             /* 🔴 clean edges */
+            }
+
+            /* OVERLAY FIX */
+            .hero-overlay {
+                position: absolute;
+                inset: 0;                     /* 🔴 FIX alignment (better than width/height) */
+                background: rgba(0,0,0,0.35);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* TEXT */
+            .hero-text {
+                color: white;
+                font-size: 70px;              /* 🔴 slightly reduced for fit */
+                text-align: center;
+                line-height: 1.1;
+                font-weight: 300;
+            }
+
+
+
+            /* TABLE SECTION */
+            .table-section {
+                padding: 0;   /* 🔴 remove 15mm */
+                margin-top: 10mm; /* optional spacing between image & table */
+            }
+
+            /* TABLE STYLE */
+            .info-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-family: Arial;
+                font-size: 13px;
+            }
+
+            .info-table td {
+                border: 1px solid #bbb;
+                padding: 8px;
+            }
+
+            /* LIGHT HEADER LOOK */
+            .info-table tr td:nth-child(odd) {
+                background: #f5f5f5;
+                width: 25%;
+            }
+
+            .info-table tr td:nth-child(even) {
+                width: 25%;
+            }
+
+.info-table-new {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: Arial, sans-serif;
+}
+
+/* CELL STYLE */
+.info-table-new td {
+    border: 1px solid #d6d1c9;
+    padding: 10px 12px;
+    vertical-align: top;
+
+    /* 🔴 makes label look like design */
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: #6b6b6b;
+}
+
+/* VALUE (second line) */
+.info-table-new td span {
+    display: block;
+    margin-top: 4px;
+    font-size: 14px;
+    color: #000;
+    letter-spacing: normal;
+}
+
+/* HIGHLIGHT ROW */
+.info-table-new .highlight {
+    background: #0c0c1a;
+    color: #fff;
+}
+
+.info-table-new .highlight span {
+    color: #fff;
+    
+}
+
+/* GOLD LABEL COLOR IN DARK CELL */
+.info-table-new .highlight {
+    color: #c9a96e;
+}
+
+
+.page-inner {
+    padding: 3mm 3mm;   /* 🔴 ONLY this controls width */
+    box-sizing: border-box;
+    
+}
+
+/* 4TH PAGE */
+
+
+/* ===== PAGE 4 ===== */
+/* ===== PAGE 4 TABLE ===== */
+
+/* ===== PAGE 4 ESTIMATE TABLE FINAL OVERRIDE ===== */
+
+.page4-wrap{
+    padding:8mm 4mm 18mm 4mm;
+    box-sizing:border-box;
+    background:#efede8;
+}
+
+.page4-hero{
+    height:42mm;
+    background:url('Image4.jpeg') center/cover no-repeat;
+    margin-bottom:8mm;
+}
+
+/* Category label */
+.category-badge{
+    display:inline-block;
+    background:#0d0d18;
+    color:#c9a84c;
+    padding:10px 22px;
+    font-family:Arial;
+    font-size:11px;
+    letter-spacing:5px;
+    font-weight:700;
+    text-transform:uppercase;
+    margin-bottom:8mm;
+}
+
+.table-block {
+    margin-bottom: 16px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+
+.estimate-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
+.estimate-table thead th {
+    background: #0d0d18;
+    color: #c9a84c;
+    padding: 10px 8px;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    border: none;
+}
+
+.estimate-table thead th:first-child {
+    text-align: left;
+    padding-left: 14px;
+}
+
+.estimate-table tbody tr {
+    border-bottom: 1px solid #e0dbd2;
+}
+
+.estimate-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.estimate-table tbody tr:nth-child(even) {
+    background: #f9f7f4;
+}
+
+.estimate-table tbody td {
+    padding: 12px 8px;
+    color: #3a3a3a;
+    text-align: center;
+    border: none;
+    font-size: 11px;
+}
+
+.estimate-table tbody td:first-child {
+    text-align: left;
+    padding-left: 14px;
+    color: #888;
+    font-size: 10px;
+}
+
+.estimate-table tbody td:nth-child(2) {
+    text-align: left;
+}
+
+.estimate-table tbody td:last-child {
+    font-weight: 600;
+    color: #0d0d18;
+}
+
+/* Totals row */
+.totals-row td {
+    background: #ffffff;
+    font-weight: 700;
+    color: #0d0d18;
+    font-size: 12px;
+    padding: 12px 8px;
+    border-top: 2px solid #c9a84c;
+    border-bottom: 2px solid #c9a84c;
+}
+
+.totals-row td:last-child {
+    color: #c9a84c;
+    font-size: 13px;
+}
+
+
+
+/* ===== EXACT IMAGE STYLE PAGE 5 ===== */
+
+.page5-wrap{
+padding:7mm 10mm 18mm 10mm;
+font-family:"Times New Roman", serif;
+background:#fff;
+}
+
+.material-title{
+font-size:32px;
+font-weight:normal;
+color:#d86f16;
+text-decoration:underline;
+margin-bottom:5mm;
+line-height:1;
+}
+
+.material-box{
+border:1px solid #333;
+padding:6px 10px 6px 10px;
+}
+
+/* Orange section headings */
+.section-label{
+color:#d86f16;
+font-size:18px;
+font-weight:bold;
+margin-top:2px;
+margin-bottom:0;
+line-height:1;
+}
+
+/* Bullet lists */
+.material-list{
+list-style:none;
+margin:0 0 2px 18px;
+padding-left:12px;
+}
+
+.material-list li{
+position:relative;
+font-size:17px;
+line-height:1.0;
+margin-bottom:1px;
+}
+
+.material-list li:before{
+content:"➤";
+position:absolute;
+left:-18px;
+top:0;
+font-size:15px;
+}
+
+/* bottom materials */
+.materials-bottom{
+margin-top:2px;
+border-collapse:collapse;
+font-size:17px;
+}
+
+.materials-bottom td{
+padding:0 18px 0 0;
+line-height:1.0;
+vertical-align:top;
+}
+
+.materials-bottom td:first-child{
+width:180px;
+}
+
+
+/* ===== PAGE 6 WARRANTY ===== */
+
+.page6-wrap{
+display:flex;
+height:100%;
+background:#f4f4f0;
+}
+
+/* LEFT SIDE */
+.warranty-left{
+width:56%;
+background:#bfa582;
+padding:18mm 12mm;
+box-sizing:border-box;
+}
+
+.warranty-title{
+font-family:"Times New Roman", serif;
+font-size:32px;
+letter-spacing:2px;
+margin-bottom:18mm;
+color:#111;
+}
+
+.warranty-item{
+font-family:"Times New Roman", serif;
+font-size:21px;
+line-height:1.15;
+margin-bottom:28mm;
+color:#111;
+padding-left:8mm;
+text-indent:-6mm;
+}
+
+/* RIGHT SIDE */
+.warranty-right{
+width:44%;
+background:#f1f1ed;
+position:relative;
+overflow:hidden;
+}
+
+/* quotation symbol */
+.quote-icon{
+position:absolute;
+top:55mm;
+left:30mm;
+font-size:80px;
+color:#bfa582;
+line-height:1;
+opacity:.9;
+}
+
+/* vertical quote text */
+.vertical-quote{
+position:absolute;
+top:68mm;
+left:34mm;
+width:90px;
+
+font-family:"Times New Roman", serif;
+font-size:17px;
+line-height:1.02;
+letter-spacing:.4px;
+text-transform:uppercase;
+color:#bfa582;
+}
+
+/* bottom room image */
+.sofa-image{
+position:absolute;
+bottom:0;
+right:0;
+width:100%;
+height:140mm;
+
+background-image:url('Image5.jpeg');  /* replace with your sofa image */
+background-size:cover;
+background-position:center bottom;
+background-repeat:no-repeat;
+}
+
+/* subtle bottom bar seen in image */
+.page6-wrap:after{
+content:"";
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:8mm;
+background:#d8d8d4;
+}
+
+
+/* ===== PAGE 7 TERMS ===== */
+
+.page7-wrap{
+padding:8mm 16mm 22mm 16mm;
+box-sizing:border-box;
+background:#ffffff;
+font-family:"Times New Roman", serif;
+position:relative;
+height:100%;
+}
+
+/* thin blue strip top */
+.page7-wrap:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:3mm;
+background:#dbe7f0;
+}
+
+/* side guide lines */
+.page7-wrap:after{
+content:"";
+position:absolute;
+top:0;
+right:12mm;
+height:100%;
+width:1px;
+background:#cfcfcf;
+}
+
+.page7-wrap{
+border-left:1px solid #cfcfcf;
+margin-left:12mm;
+}
+
+/* title */
+.terms-title{
+margin-top:8mm;
+font-size:26px;
+color:#d9862f;
+text-decoration:underline;
+font-weight:normal;
+margin-bottom:10mm;
+}
+
+/* bullets */
+.terms-list{
+list-style:none;
+margin:0;
+padding:0;
+}
+
+.terms-list li{
+position:relative;
+padding-left:22px;
+font-size:16px;
+line-height:1.9;
+margin-bottom:4px;
+}
+
+.terms-list li:before{
+content:"❖";
+position:absolute;
+left:0;
+top:0;
+font-size:14px;
+}
+
+/* bottom quote */
+.terms-tagline{
+position:absolute;
+bottom:26mm;
+right:18mm;
+display:flex;
+align-items:flex-start;
+color:#b89f7a;
+}
+
+.big-d{
+font-size:84px;
+line-height:.8;
+font-family:"Times New Roman", serif;
+}
+
+.tagline-text{
+margin-left:-8px;
+margin-top:14px;
+font-size:18px;
+line-height:1.05;
+color:#3f3f3f;
+}
+
+
+table{
+    width:80%;
+    border-collapse:collapse;
+      border-radius:10px;
+    overflow:hidden;
+    font-family: 'Lucida Sans';
+    font-size: 10px;
+}
+th{
+    background:#2c3e50;
+    color:white;
+    padding:12px;
+    text-align:left;
+}
+
+
+td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    
+}
+
+        /* Quoted price row — change 6 */
+        .quoted-price-row td {
+            background: #0d0d18;
+            color: #c9a84c;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 14px 12px;
+            border-top: 3px solid #c9a84c;
+            letter-spacing: 0.5px;
+        }
+
+        /* Category header row in Cat-A table */
+        .cat-group-header td {
+            background: #f0ede8;
+            color: #0d0d18;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 8px 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-top: 1px solid #c9a84c;
+            border-bottom: 1px solid #c9a84c;
+        }
 </style>
 </head>
 <body>
@@ -200,6 +1103,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     <div><h2 id="editTitle">✏️ New Estimate</h2><p class="sub" id="editSub">Fill client details and select tables</p></div>
     <div class="hdr-btns">
       <button class="btn btn-outline" onclick="showScreen('entries')">← Back</button>
+      <button class="btn btn-outline" onclick="saveAsNew()" title="Save current data as a brand new estimate">📋 Save as New</button>
       <button class="btn btn-success" onclick="saveEstimate()">💾 Save</button>
     </div>
   </div>
@@ -245,6 +1149,10 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
       <tfoot><tr class="tot-row"><td colspan="12" class="tot-label">CATEGORY-A SUB TOTAL</td><td id="tot-catA">₹0</td><td></td></tr></tfoot>
     </table></div></div>
     <button class="add-row-btn" onclick="addRow('catA')">+ Add Row</button>
+  <div style="padding:10px 0 4px;">
+    <label style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">Notes / Remarks</label>
+    <textarea id="notes-catA" rows="2" style="width:100%;margin-top:4px;border:1.5px solid var(--border);border-radius:var(--r);padding:8px 11px;font-size:13px;resize:vertical;font-family:inherit" placeholder="Add any notes or remarks for this section…" oninput="S.notes['catA']=this.value"></textarea>
+  </div>
   </div>
 
   <!-- KITCHEN ACCESSORIES -->
@@ -254,44 +1162,60 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
       <span class="blk-hint">Select Product → auto-fills Brand, Article No, Price and Picture</span>
     </div>
     <div class="blk-body"><div class="tbl-scroll"><table class="est-tbl">
-      <thead><tr><th>SL</th><th>Product</th><th>Brand</th><th>Article No</th><th>Picture</th><th>QTY</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
+      <thead><tr><th>SL</th><th>Picture</th><th>Product</th><th>Brand</th><th>Article No</th><th>QTY</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
       <tbody id="tb-kitAcc"></tbody>
       <tfoot><tr class="tot-row"><td colspan="6" class="tot-label">KITCHEN ACCESSORIES SUB TOTAL</td><td id="tot-kitAcc">₹0</td><td></td><td></td></tr></tfoot>
     </table></div></div>
     <button class="add-row-btn" onclick="addRow('kitAcc')">+ Add Row</button>
+  <div style="padding:10px 0 4px;">
+    <label style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">Notes / Remarks</label>
+    <textarea id="notes-kitAcc" rows="2" style="width:100%;margin-top:4px;border:1.5px solid var(--border);border-radius:var(--r);padding:8px 11px;font-size:13px;resize:vertical;font-family:inherit" placeholder="Add any notes or remarks for this section…" oninput="S.notes['kitAcc']=this.value"></textarea>
+  </div>
   </div>
 
   <!-- ADDITIONAL WORKS -->
   <div id="blk-addWorks" class="est-block" style="display:none">
     <div class="blk-hdr"><span>🔧 ADDITIONAL WORKS</span></div>
     <div class="blk-body"><div class="tbl-scroll"><table class="est-tbl">
-      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Shutter Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>QTY</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
+      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Shutter Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
       <tbody id="tb-addWorks"></tbody>
-      <tfoot><tr class="tot-row"><td colspan="8" class="tot-label">ADDITIONAL WORKS SUB TOTAL</td><td id="tot-addWorks">₹0</td><td></td><td></td></tr></tfoot>
+      <tfoot><tr class="tot-row"><td colspan="7" class="tot-label">ADDITIONAL WORKS SUB TOTAL</td><td id="tot-addWorks">₹0</td><td></td><td></td></tr></tfoot>
     </table></div></div>
     <button class="add-row-btn" onclick="addRow('addWorks')">+ Add Row</button>
+  <div style="padding:10px 0 4px;">
+    <label style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">Notes / Remarks</label>
+    <textarea id="notes-addWorks" rows="2" style="width:100%;margin-top:4px;border:1.5px solid var(--border);border-radius:var(--r);padding:8px 11px;font-size:13px;resize:vertical;font-family:inherit" placeholder="Add any notes or remarks for this section…" oninput="S.notes['addWorks']=this.value"></textarea>
+  </div>
   </div>
 
   <!-- CATEGORY-B -->
   <div id="blk-catB" class="est-block" style="display:none">
     <div class="blk-hdr"><span>📦 CATEGORY – B</span></div>
     <div class="blk-body"><div class="tbl-scroll"><table class="est-tbl">
-      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Shutter Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>QTY</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
+      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Shutter Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
       <tbody id="tb-catB"></tbody>
-      <tfoot><tr class="tot-row"><td colspan="8" class="tot-label">CATEGORY-B SUB TOTAL</td><td id="tot-catB">₹0</td><td></td><td></td></tr></tfoot>
+      <tfoot><tr class="tot-row"><td colspan="7" class="tot-label">CATEGORY-B SUB TOTAL</td><td id="tot-catB">₹0</td><td></td><td></td></tr></tfoot>
     </table></div></div>
     <button class="add-row-btn" onclick="addRow('catB')">+ Add Row</button>
+  <div style="padding:10px 0 4px;">
+    <label style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">Notes / Remarks</label>
+    <textarea id="notes-catB" rows="2" style="width:100%;margin-top:4px;border:1.5px solid var(--border);border-radius:var(--r);padding:8px 11px;font-size:13px;resize:vertical;font-family:inherit" placeholder="Add any notes or remarks for this section…" oninput="S.notes['catB']=this.value"></textarea>
+  </div>
   </div>
 
   <!-- GYPSUM CEILING -->
   <div id="blk-gypsum" class="est-block" style="display:none">
     <div class="blk-hdr"><span>🏠 GYPSUM CEILING WORK</span></div>
     <div class="blk-body"><div class="tbl-scroll"><table class="est-tbl">
-      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
+      <thead><tr><th>SL</th><th>Item</th><th>Finish</th><th>Material</th><th>Unit</th><th>Size (free text)</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
       <tbody id="tb-gypsum"></tbody>
-      <tfoot><tr class="tot-row"><td colspan="7" class="tot-label">GYPSUM CEILING SUB TOTAL</td><td id="tot-gypsum">₹0</td><td></td><td></td></tr></tfoot>
+      <tfoot><tr class="tot-row"><td colspan="6" class="tot-label">GYPSUM CEILING SUB TOTAL</td><td id="tot-gypsum">₹0</td><td></td><td></td></tr></tfoot>
     </table></div></div>
     <button class="add-row-btn" onclick="addRow('gypsum')">+ Add Row</button>
+  <div style="padding:10px 0 4px;">
+    <label style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">Notes / Remarks</label>
+    <textarea id="notes-gypsum" rows="2" style="width:100%;margin-top:4px;border:1.5px solid var(--border);border-radius:var(--r);padding:8px 11px;font-size:13px;resize:vertical;font-family:inherit" placeholder="Add any notes or remarks for this section…" oninput="S.notes['gypsum']=this.value"></textarea>
+  </div>
   </div>
 
   <div class="grand-total-bar">
@@ -303,14 +1227,12 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 <!-- SCREEN 3: PREVIEW -->
 <div id="screen-preview" class="screen">
   <div class="screen-hdr">
-    <div><h2>👁 Estimate Preview</h2><p class="sub">A4 layout — Print to export as PDF</p></div>
     <div class="hdr-btns">
       <button class="btn btn-outline" onclick="showScreen('edit')">← Back</button>
       <button class="btn btn-primary" onclick="window.print()">🖨 Print / PDF</button>
     </div>
   </div>
   <div id="previewWrap" class="preview-wrap">
-    <div class="preview-ph">Open or create an estimate to see the A4 preview.</div>
   </div>
 </div>
 
@@ -351,6 +1273,14 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 
 
 <script>
+// ══════════════════════════════════════════════════════════════════
+//  PREVIEW TEMPLATE — embedded from der_1.html
+//  Contains all 7 A4 pages. {{PLACEHOLDERS}} are replaced at runtime.
+//  No separate preview-template.html file needed.
+// ══════════════════════════════════════════════════════════════════
+var PREVIEW_TPL = "<div class=\"page\">\n\n    <div class=\"content\">\n        <div class=\"title-text_1\">\n            ESTIMATE\n        </div>\n    </div>\n\n   \n\n    <div class=\"top-header\">\n        <div class=\"left-rect\"></div>\n\n        <div class=\"logo-section\">\n            <img src=\"Logo.png\" class=\"logo\">\n        <div class=\"logo-text\">DOC INTERIORS</div>\n        </div>\n\n        <div class=\"right-rect\"></div>\n    </div>\n\n    \n    <div class=\"header-img\">\n        <div class=\"overlay-text\">\n            <div class=\"title-text\">\n            <span class=\"first-letter\">D</span>EPTH<br>\n            <span class=\"first-letter\">O</span>F<br>\n            <span class=\"first-letter\">C</span>REATION\n            </div>\n        </div>\n    </div>\n\n\n     <div class=\"bottom-section\">\n        <div class=\"left-rect\"></div>\n        <div class=\"bottom-content\">\n            <div class=\"tagline\">\n                100% CUSTOMIZED CONTEMPORARY\n            </div>\n\n            <div class=\"categories\">\n                KITCHEN <span>|</span> BEDROOM <span>|</span> LIVING <span>|</span> DINING\n            </div>\n\n            <div class=\"website\">\n                www.docinteriors.com\n            <div class=\"underline\"></div>\n            </div>\n    </div>\n\n    </div>\n    \n\n</div>\n\n\n\n<div class=\"page\">\n\n    <!-- IMAGE GRID -->\n    <div class=\"image-grid\">\n        <div class=\"left-images\">\n            <div class=\"img top-img\"></div>\n            <div class=\"img bottom-img\"></div>\n        </div>\n        <div class=\"right-image\"></div>\n    </div>\n\n    <!-- TEXT SECTION -->\n    <div class=\"text-section\">\n        <h3>Thank you for considering DOC Interiors.</h3>\n\n        <p class=\"sub-text\">\n            Can't wait for more expert insights?<br>\n            We recommend you to get in touch with us whenever possible. \n            We're always at your service.\n        </p>\n    </div>\n\n    <!-- PROCESS SECTION -->\n    <div class=\"process-section\">\n\n        <div class=\"process-title\">            \n            GET YOUR HOME INTERIOR DONE WITHIN 35-45 WORKING DAYS\n        </div>\n\n        <div class=\"process-steps\">\n\n            <div class=\"step\">\n                <img src=\"Logo_1.png\">\n                <p>SPEAK TO OUR DESIGN CONSULTANT AND</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_2.png\">\n                <p>DETAILED DRAWING AND APPROVAL</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_3.png\">\n                <p>PRODUCTION AT OWN FACTORY</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_4.png\">\n                <p>MATERIAL DELIVERY WITHIN 45 DAYS</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_5.png\">\n                <p>INSTALLATION AT SITE</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_6.png\">\n                <p>ON-TIME PROJECT HANDOVER</p>\n            </div>\n\n        </div>\n    </div>\n\n    <div class=\"website\">\n                www.docinteriors.com\n    <div class=\"underline\"></div>\n    \n\n    </div>\n</div>\n\n\n<div class=\"page\">\n\n  <div class=\"page-inner\">  \n    <!-- HERO IMAGE -->\n  <!-- HERO -->\n        <div class=\"hero-section\">\n            <div class=\"hero-section-inner\">\n                <div class=\"hero-overlay\">\n                    <div class=\"hero-text\">\n                        depth of<br>creation\n                    </div>\n                </div>\n            </div>\n        </div>\n\n    <!-- TABLE SECTION -->\n    <div class=\"table-section\"> \n        <table class=\"info-table-new\">\n\n    <tr>\n        <td>DATE<br><span>{{DATE}}</span></td>\n        <td>ESTIMATION NO.<br><span>{{ESTIMATION_NO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>CLIENT<br><span>{{CLIENT_NAME}}</span></td>\n        <td>BDO<br><span>{{BDO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>SITE ADDRESS<br><span>{{SITE_ADDRESS}}</span></td>\n        <td>MOBILE<br><span>{{MOBILE}}</span></td>\n    </tr>\n\n    <tr>\n        <td>E-MAIL<br><span>{{EMAIL}}</span></td>\n        <td>E-MAIL (BDO)<br><span>{{EMAIL_BDO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>CONTACT NUMBER<br><span>{{CONTACT_NUMBER}}</span></td>\n        <td>INTERIOR DESIGNER<br><span>{{INTERIOR_DESIGNER}}</span></td>\n    </tr>\n\n    <tr>\n        <td class=\"highlight\">CUSTOMER CARE<br><span>{{CUSTOMER_CARE}}</span></td>\n        <td>PREPARED BY<br><span>{{PREPARED_BY}}</span></td>\n    </tr>\n\n        </table>\n    </div>\n    </div>\n\n     <div class=\"website\">\n                www.docinteriors.com\n    <div class=\"underline\"></div>\n\n    \n\n    </div>\n    </div>\n\n\n{{ESTIMATE_SECTIONS}}\n\n\n<div class=\"page\">\n\n<div class=\"page5-wrap\">\n\n    <div class=\"material-title\">\n        MATERIAL OPTIONS\n    </div>\n\n    <div class=\"material-box\">\n\n        <div class=\"section-label\">Shutter Option :</div>\n\n        <ul class=\"material-list\">\n            <li>Laminated shutter on HDHMR Exterior grade HDF(Action Teza HDF,Laminate-GreenLam Merrino, NewMica)</li>\n            <li>Acrylic shutter on HDHMR Exterior grade HDF(Action Teza HDF, Acrylic-Dimond D\u00e9cor)</li>\n            <li>Glass shutter on 16mm Marine plywood (Marine Ply-Famous, Glass-4mm Saint Gobain Planilaque glass)</li>\n            <li>Veneer shutter on 18mm Pvc & Marine Plywood (Veneer-Decowood Greenlam)</li>\n            <li>PU Finish, Glass and Stain Finish</li>\n            <li>PVC Laminate shutter on HDHMR Exterior grade</li>\n            <li>Shutter aristo brand</li>\n        </ul>\n\n        <div class=\"section-label\">Shutter:</div>\n        <ul class=\"material-list\">\n            <li>Both side Laminated HDHMR Exterior grade HDF Board with matching edge banding on sides</li>\n        </ul>\n\n        <div class=\"section-label\">Carcass :</div>\n        <ul class=\"material-list\">\n            <li>Both side cold pressed laminated marine grade plywood BWP(Boiling Water Proof)with water resistance testing after 72hrs of boiling edge banded on the side of 18mm</li>\n        </ul>\n\n        <div class=\"section-label\">Skirting:</div>\n        <ul class=\"material-list\">\n            <li>Laminated skirting</li>\n        </ul>\n\n        <div class=\"section-label\">Fittings:</div>\n        <ul class=\"material-list\">\n            <li>SS</li>\n        </ul>\n\n        <div class=\"section-label\">Accessories:</div>\n        <ul class=\"material-list\">\n            <li>Hettich</li>\n        </ul>\n\n        <div class=\"section-label\">Edge Banding:</div>\n        <ul class=\"material-list\">\n            <li>All four side on the carcass and shutter with corner rounding wherever applicable, premium Edge banding tapes.</li>\n        </ul>\n\n        <div class=\"section-label\">Carcass Back panel:</div>\n        <ul class=\"material-list\">\n            <li>8mm PVC Board</li>\n        </ul>\n\n        <div class=\"section-label\">Sink cabinet & wash counters:</div>\n        <ul class=\"material-list\">\n            <li>17mm PVC Foam board with a smooth matte finish Tolerance +/-1mm</li>\n        </ul>\n\n        <br>\n\n        <div class=\"section-label\">Materials:</div>\n\n        <table class=\"materials-bottom\">\n            <tr>\n                <td>\u27a4 Marine Plywood-</td>\n                <td>Famous.</td>\n            </tr>\n            <tr>\n                <td>\u27a4 Wpc</td>\n                <td>- Demac/Thomson</td>\n            </tr>\n            <tr>\n                <td>\u27a4 Laminate</td>\n                <td>- Greenlam / Newmika/ Merrino</td>\n            </tr>\n            <tr>\n                <td>\u27a4 Accessories</td>\n                <td>- Hettich</td>\n            </tr>\n        </table>\n\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n<div class=\"page\">\n\n<div class=\"page6-wrap\">\n\n    <!-- LEFT TAN PANEL -->\n    <div class=\"warranty-left\">\n\n        <div class=\"warranty-title\">\n            WARRANTY\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 10 Years warranty against avoidable, unnatural defects in\n            material supplied under normal usage.\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 Manufactures warranty for fittings, hardware and accessories.\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 Life time service will be provided up till 1st year two free\n            service after that per visit chargeable at Rs.2000/- plus any\n            replacement charges.\n        </div>\n\n    </div>\n\n\n    <!-- RIGHT PANEL -->\n    <div class=\"warranty-right\">\n\n        <div class=\"quote-icon\">\n            \u275d\n        </div>\n\n        <div class=\"vertical-quote\">\n            THE KEY TO GREATEST DESIGNING IS CAPTURING THE SPIRIT OF THE CLIENT AND THE ESSENCE OF THE SPACE\n        </div>\n\n        <div class=\"sofa-image\"></div>\n\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n<div class=\"page\">\n\n<div class=\"page7-wrap\">\n\n    <div class=\"terms-title\">\n        TERMS AND CONDITIONS\n    </div>\n\n    <ul class=\"terms-list\">\n\n        <li>The estimation and quotation are prepared in accordance with the provided terms and conditions.</li>\n\n        <li>Once the design is finalized, no changes will be permitted in production drawings.</li>\n\n        <li>Two 3D design revisions are provided free of cost; further changes will incur extra charges.</li>\n\n        <li>The 3D design may include elements for aesthetic purposes only; such items are not part of the quotation and will incur extra charges if required.</li>\n\n        <li>The scope of work is limited to interior views only. Exterior, courtyard, and other external views are excluded.</li>\n\n        <li>The quotation does not include appliances such as chimney, hob, sink, or any other accessories.</li>\n\n        <li>The quotation excludes supply and installation of lighting, LED strips, granite, tiles, and related materials, as well as all plumbing, electrical, masonry, fittings, and associated labor charges.</li>\n\n        <li>Any handle\u2019s cost above \u20b9300 per item will be billed additionally in quotation.</li>\n\n        <li>The client shall provide a continuous electricity supply required for operating machinery during execution.</li>\n\n        <li>The client is responsible for ensuring a safe and conducive working environment at the site.</li>\n\n        <li>The client must provide a secure space for storage of materials and machinery brought to the site.</li>\n\n        <li>Any unloading charges exceeding \u20b93,000/- shall be borne directly by the client.</li>\n\n        <li>The client shall obtain all necessary permissions and approvals from building authorities, apartment associations, municipal bodies, electrical boards, and any other relevant authorities required for execution of the work.</li>\n\n        <li>Any changes in design or specifications after finalization will result in a revision of the quotation.</li>\n\n        <li>This quotation is valid for a period of one (1) month from the date of issue.</li>\n\n    </ul>\n\n    <div class=\"terms-tagline\">\n        <span class=\"big-d\">D</span>\n        <div class=\"tagline-text\">\n            ESIGN IS THINKING<br>\n            MADE VISUAL\n        </div>\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n</div>";
+
+
 // ════════════════════════════════════════════════════════════════
 //  DOC INTERIORS — Complete App JS
 //  Key design: NO inline event handlers with string args.
@@ -370,7 +1300,8 @@ var S = {
   adminTab:'catA', adminDel:null, modalEdit:null,
   active:{catA:false,kitAcc:false,addWorks:false,catB:false,gypsum:false},
   rows:{catA:[],kitAcc:[],addWorks:[],catB:[],gypsum:[]},
-  previewTemplate:null
+  previewTemplate:null,
+  notes:{catA:'',kitAcc:'',addWorks:'',catB:'',gypsum:''}  // per-table notes
 };
 
 // ── Utils ────────────────────────────────────────────────────────
@@ -542,6 +1473,12 @@ function editEstimate(id){
     var el=document.getElementById('f_'+k); if(el)el.value=est[k]||'';
   });
   var tables=est.data||{};
+  var savedNotes=(est.data&&est.data._notes)||{};
+  Object.keys(S.notes).forEach(function(k){
+    S.notes[k]=savedNotes[k]||'';
+    var el=document.getElementById('notes-'+k);
+    if(el)el.value=S.notes[k];
+  });
   Object.keys(S.active).forEach(function(k){
     S.active[k]=!!(tables[k]&&tables[k].length);
     S.rows[k]=tables[k]||[];
@@ -555,6 +1492,11 @@ function clearForm(){
     var el=document.getElementById('f_'+f); if(el)el.value='';
   });
   Object.keys(S.active).forEach(function(k){S.active[k]=false;S.rows[k]=[];togTable(k,false);});
+  Object.keys(S.notes).forEach(function(k){
+    S.notes[k]='';
+    var el=document.getElementById('notes-'+k);
+    if(el)el.value='';
+  });
   updateGrand();
 }
 function togTable(key,on){
@@ -572,9 +1514,9 @@ function toggleTable(key){
 var BLANK={
   catA    :function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',sizeX:'',sizeY:'',qtySqft:0,qty:'',price:'',total:0};},
   kitAcc  :function(){return{product:'',brand:'',articleNo:'',pictureUrl:'',qty:'',price:'',total:0};},
-  addWorks:function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',qty:'',price:'',total:0};},
-  catB    :function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',qty:'',price:'',total:0};},
-  gypsum  :function(){return{category:'',item:'',finish:'',material:'',unit:'',size:'',price:'',total:0};}
+  addWorks:function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',price:'',total:0};},
+  catB    :function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',price:'',total:0};},
+  gypsum  :function(){return{item:'',finish:'',material:'',unit:'',size:'',price:'',total:0};}
 };
 function addRow(key){S.rows[key].push(BLANK[key]());renderTable(key);}
 function delRow(key,i){S.rows[key].splice(i,1);renderTable(key);updateGrand();}
@@ -661,16 +1603,17 @@ function renderKitAcc(){
   var dd=S.dropdowns.kitchenAcc||[], prods=uniq(dd,'product');
   var tb=document.getElementById('tb-kitAcc');
   tb.innerHTML=S.rows.kitAcc.map(function(r,i){
+    // Image: 88x88px (doubled height), shown BEFORE product dropdown
     var picHtml=r.pictureUrl
-      ?'<img src="'+h(r.pictureUrl)+'" style="width:44px;height:44px;object-fit:cover;border-radius:4px;border:1px solid var(--border)">'
-      :'<div style="width:44px;height:44px;background:var(--gold-lt);border-radius:4px;border:1px dashed var(--gold);display:flex;align-items:center;justify-content:center;font-size:16px">🖼</div>';
-    return '<tr>'+
+      ?'<img src="'+h(r.pictureUrl)+'" style="width:88px;height:88px;object-fit:cover;border-radius:6px;border:1px solid var(--border)">'
+      :'<div style="width:88px;height:88px;background:var(--gold-lt);border-radius:6px;border:1px dashed var(--gold);display:flex;align-items:center;justify-content:center;font-size:26px">🖼</div>';
+    return '<tr style="vertical-align:middle">'+
       '<td>'+(i+1)+'</td>'+
+      '<td style="padding:4px 6px">'+picHtml+'</td>'+
       '<td>'+sel(prods,r.product,'handleSelKit('+i+',this)','min-width:160px')+'</td>'+
       '<td class="af-cell" style="font-size:11px">'+h(r.brand||'—')+'</td>'+
       '<td class="af-cell" style="font-size:11px">'+h(r.articleNo||'—')+'</td>'+
-      '<td>'+picHtml+'</td>'+
-      '<td><input class="ti" type="text" data-row="'+i+'" data-field="qty"   value="'+h(r.qty||'')+'"  placeholder="0" style="width:52px" inputmode="decimal"></td>'+
+      '<td><input class="ti" type="text" data-row="'+i+'" data-field="qty"   value="'+h(r.qty||'')+'" placeholder="0" style="width:52px" inputmode="decimal"></td>'+
       '<td><input class="ti" type="text" data-row="'+i+'" data-field="price" value="'+h(r.price||'')+'" placeholder="0" style="width:75px" inputmode="decimal"></td>'+
       '<td><span class="computed" id="tot-kitAcc-'+i+'">₹'+fmt(r.total||0)+'</span></td>'+
       '<td><button class="btn-del-row" data-key="kitAcc" data-row="'+i+'">✕</button></td>'+
@@ -702,27 +1645,22 @@ function renderSimple(key){
   var tb=document.getElementById('tb-'+key);
   tb.innerHTML=S.rows[key].map(function(r,i){
     var items=uniq(dd.filter(function(d){return !r.category||d.category===r.category;}),'item');
+    var fn='setSimple("'+key+'",'+i+',';
+    // NO QTY column — Price is free text entry, Total = Price automatically
     return '<tr>'+
       '<td>'+(i+1)+'</td>'+
-      '<td>'+sel(cats,r.category,'handleSelSimple("'+key+'",'+i+',this)')+'</td>'+
-      '<td>'+sel(items,r.item,'handleSelSimple("'+key+'",'+i+',this)')+'</td>'+
-      '<td>'+sel(shts,r.shutterFinish,'handleSelSimple("'+key+'",'+i+',this)')+'</td>'+
-      '<td>'+sel(mats,r.material,'handleSelSimple("'+key+'",'+i+',this)')+'</td>'+
-      '<td>'+sel(uts,r.unit,'handleSelSimple("'+key+'",'+i+',this)','width:70px')+'</td>'+
-      '<td><input class="ti" type="text" data-row="'+i+'" data-field="size"  value="'+h(r.size||'')+'"  placeholder="free text" style="width:90px"></td>'+
-      '<td><input class="ti" type="text" data-row="'+i+'" data-field="qty"   value="'+h(r.qty||'')+'"   placeholder="0" style="width:58px" inputmode="decimal"></td>'+
-      '<td><input class="ti" type="text" data-row="'+i+'" data-field="price" value="'+h(r.price||'')+'"  placeholder="0" style="width:75px" inputmode="decimal"></td>'+
+      '<td>'+sel(cats,r.category,fn+'"category",this.value)')+'</td>'+
+      '<td>'+sel(items,r.item,fn+'"item",this.value)')+'</td>'+
+      '<td>'+sel(shts,r.shutterFinish,fn+'"shutterFinish",this.value)')+'</td>'+
+      '<td>'+sel(mats,r.material,fn+'"material",this.value)')+'</td>'+
+      '<td>'+sel(uts,r.unit,fn+'"unit",this.value)','width:70px')+'</td>'+
+      '<td><input class="ti" type="text" data-row="'+i+'" data-field="size"  value="'+h(r.size||'')+'" placeholder="free text" style="width:90px"></td>'+
+      '<td><input class="ti" type="text" data-row="'+i+'" data-field="price" value="'+h(r.price||'')+'" placeholder="enter price" style="width:90px" inputmode="decimal"></td>'+
       '<td><span class="computed" id="tot-'+key+'-'+i+'">₹'+fmt(r.total||0)+'</span></td>'+
       '<td><button class="btn-del-row" data-key="'+key+'" data-row="'+i+'">✕</button></td>'+
     '</tr>';
   }).join('');
   attachTableListeners(tb,key);
-}
-function handleSelSimple(key,i,el){
-  var colIdx=el.closest('td').cellIndex;
-  var fieldMap={1:'category',2:'item',3:'shutterFinish',4:'material',5:'unit'};
-  var field=fieldMap[colIdx]||'category';
-  setSimple(key,i,field,el.value);
 }
 function setSimple(key,i,f,v){
   var ddKey=key==='addWorks'?'additionalWorks':'catB';
@@ -730,9 +1668,15 @@ function setSimple(key,i,f,v){
   if(f==='category')r.item='';
   if(f==='item'&&v){
     var m=(S.dropdowns[ddKey]||[]).find(function(d){return d.item===v;});
-    if(m){r.shutterFinish=m.shutterFinish||'';r.material=m.material||'';r.unit=m.unit||'';if(!parseFloat(r.price))r.price=m.defaultPrice||'';}
+    if(m){
+      r.shutterFinish=m.shutterFinish||'';
+      r.material=m.material||'';
+      r.unit=m.unit||'';
+      if(!parseFloat(r.price))r.price=m.defaultPrice||'';
+    }
   }
-  r.total=(parseFloat(r.qty)||0)*(parseFloat(r.price)||0);
+  // Total = Price (free text field, no QTY multiplication)
+  r.total=parseFloat(r.price)||0;
   if(f==='category'||f==='item'){renderSimple(key);}
   else{
     var totEl=document.getElementById('tot-'+key+'-'+i);
@@ -743,47 +1687,79 @@ function setSimple(key,i,f,v){
 
 // ── GYPSUM CEILING ───────────────────────────────────────────────
 function renderGypsum(){
-  var dd=S.dropdowns.gypsum||[];
-  var cats=uniq(dd,'category'),fins=uniq(dd,'finish'),mats=uniq(dd,'material'),uts=uniq(dd,'unit');
-  var tb=document.getElementById('tb-gypsum');
-  tb.innerHTML=S.rows.gypsum.map(function(r,i){
-    var items=uniq(dd.filter(function(d){return !r.category||d.category===r.category;}),'item');
-    return '<tr>'+
-      '<td>'+(i+1)+'</td>'+
-      '<td>'+sel(cats,r.category,'handleSelGypsum('+i+',this)')+'</td>'+
-      '<td>'+sel(items,r.item,'handleSelGypsum('+i+',this)')+'</td>'+
-      '<td>'+sel(fins,r.finish,'handleSelGypsum('+i+',this)')+'</td>'+
-      '<td>'+sel(mats,r.material,'handleSelGypsum('+i+',this)')+'</td>'+
-      '<td>'+sel(uts,r.unit,'handleSelGypsum('+i+',this)','width:70px')+'</td>'+
-      '<td><input class="ti" type="text" data-row="'+i+'" data-field="size"  value="'+h(r.size||'')+'"  placeholder="free text" style="width:90px"></td>'+
-      '<td><input class="ti" type="text" data-row="'+i+'" data-field="price" value="'+h(r.price||'')+'" placeholder="0" style="width:75px" inputmode="decimal"></td>'+
-      '<td><span class="computed" id="tot-gypsum-'+i+'">₹'+fmt(r.total||0)+'</span></td>'+
-      '<td><button class="btn-del-row" data-key="gypsum" data-row="'+i+'">✕</button></td>'+
+  var dd   = S.dropdowns.gypsum || [];
+  // Build unique option lists from the master dropdown data
+  var items = uniq(dd, 'item');
+  var fins  = uniq(dd, 'finish');
+  var mats  = uniq(dd, 'material');
+  var uts   = uniq(dd, 'unit');
+
+  var tb = document.getElementById('tb-gypsum');
+  tb.innerHTML = S.rows.gypsum.map(function(r, i){
+    return '<tr>' +
+      // Col 0: SL
+      '<td>' + (i+1) + '</td>' +
+      // Col 1: Item (dropdown) — selecting auto-fills Finish, Material, Unit, Price
+      '<td>' + sel(items, r.item, 'handleSelGypsum(' + i + ',this)') + '</td>' +
+      // Col 2: Finish (dropdown)
+      '<td>' + sel(fins,  r.finish,   'handleSelGypsum(' + i + ',this)', 'min-width:100px') + '</td>' +
+      // Col 3: Material (dropdown)
+      '<td>' + sel(mats,  r.material, 'handleSelGypsum(' + i + ',this)', 'min-width:100px') + '</td>' +
+      // Col 4: Unit (dropdown)
+      '<td>' + sel(uts,   r.unit,     'handleSelGypsum(' + i + ',this)', 'width:80px') + '</td>' +
+      // Col 5: Size — free text
+      '<td><input class="ti" type="text" data-row="' + i + '" data-field="size"  value="' + h(r.size||'') + '" placeholder="e.g. 10x12 ft" style="width:100px"></td>' +
+      // Col 6: Price — free text entry
+      '<td><input class="ti" type="text" data-row="' + i + '" data-field="price" value="' + h(r.price||'') + '" placeholder="enter price" style="width:90px" inputmode="decimal"></td>' +
+      // Col 7: Total (auto = Price)
+      '<td><span class="computed" id="tot-gypsum-' + i + '">₹' + fmt(r.total||0) + '</span></td>' +
+      // Col 8: Delete
+      '<td><button class="btn-del-row" data-key="gypsum" data-row="' + i + '">✕</button></td>' +
     '</tr>';
   }).join('');
-  attachTableListeners(tb,'gypsum');
+
+  attachTableListeners(tb, 'gypsum');
 }
-function handleSelGypsum(i,el){
-  var colIdx=el.closest('td').cellIndex;
-  var fieldMap={1:'category',2:'item',3:'finish',4:'material',5:'unit'};
-  var field=fieldMap[colIdx]||'category';
-  setGypsum(i,field,el.value);
+
+function handleSelGypsum(i, el){
+  // cellIndex is 0-based:
+  // 0=SL, 1=Item, 2=Finish, 3=Material, 4=Unit, 5=Size, 6=Price, 7=Total, 8=Del
+  var colIdx   = el.closest('td').cellIndex;
+  var fieldMap = { 1:'item', 2:'finish', 3:'material', 4:'unit' };
+  var field    = fieldMap[colIdx];
+  if (field) setGypsum(i, field, el.value);
 }
-function setGypsum(i,f,v){
-  var r=S.rows.gypsum[i]; r[f]=v;
-  if(f==='category')r.item='';
-  if(f==='item'&&v){
-    var m=(S.dropdowns.gypsum||[]).find(function(d){return d.item===v;});
-    if(m)r.price=m.defaultPrice||'';
+
+function setGypsum(i, f, v){
+  var r = S.rows.gypsum[i];
+  r[f] = v;
+
+  // When Item is selected, auto-fill Finish, Material, Unit and default Price
+  if (f === 'item' && v) {
+    var m = (S.dropdowns.gypsum || []).find(function(d){ return d.item === v; });
+    if (m) {
+      r.finish   = m.finish   || '';
+      r.material = m.material || '';
+      r.unit     = m.unit     || '';
+      // Only auto-fill price if user hasn't already typed one
+      if (!parseFloat(r.price)) r.price = m.defaultPrice || '';
+    }
+    // Re-render to update all select dropdowns with auto-filled values
+    renderGypsum();
+    updateTot('gypsum');
+    return;
   }
-  r.total=parseFloat(r.price)||0;
-  if(f==='category'||f==='item'||f==='finish'){renderGypsum();}
-  else{
-    var totEl=document.getElementById('tot-gypsum-'+i);
-    if(totEl)totEl.textContent='₹'+fmt(r.total||0);
-  }
+
+  // For all other field changes, just recalculate total = price
+  r.total = parseFloat(r.price) || 0;
+
+  // Update only the affected cells in-place (faster than full re-render)
+  var totEl = document.getElementById('tot-gypsum-' + i);
+  if (totEl) totEl.textContent = '₹' + fmt(r.total || 0);
+
   updateTot('gypsum');
 }
+
 
 // ── Delegated event listener ─────────────────────────────────────
 // Attached to each <tbody> after rendering.
@@ -823,7 +1799,7 @@ function attachTableListeners(tb, key){
       case 'addWorks':
       case 'catB':
         var rs=S.rows[key][row]; rs[field]=val;
-        rs.total=(parseFloat(rs.qty)||0)*(parseFloat(rs.price)||0);
+        rs.total=parseFloat(rs.price)||0;  // Total = Price (no QTY)
         var ts=document.getElementById('tot-'+key+'-'+row);
         if(ts)ts.textContent='₹'+fmt(rs.total||0);
         break;
@@ -878,11 +1854,25 @@ function saveEstimate(){
     tables:{}
   };
   Object.keys(S.active).forEach(function(k){if(S.active[k])payload.tables[k]=S.rows[k];});
+  payload.tables._notes=S.notes;  // notes saved inside DATA_JSON alongside tables
   loading(true);
   gasPost('saveEstimate',payload)
     .then(function(r){S.currentId=r.id;toast('Saved!','ok');return loadEntries();})
     .catch(function(e){toast('Save failed: '+e.message,'err');})
     .finally(function(){loading(false);});
+}
+
+// saveAsNew — clears the current ID so the record saves as a fresh entry
+function saveAsNew(){
+  if(!gv('f_clientName')){toast('Client name is required','err');return;}
+  // Generate a new estimation number
+  var oldNo=gv('f_estimationNo');
+  document.getElementById('f_estimationNo').value='DOC-'+Date.now().toString().slice(-6);
+  document.getElementById('f_estimateDate').value=new Date().toISOString().split('T')[0];
+  var prevId=S.currentId;
+  S.currentId=null;  // null = INSERT not UPDATE
+  saveEstimate();    // saves as new
+  // Note: saveEstimate sets S.currentId to the new ID after saving
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -893,6 +1883,12 @@ function previewById(id){
   if(!est){toast('Not found','err');return;}
   S.currentId=id;
   var tables=est.data||{};
+  var savedNotes=(est.data&&est.data._notes)||{};
+  Object.keys(S.notes).forEach(function(k){
+    S.notes[k]=savedNotes[k]||'';
+    var el=document.getElementById('notes-'+k);
+    if(el)el.value=S.notes[k];
+  });
   Object.keys(S.active).forEach(function(k){S.active[k]=!!(tables[k]&&tables[k].length);S.rows[k]=tables[k]||[];});
   ['clientName','estimationNo','estimateDate','siteAddress','mobile','contactNumber',
    'email','bdo','interiorDesigner','customerCare','preparedBy'].forEach(function(k){
@@ -901,75 +1897,578 @@ function previewById(id){
   showScreen('preview');
 }
 function renderPreview(){
-  var wrap=document.getElementById('previewWrap');
-  if(!S.previewTemplate){
-    wrap.innerHTML='<div class="preview-ph">Loading preview template…</div>';
-    fetch('preview-template.html')
-      .then(function(r){if(!r.ok)throw new Error('preview-template.html not found (HTTP '+r.status+')');return r.text();})
-      .then(function(tpl){S.previewTemplate=tpl;injectPreview(wrap);})
-      .catch(function(e){wrap.innerHTML='<div class="preview-ph" style="color:var(--danger)">⚠️ '+h(e.message)+'<br><small>Make sure preview-template.html is uploaded to GitHub.</small></div>';});
-    return;
+  var wrap = document.getElementById('previewWrap');
+  // Template is embedded directly in this file — no fetch needed
+  if (!S.previewTemplate) {
+    S.previewTemplate = PREVIEW_TPL;
   }
   injectPreview(wrap);
 }
+
 function injectPreview(wrap){
-  var html=S.previewTemplate;
-  var c={
-    DATE:gv('f_estimateDate')||'—', ESTIMATION_NO:gv('f_estimationNo')||'—',
-    CLIENT_NAME:gv('f_clientName')||'—', BDO:gv('f_bdo')||'—',
-    SITE_ADDRESS:gv('f_siteAddress')||'—', MOBILE:gv('f_mobile')||'—',
-    EMAIL:gv('f_email')||'—', EMAIL_BDO:'—',
-    CONTACT_NUMBER:gv('f_contactNumber')||'—', INTERIOR_DESIGNER:gv('f_interiorDesigner')||'—',
-    CUSTOMER_CARE:gv('f_customerCare')||'+91 8943807777', PREPARED_BY:gv('f_preparedBy')||'—'
+  var html = S.previewTemplate;
+
+  // ── Replace every {{PLACEHOLDER}} with live form values ──────────────────
+  var fields = {
+    DATE             : gv('f_estimateDate')     || '—',
+    ESTIMATION_NO    : gv('f_estimationNo')     || '—',
+    CLIENT_NAME      : gv('f_clientName')       || '—',
+    BDO              : gv('f_bdo')              || '—',
+    SITE_ADDRESS     : gv('f_siteAddress')      || '—',
+    MOBILE           : gv('f_mobile')           || '—',
+    EMAIL            : gv('f_email')            || '—',
+    EMAIL_BDO        : '—',
+    CONTACT_NUMBER   : gv('f_contactNumber')    || '—',
+    INTERIOR_DESIGNER: gv('f_interiorDesigner') || '—',
+    CUSTOMER_CARE    : gv('f_customerCare')     || '+91 8943807777',
+    PREPARED_BY      : gv('f_preparedBy')       || '—'
   };
-  Object.keys(c).forEach(function(k){html=html.split('{{'+k+'}}').join(c[k]);});
-  html=html.replace('{{ESTIMATE_SECTIONS}}',buildEstimateSections());
-  var bm=html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-  wrap.innerHTML=bm?bm[1]:html;
-}
-function buildEstimateSections(){
-  var TBLS=[
-    {key:'catA',    label:'CATEGORY-A',         cols:['SL NO.','ITEM','SHUTTER FINISH','MATERIAL','UNIT','SIZE','QTY','PRICE']},
-    {key:'kitAcc',  label:'KITCHEN ACCESSORIES', cols:['SL NO.','PRODUCT','BRAND','ARTICLE NO.','PICTURE','QTY','PRICE','TOTAL']},
-    {key:'addWorks',label:'ADDITIONAL WORKS',    cols:['SL NO.','ITEM','SHUTTER FINISH','MATERIAL','UNIT','SIZE','QTY','PRICE']},
-    {key:'catB',    label:'CATEGORY-B',          cols:['SL NO.','ITEM','SHUTTER FINISH','MATERIAL','UNIT','SIZE','QTY','PRICE']},
-    {key:'gypsum',  label:'GYPSUM CEILING WORK', cols:['SL NO.','ITEM','FINISH','MATERIAL','UNIT','SIZE','PRICE']}
-  ];
-  var html='';
-  TBLS.forEach(function(t){
-    if(!S.active[t.key]||!S.rows[t.key].length)return;
-    var rows=S.rows[t.key];
-    var sub=rows.reduce(function(s,r){return s+(parseFloat(r.total)||0);},0);
-    var nc=t.cols.length;
-    var body=rows.map(function(r,i){
-      var num=String(i+1).padStart(2,'0');
-      var c='<td>'+num+'</td>';
-      if(t.key==='catA')
-        c+='<td>'+h(r.item||'—')+'</td><td>'+h(r.shutterFinish||'—')+'</td><td>'+h(r.material||'—')+'</td><td>'+h(r.unit||'—')+'</td><td>'+h(r.size||'—')+'</td><td>'+(r.qty||0)+'</td><td>₹'+fmt(r.price||0)+'</td>';
-      else if(t.key==='kitAcc'){
-        var pic=r.pictureUrl?'<img src="'+r.pictureUrl+'" style="width:36px;height:36px;object-fit:cover;border-radius:3px">':'—';
-        c+='<td>'+h(r.product||'—')+'</td><td>'+h(r.brand||'—')+'</td><td>'+h(r.articleNo||'—')+'</td><td>'+pic+'</td><td>'+(r.qty||0)+'</td><td>₹'+fmt(r.price||0)+'</td><td>₹'+fmt(r.total||0)+'</td>';
-      }
-      else if(t.key==='gypsum')
-        c+='<td>'+h(r.item||'—')+'</td><td>'+h(r.finish||'—')+'</td><td>'+h(r.material||'—')+'</td><td>'+h(r.unit||'—')+'</td><td>'+h(r.size||'—')+'</td><td>₹'+fmt(r.price||0)+'</td>';
-      else
-        c+='<td>'+h(r.item||'—')+'</td><td>'+h(r.shutterFinish||'—')+'</td><td>'+h(r.material||'—')+'</td><td>'+h(r.unit||'—')+'</td><td>'+h(r.size||'—')+'</td><td>'+(r.qty||0)+'</td><td>₹'+fmt(r.price||0)+'</td>';
-      c+='<td>₹'+fmt(r.total||0)+'</td>';
-      return '<tr>'+c+'</tr>';
-    }).join('');
-    html+=
-      '<div class="category-badge">'+t.label+'</div>'+
-      '<table class="estimate-table">'+
-        '<thead><tr>'+t.cols.map(function(c){return'<th>'+c+'</th>';}).join('')+'</tr></thead>'+
-        '<tbody>'+body+'</tbody>'+
-        '<tbody><tr class="totals-row">'+
-          '<td colspan="'+(nc-1)+'" style="text-align:right;letter-spacing:1px;font-size:10px;padding-right:12px">'+t.label+' TOTAL</td>'+
-          '<td>₹'+fmt(sub)+'</td>'+
-        '</tr></tbody>'+
-      '</table><br><br>';
+
+  Object.keys(fields).forEach(function(k){
+    // split+join replaces ALL occurrences (unlike .replace which only replaces first)
+    html = html.split('{{' + k + '}}').join(h(fields[k]));
   });
-  return html||'<p style="padding:10px;color:#888">No tables selected.</p>';
+
+  // ── Build estimate table sections and inject into {{ESTIMATE_SECTIONS}} ───
+  html = html.replace('{{ESTIMATE_SECTIONS}}', buildEstimateSections());
+
+  // PREVIEW_TPL contains only the page divs (no <html>/<body> wrapper)
+  // so inject directly
+  wrap.innerHTML = html;
 }
+
+// ── buildEstimateSections ─────────────────────────────────────────────────────
+// Builds one <section class="estimate-section"> per active table
+// using the exact CSS classes from der_1.html:
+//   .category-badge  →  table title badge
+//   .estimate-table  →  the data table
+//   .totals-row      →  sub-total row
+// Notes for each table appear below the table in a styled box.
+// numberToWords — converts a number to Indian English words
+function numberToWords(n) {
+  n = Math.round(n);
+  if (n === 0) return 'Zero Rupees Only';
+  var ones = ['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine',
+               'Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen',
+               'Seventeen','Eighteen','Nineteen'];
+  var tens = ['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+  function words(num) {
+    if (num === 0) return '';
+    if (num < 20) return ones[num] + ' ';
+    if (num < 100) return tens[Math.floor(num/10)] + ' ' + (num%10 ? ones[num%10]+' ' : '');
+    return ones[Math.floor(num/100)] + ' Hundred ' + words(num%100);
+  }
+  var str = '';
+  var crore = Math.floor(n / 10000000); n %= 10000000;
+  var lakh  = Math.floor(n / 100000);   n %= 100000;
+  var thou  = Math.floor(n / 1000);     n %= 1000;
+  var rem   = n;
+  if (crore) str += words(crore) + 'Crore ';
+  if (lakh)  str += words(lakh)  + 'Lakh ';
+  if (thou)  str += words(thou)  + 'Thousand ';
+  if (rem)   str += words(rem);
+  return str.trim() + ' Rupees Only';
+}
+
+// fmtIndian — formats number as Indian currency: 13,10,600.00
+function fmtIndian(n) {
+  n = Math.abs(Number(n) || 0);
+  var parts = n.toFixed(2).split('.');
+  var whole = parts[0];
+  var dec   = parts[1];
+  var last3 = whole.slice(-3);
+  var rest  = whole.slice(0, -3);
+  if (rest) last3 = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + last3;
+  return last3 + '.' + dec;
+}
+
+function buildEstimateSections(){
+
+  // ════════════════════════════════════════════════════════════
+  //  PAGE LAYOUT ENGINE
+  //
+  //  A4 usable height inside page4-wrap ≈ 185 units
+  //  (297mm page - sub-header 10 - hero 42 - wrap padding 26 - website 14 = ~185mm)
+  //  Without hero: ~227 units
+  //
+  //  Estimated heights (in mm):
+  //    thead row          : 10
+  //    data row           : 8
+  //    cat-group header   : 8
+  //    sub-total row      : 10
+  //    quoted-price row   : 18
+  //    notes box          : 12 (if exists)
+  //    category-badge     : 14
+  //    continued label    : 6
+  //    section gap        : 6
+  //
+  //  Each page accumulates content until it hits the height limit,
+  //  then a new page starts. All tables flow consecutively.
+  // ════════════════════════════════════════════════════════════
+
+  var H_PAGE_FIRST   = 140;   // usable mm on page1 (hero takes ~42mm)
+  var H_PAGE_NORMAL  = 210;   // usable mm on pages without hero
+  var H_THEAD        = 10;
+  var H_ROW          = 8;
+  var H_CAT_HDR      = 8;
+  var H_SUBTOTAL     = 10;
+  var H_QUOTED       = 20;
+  var H_NOTES        = 14;
+  var H_BADGE        = 14;
+  var H_CONTD        = 6;
+  var H_GAP          = 8;     // gap between two tables on same page
+
+  var grand      = 0;
+  var subtotals  = [];        // [{label, amount}] for summary table
+  var firstPage  = true;      // hero only on very first page
+
+  // ── Low-level helpers ─────────────────────────────────────────
+
+  function subTotalRow(colSpan, label, amount) {
+    return '<tr class="totals-row">' +
+      '<td colspan="' + (colSpan-1) + '" style="text-align:right;letter-spacing:1px;font-size:10px;padding-right:12px">' + label + '</td>' +
+      '<td>&#8377;' + fmt(amount) + '</td>' +
+    '</tr>';
+  }
+
+  function quotedRow(colSpan, amount) {
+    var indian = fmtIndian(amount);
+    var words  = numberToWords(amount);
+    return '<tr>' +
+      '<td colspan="' + colSpan + '" style="' +
+        'background:#0d0d18;color:#c9a84c;font-family:Arial,sans-serif;' +
+        'font-size:10px;font-weight:700;padding:12px 14px;' +
+        'border-top:2px solid #c9a84c;line-height:1.8">' +
+        '<span style="letter-spacing:2px;font-size:9px">OUR REASONABLE QUOTED PRICE</span><br>' +
+        '<span style="font-size:13px;letter-spacing:1px">Rs- ' + indian + '/-*</span><br>' +
+        '<span style="font-weight:400;font-style:italic;color:#e0d5c0;font-size:10px">(' + words + ')</span>' +
+      '</td>' +
+    '</tr>';
+  }
+
+  // ── Page builder ──────────────────────────────────────────────
+  // Each page is an array of { html, height } blocks.
+  // We commit a page when adding the next block would overflow.
+
+  var pages         = [];     // completed pages: each is array of html strings
+  var currentPage   = [];     // blocks in progress for current page
+  var currentH      = 0;      // height used so far on current page
+  var pageCount     = 0;      // how many pages committed so far
+
+  function pageLimit() {
+    return (pageCount === 0 && firstPage) ? H_PAGE_FIRST : H_PAGE_NORMAL;
+  }
+
+  function commitPage() {
+    if (currentPage.length > 0) {
+      pages.push({ blocks: currentPage.slice(), isFirst: (pageCount === 0 && firstPage) });
+      pageCount++;
+    }
+    currentPage = [];
+    currentH    = 0;
+  }
+
+  // Add a block to the current page. If it doesn't fit, commit first.
+  function addBlock(htmlStr, height, forceNewPage) {
+    if (forceNewPage || (currentPage.length > 0 && currentH + height > pageLimit())) {
+      commitPage();
+    }
+    currentPage.push(htmlStr);
+    currentH += height;
+  }
+
+  // ── Table renderer — splits rows across pages ─────────────────
+  // tableSpec: { badge, thead, rows[], subTotRow, quotPriceRow, notesHtml, cols }
+  function renderTableSpec(spec) {
+    var rows     = spec.rows;
+    var badge    = spec.badge;
+    var thead    = spec.thead;
+    var subTot   = spec.subTotRow;
+    var quot     = spec.quotPriceRow;
+    var notes    = spec.notesHtml;
+
+    var i = 0;
+    var sectionStart = true;  // first chunk of this table
+
+    while (i <= rows.length) {
+      var isTableEnd = false;
+
+      // Estimate height of badge/contd header
+      var headerH = sectionStart ? H_BADGE + H_THEAD : H_CONTD + H_THEAD;
+
+      // How many rows fit on this page from here?
+      var available = pageLimit() - currentH - headerH - H_GAP;
+      var rowsLeft  = rows.length - i;
+
+      // If we're at the end (writing subtotal + quoted), estimate that height
+      // and see if the footer fits on this page
+      var footerH   = H_SUBTOTAL + H_QUOTED + (notes ? H_NOTES : 0);
+
+      var rowsFit;
+      if (rowsLeft === 0) {
+        // Only footer to write — check if it fits
+        if (currentH + footerH + H_GAP <= pageLimit() && currentPage.length > 0) {
+          // Append footer to existing open table on this page
+          // Find the last open table and close it
+          addFooterToCurrentPage(subTot, quot, notes, spec.cols);
+          return;
+        } else {
+          commitPage();
+          addFooterOnNewPage(subTot, quot, notes, spec.cols, badge);
+          return;
+        }
+      }
+
+      // Calculate how many rows fit before we need to check footer
+      rowsFit = Math.max(1, Math.floor((available) / H_ROW));
+
+      var chunkIsLast = (i + rowsFit >= rows.length);
+      if (chunkIsLast) {
+        // Check if this chunk + footer fits
+        var chunkH = headerH + (rows.length - i) * H_ROW + footerH + H_GAP;
+        if (currentPage.length > 0 && currentH + chunkH > pageLimit()) {
+          commitPage();
+        }
+        // Write final chunk + footer
+        var headerHtml = sectionStart
+          ? '<div class="category-badge">' + badge + '</div>'
+          : '<div style="font-family:Arial;font-size:9px;color:#888;letter-spacing:1px;padding:0 0 4px">' + badge + ' (continued)</div>';
+
+        var rowHtml = rows.slice(i).join('');
+        addBlock(
+          headerHtml +
+          '<table class="estimate-table">' + thead +
+          '<tbody>' + rowHtml + subTot + quot + '</tbody></table>' +
+          (notes || ''),
+          chunkH
+        );
+        return;
+      } else {
+        // Intermediate chunk — just rows, no footer
+        var chunkH2 = headerH + rowsFit * H_ROW + H_GAP;
+        if (currentPage.length > 0 && currentH + chunkH2 > pageLimit()) {
+          commitPage();
+        }
+        var headerHtml2 = sectionStart
+          ? '<div class="category-badge">' + badge + '</div>'
+          : '<div style="font-family:Arial;font-size:9px;color:#888;letter-spacing:1px;padding:0 0 4px">' + badge + ' (continued)</div>';
+
+        addBlock(
+          headerHtml2 +
+          '<table class="estimate-table">' + thead +
+          '<tbody>' + rows.slice(i, i + rowsFit).join('') + '</tbody></table>' +
+          '<div style="font-family:Arial;font-size:9px;color:#888;text-align:right;padding:2px 0">(continued on next page…)</div>',
+          chunkH2
+        );
+        i += rowsFit;
+        sectionStart = false;
+      }
+    }
+  }
+
+  // Simplified: footer on current page (appended directly)
+  function addFooterToCurrentPage(subTot, quot, notes, cols) {
+    // Close the last table's tbody and add footer rows
+    // Since we can't easily reopen a closed table, just add as a new table
+    addBlock(
+      '<table class="estimate-table"><tbody>' + subTot + quot + '</tbody></table>' + (notes || ''),
+      H_SUBTOTAL + H_QUOTED + (notes ? H_NOTES : 0)
+    );
+  }
+
+  function addFooterOnNewPage(subTot, quot, notes, cols, badge) {
+    addBlock(
+      '<div class="category-badge">' + badge + ' — SUMMARY</div>' +
+      '<table class="estimate-table"><tbody>' + subTot + quot + '</tbody></table>' + (notes || ''),
+      H_BADGE + H_SUBTOTAL + H_QUOTED + (notes ? H_NOTES : 0)
+    );
+  }
+
+  // ── Render pages to HTML ──────────────────────────────────────
+  function renderPages() {
+    commitPage();  // commit any remaining content
+    var html = '';
+    pages.forEach(function(pg) {
+      var hero = pg.isFirst ? '<div class="page4-hero"></div>' : '';
+      html +=
+        '<div class="page">' +
+          '<div class="sub-header">SUB: ESTIMATE FOR WOOD WORK, ACCESSORIES AND BEAUTIFICATION</div>' +
+          hero +
+          '<div class="page4-wrap">' +
+            pg.blocks.join('<div style="height:6px"></div>') +
+          '</div>' +
+          '<div class="website">www.docinteriors.com<div class="underline"></div></div>' +
+        '</div>';
+    });
+    return html;
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  //  BUILD EACH TABLE
+  // ══════════════════════════════════════════════════════════════
+
+  // ── CATEGORY-A — grouped by category ─────────────────────────
+  if (S.active.catA && S.rows.catA.length) {
+    var rows = S.rows.catA;
+    var sub  = rows.reduce(function(a,r){ return a+(parseFloat(r.total)||0); }, 0);
+    grand += sub;
+    subtotals.push({ label:'CATEGORY-A', amount:sub });
+
+    var catOrder = [], catMap = {};
+    rows.forEach(function(r){
+      var cat = r.category || 'GENERAL';
+      if (!catMap[cat]) { catMap[cat]=[]; catOrder.push(cat); }
+      catMap[cat].push(r);
+    });
+    var allRows = [], sl = 1;
+    catOrder.forEach(function(cat){
+      allRows.push('<tr class="cat-group-header"><td colspan="10" style="padding-left:14px">' + h(cat) + '</td></tr>');
+      catMap[cat].forEach(function(r){
+        allRows.push(
+          '<tr>' +
+            '<td>' + pad(sl++) + '</td>' +
+            '<td>' + h(r.item||'—') + '</td>' +
+            '<td>' + h(r.shutterFinish||'—') + '</td>' +
+            '<td>' + h(r.material||'—') + '</td>' +
+            '<td>' + h(r.unit||'—') + '</td>' +
+            '<td>' + h(r.size||'—') + '</td>' +
+            '<td>' + (r.qtySqft||0) + '</td>' +
+            '<td>' + h(r.qty||'0') + '</td>' +
+            '<td>&#8377;' + fmt(r.price||0) + '</td>' +
+            '<td>&#8377;' + fmt(r.total||0) + '</td>' +
+          '</tr>'
+        );
+      });
+    });
+
+    renderTableSpec({
+      badge        : 'CATEGORY-A',
+      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>SHUTTER FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>QTY SQFT</th><th>QTY</th><th>PRICE</th><th>TOTAL</th></tr></thead>',
+      rows         : allRows,
+      subTotRow    : subTotalRow(10, 'CATEGORY-A SUB TOTAL', sub),
+      quotPriceRow : quotedRow(10, sub),
+      notesHtml    : notesBox(S.notes.catA),
+      cols         : 10
+    });
+    firstPage = false;
+  }
+
+  // ── KITCHEN ACCESSORIES ───────────────────────────────────────
+  if (S.active.kitAcc && S.rows.kitAcc.length) {
+    var rows = S.rows.kitAcc;
+    var sub  = rows.reduce(function(a,r){ return a+(parseFloat(r.total)||0); }, 0);
+    grand += sub;
+    subtotals.push({ label:'KITCHEN ACCESSORIES WITH INSTALLATION CHARGE', amount:sub });
+
+    var allRows = rows.map(function(r,i){
+      var pic = r.pictureUrl
+        ? '<img src="' + r.pictureUrl + '" style="width:46px;height:46px;object-fit:cover;border-radius:3px">'
+        : '&#8212;';
+      return '<tr>' +
+        '<td>' + pad(i+1) + '</td>' +
+        '<td>' + h(r.product||'—') + '</td>' +
+        '<td style="text-align:center">' + pic + '</td>' +
+        '<td>' + h(r.brand||'—') + '</td>' +
+        '<td>' + h(r.articleNo||'—') + '</td>' +
+        '<td>' + h(r.qty||'0') + '</td>' +
+        '<td>&#8377;' + fmt(r.price||0) + '</td>' +
+        '<td>&#8377;' + fmt(r.total||0) + '</td>' +
+      '</tr>';
+    });
+
+    renderTableSpec({
+      badge        : 'KITCHEN ACCESSORIES WITH INSTALLATION CHARGE',
+      thead        : '<thead><tr><th>SL NO.</th><th>PRODUCT</th><th>PICTURE</th><th>BRAND</th><th>ARTICLE NO.</th><th>QTY</th><th>PRICE</th><th>TOTAL</th></tr></thead>',
+      rows         : allRows,
+      subTotRow    : subTotalRow(8, 'KITCHEN ACCESSORIES SUB TOTAL', sub),
+      quotPriceRow : quotedRow(8, sub),
+      notesHtml    : notesBox(S.notes.kitAcc),
+      cols         : 8
+    });
+  }
+
+  // ── ADDITIONAL WORKS ──────────────────────────────────────────
+  if (S.active.addWorks && S.rows.addWorks.length) {
+    var rows = S.rows.addWorks;
+    var sub  = rows.reduce(function(a,r){ return a+(parseFloat(r.total)||0); }, 0);
+    grand += sub;
+    subtotals.push({ label:'ADDITIONAL WORKS', amount:sub });
+
+    var allRows = rows.map(function(r,i){
+      return '<tr>' +
+        '<td>' + pad(i+1) + '</td>' +
+        '<td>' + h(r.item||'—') + '</td>' +
+        '<td>' + h(r.shutterFinish||'—') + '</td>' +
+        '<td>' + h(r.material||'—') + '</td>' +
+        '<td>' + h(r.unit||'—') + '</td>' +
+        '<td>' + h(r.size||'—') + '</td>' +
+        '<td>&#8377;' + fmt(r.price||0) + '</td>' +
+        '<td>&#8377;' + fmt(r.total||0) + '</td>' +
+      '</tr>';
+    });
+
+    renderTableSpec({
+      badge        : 'ADDITIONAL WORKS',
+      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>SHUTTER FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>PRICE</th><th>TOTAL</th></tr></thead>',
+      rows         : allRows,
+      subTotRow    : subTotalRow(8, 'ADDITIONAL WORKS SUB TOTAL', sub),
+      quotPriceRow : quotedRow(8, sub),
+      notesHtml    : notesBox(S.notes.addWorks),
+      cols         : 8
+    });
+  }
+
+  // ── CATEGORY-B ────────────────────────────────────────────────
+  if (S.active.catB && S.rows.catB.length) {
+    var rows = S.rows.catB;
+    var sub  = rows.reduce(function(a,r){ return a+(parseFloat(r.total)||0); }, 0);
+    grand += sub;
+    subtotals.push({ label:'CATEGORY-B', amount:sub });
+
+    var allRows = rows.map(function(r,i){
+      return '<tr>' +
+        '<td>' + pad(i+1) + '</td>' +
+        '<td>' + h(r.item||'—') + '</td>' +
+        '<td>' + h(r.shutterFinish||'—') + '</td>' +
+        '<td>' + h(r.material||'—') + '</td>' +
+        '<td>' + h(r.unit||'—') + '</td>' +
+        '<td>' + h(r.size||'—') + '</td>' +
+        '<td>&#8377;' + fmt(r.price||0) + '</td>' +
+        '<td>&#8377;' + fmt(r.total||0) + '</td>' +
+      '</tr>';
+    });
+
+    renderTableSpec({
+      badge        : 'CATEGORY-B',
+      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>SHUTTER FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>PRICE</th><th>TOTAL</th></tr></thead>',
+      rows         : allRows,
+      subTotRow    : subTotalRow(8, 'CATEGORY-B SUB TOTAL', sub),
+      quotPriceRow : quotedRow(8, sub),
+      notesHtml    : notesBox(S.notes.catB),
+      cols         : 8
+    });
+  }
+
+  // ── GYPSUM CEILING WORK ───────────────────────────────────────
+  if (S.active.gypsum && S.rows.gypsum.length) {
+    var rows = S.rows.gypsum;
+    var sub  = rows.reduce(function(a,r){ return a+(parseFloat(r.total)||0); }, 0);
+    grand += sub;
+    subtotals.push({ label:'GYPSUM CEILING WORK', amount:sub });
+
+    var allRows = rows.map(function(r,i){
+      return '<tr>' +
+        '<td>' + pad(i+1) + '</td>' +
+        '<td>' + h(r.item||'—') + '</td>' +
+        '<td>' + h(r.finish||'—') + '</td>' +
+        '<td>' + h(r.material||'—') + '</td>' +
+        '<td>' + h(r.unit||'—') + '</td>' +
+        '<td>' + h(r.size||'—') + '</td>' +
+        '<td>&#8377;' + fmt(r.price||0) + '</td>' +
+        '<td>&#8377;' + fmt(r.total||0) + '</td>' +
+      '</tr>';
+    });
+
+    renderTableSpec({
+      badge        : 'GYPSUM CEILING WORK',
+      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>PRICE</th><th>TOTAL</th></tr></thead>',
+      rows         : allRows,
+      subTotRow    : subTotalRow(8, 'GYPSUM CEILING SUB TOTAL', sub),
+      quotPriceRow : quotedRow(8, sub),
+      notesHtml    : notesBox(S.notes.gypsum),
+      cols         : 8
+    });
+  }
+
+  // ── Render all accumulated pages ──────────────────────────────
+  var html = renderPages();
+
+  // ══════════════════════════════════════════════════════════════
+  //  SUMMARY PAGE — table-wise split + grand total
+  // ══════════════════════════════════════════════════════════════
+  if (grand > 0 && subtotals.length > 0) {
+    var indian = fmtIndian(grand);
+    var words  = numberToWords(grand);
+
+    var summaryRows = subtotals.map(function(s, idx){
+      return '<tr>' +
+        '<td style="text-align:left;padding-left:14px;font-weight:600;color:#0d0d18">' + (idx+1) + '. ' + s.label + '</td>' +
+        '<td style="text-align:right;font-weight:700;color:#0d0d18;padding-right:14px">&#8377;' + fmt(s.amount) + '</td>' +
+      '</tr>';
+    }).join('');
+
+    html +=
+      '<div class="page">' +
+        '<div class="sub-header">ESTIMATE SUMMARY</div>' +
+        '<div class="page4-wrap">' +
+
+          // ── Summary breakdown table ──────────────────────────
+          '<div class="category-badge">COST SUMMARY</div>' +
+          '<table class="estimate-table">' +
+            '<thead><tr>' +
+              '<th style="text-align:left;padding-left:14px">DESCRIPTION</th>' +
+              '<th style="text-align:right;padding-right:14px">AMOUNT</th>' +
+            '</tr></thead>' +
+            '<tbody>' +
+              summaryRows +
+              // Divider
+              '<tr><td colspan="2" style="padding:0;border-top:2px solid #c9a84c;background:#c9a84c;height:2px"></td></tr>' +
+              // Grand total row
+              '<tr style="background:#0d0d18">' +
+                '<td style="text-align:left;padding-left:14px;font-size:12px;font-weight:700;letter-spacing:2px;color:#c9a84c;padding-top:14px;padding-bottom:14px;border:none">GRAND TOTAL</td>' +
+                '<td style="text-align:right;font-size:15px;font-weight:700;color:#c9a84c;padding-right:12px;border:none">&#8377;' + fmt(grand) + '</td>' +
+              '</tr>' +
+              // Quoted price
+              '<tr>' +
+                '<td colspan="2" style="background:#0d0d18;color:#c9a84c;font-family:Arial,sans-serif;font-size:10px;font-weight:700;padding:14px 16px;border-top:2px solid #c9a84c;line-height:2">' +
+                  '<span style="letter-spacing:2px;font-size:9px">OUR REASONABLE QUOTED PRICE</span><br>' +
+                  '<span style="font-size:14px;letter-spacing:1px">Rs- ' + indian + '/-*</span><br>' +
+                  '<span style="font-weight:400;font-style:italic;color:#e0d5c0;font-size:10px">(' + words + ')</span>' +
+                '</td>' +
+              '</tr>' +
+            '</tbody>' +
+          '</table>' +
+
+          // ── Note ──────────────────────────────────────────────
+          '<div style="margin-top:12px;padding:10px 14px;background:#fff;border-left:3px solid #c9a84c;font-family:Arial;font-size:10px;color:#555;line-height:1.7">' +
+            '<strong style="color:#0d0d18;letter-spacing:1px">NOTE:</strong> ' +
+            'The above summary shows the total cost breakdown by section. ' +
+            'All amounts are inclusive of material, labour and installation charges unless stated otherwise. ' +
+            'GST as applicable will be charged extra. This quotation is valid for 30 days from the date of issue.' +
+          '</div>' +
+
+        '</div>' +
+        '<div class="website">www.docinteriors.com<div class="underline"></div></div>' +
+      '</div>';
+  }
+
+  if (!html) {
+    html =
+      '<div class="page">' +
+        '<div class="sub-header">SUB: ESTIMATE FOR WOOD WORK, ACCESSORIES AND BEAUTIFICATION</div>' +
+        '<div class="page4-hero"></div>' +
+        '<div class="page4-wrap">' +
+          '<p style="padding:10px;color:#888;font-family:Arial;font-size:12px">No tables selected.</p>' +
+        '</div>' +
+        '<div class="website">www.docinteriors.com<div class="underline"></div></div>' +
+      '</div>';
+  }
+
+  return html;
+}
+
+
+// pad: 1 → "01", 12 → "12"
+function pad(n){ return n < 10 ? '0'+n : String(n); }
+
+// notesBox: renders a notes section below a table if notes exist
+function notesBox(note){
+  if (!note || !note.trim()) return '';
+  return '<div style="margin-top:6px;padding:8px 12px;background:#fff;border-left:3px solid #c9a84c;font-family:Arial;font-size:11px;color:#444">' +
+    '<strong style="letter-spacing:1px;color:#0d0d18">NOTES / REMARKS:</strong> ' + h(note) +
+  '</div>';
+}
+
 
 // ════════════════════════════════════════════════════════════════
 //  SCREEN 4 – ADMIN
@@ -1082,128 +2581,134 @@ function renderAdminTable(key){
   });
 }
 // ══════════════════════════════════════════════════════════════════
-//  KITCHEN ACCESSORIES IMAGE UPLOAD
-//  Flow: User picks file → FileReader reads as base64
-//        → gasPost('uploadImage') sends to Code.gs
-//        → Code.gs saves to Google Drive folder (DRIVE_FOLDER_ID)
-//        → Code.gs returns thumbnail URL (works in <img> tags)
-//        → gasPost('saveImageUrl') writes URL to Sheet column 4
-//        → Admin table and New/Edit table both refresh and show image
+//  KITCHEN ACCESSORIES IMAGE
+//  Compress in browser → save base64 directly to Google Sheet
 // ══════════════════════════════════════════════════════════════════
 
 function uploadPicToDrive(key, i, input) {
   var file = input.files[0];
   if (!file) return;
 
-  // Show uploading state in the URL input field
   var urlInput = document.getElementById('pic-url-' + i);
-  if (urlInput) {
-    urlInput.value       = '';
-    urlInput.placeholder = '⏳ Uploading to Google Drive…';
-  }
-  toast('Uploading image to Google Drive…', '');
+  toast('Processing image…', '');
   loading(true);
 
-  // Read the file as base64 data URL
   var reader = new FileReader();
-  reader.onload = function(ev) {
-    var base64Data = ev.target.result;          // "data:image/jpeg;base64,...."
-    var mimeType   = file.type  || 'image/jpeg';
-    var fileName   = file.name  || ('kit_img_' + Date.now() + '.jpg');
-
-    // STEP 1 ── Send to GAS → uploads to Google Drive → returns thumbnail URL
-    gasPost('uploadImage', {
-      base64   : base64Data,
-      mimeType : mimeType,
-      fileName : fileName
-    })
-    .then(function(res) {
-      // res = { ok:true, url:'https://drive.google.com/thumbnail?id=...', fileId:'...' }
-      var thumbUrl = res.url;
-      if (!thumbUrl) throw new Error('No URL returned from Drive. Check DRIVE_FOLDER_ID in Code.gs');
-
-      // Show the URL in the input field
-      if (urlInput) {
-        urlInput.value       = thumbUrl;
-        urlInput.placeholder = 'Image URL';
-      }
-
-      // Update in-memory state
-      S.adminData[key].data[i].pictureUrl = thumbUrl;
-
-      // STEP 2 ── Write ONLY the URL into column 4 of the sheet (single cell)
-      //           This avoids the 50,000 char limit that breaks if base64 is stored
-      var rowIndex = S.adminData[key].data[i]._rowIndex;
-      return gasPost('saveImageUrl', {
-        sheetName : S.adminData[key].sheetName,
-        rowIndex  : rowIndex,
-        url       : thumbUrl,
-        colIndex  : 4          // PICTURE_URL = column 4 in DROPDOWN_KIT_ACC
-      });
-    })
-    .then(function() {
-      toast('✅ Image uploaded and URL saved to spreadsheet', 'ok');
-
-      // STEP 3 ── Reload both admin data and dropdowns so everything reflects the new image
-      return Promise.all([
-        gasGet('getAdminDropdownData'),
-        gasGet('getDropdownData')
-      ]);
-    })
-    .then(function(results) {
-      S.adminData = results[0] || {};
-      S.dropdowns = results[1] || { catA:[], catB:[], additionalWorks:[], gypsum:[], kitchenAcc:[] };
-
-      // Refresh the admin table — image preview now appears in the Pic column
-      renderAdminTable(key);
-
-      // Also update any already-open rows in the New/Edit kitAcc table
-      // so the image appears there too without re-selecting the product
-      if (S.rows && S.rows.kitAcc) {
-        S.rows.kitAcc.forEach(function(r) {
-          var match = (S.dropdowns.kitchenAcc || []).find(function(d) {
-            return d.product === r.product;
-          });
-          if (match && match.pictureUrl) r.pictureUrl = match.pictureUrl;
-        });
-        if (S.active && S.active.kitAcc) renderKitAcc();
-      }
-    })
-    .catch(function(err) {
-      toast('❌ Upload failed: ' + err.message, 'err');
-      if (urlInput) urlInput.placeholder = 'Upload failed — try again or paste URL';
-    })
-    .finally(function() {
-      loading(false);
-    });
-  };
 
   reader.onerror = function() {
-    toast('❌ Could not read the image file', 'err');
+    toast('Could not read file', 'err');
     loading(false);
+  };
+
+  reader.onload = function(ev) {
+    var img = new Image();
+
+    img.onerror = function() {
+      toast('Could not load image', 'err');
+      loading(false);
+    };
+
+    img.onload = function() {
+      try {
+        // ── Resize to max 120x120 at 40% JPEG quality ──────────────
+        // Target: under 10,000 chars (Google Sheets limit: 50,000)
+        var MAX = 120;
+        var w = img.width,  h = img.height;
+        if (w > h) { if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; } }
+        else       { if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; } }
+
+        var canvas = document.createElement('canvas');
+        canvas.width  = w;
+        canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+
+        var b64 = canvas.toDataURL('image/jpeg', 0.4);
+        console.log('Image compressed:', b64.length, 'chars,', w+'x'+h+'px');
+
+        if (b64.length > 49000) {
+          toast('Image still too large (' + b64.length + ' chars). Use a smaller image.', 'err');
+          loading(false);
+          return;
+        }
+
+        // ── Update memory immediately so preview shows ──────────────
+        S.adminData[key].data[i].pictureUrl = b64;
+        if (urlInput) urlInput.value = '(image stored — ' + b64.length + ' chars)';
+
+        // ── Save to sheet ───────────────────────────────────────────
+        var ri  = S.adminData[key].data[i]._rowIndex;
+        var shn = S.adminData[key].sheetName;
+
+        console.log('Saving to sheet:', shn, 'row:', ri, 'col: 4');
+
+        gasPost('saveImageUrl', {
+          sheetName : shn,
+          rowIndex  : ri,
+          colIndex  : 4,
+          url       : b64
+        })
+        .then(function(res) {
+          console.log('saveImageUrl response:', JSON.stringify(res));
+          toast('Image saved to spreadsheet ✓', 'ok');
+          // Refresh admin + dropdowns
+          return Promise.all([
+            gasGet('getAdminDropdownData'),
+            gasGet('getDropdownData')
+          ]);
+        })
+        .then(function(results) {
+          S.adminData = results[0] || {};
+          S.dropdowns = results[1] || { catA:[], catB:[], additionalWorks:[], gypsum:[], kitchenAcc:[] };
+          renderAdminTable(key);
+          // Update any open New/Edit kitAcc rows
+          if (S.rows && S.rows.kitAcc) {
+            S.rows.kitAcc.forEach(function(r) {
+              var m = (S.dropdowns.kitchenAcc || []).find(function(d) {
+                return d.product === r.product;
+              });
+              if (m && m.pictureUrl) r.pictureUrl = m.pictureUrl;
+            });
+            if (S.active && S.active.kitAcc) renderKitAcc();
+          }
+        })
+        .catch(function(err) {
+          console.error('saveImageUrl error:', err.message);
+          toast('Save failed: ' + err.message, 'err');
+        })
+        .finally(function() { loading(false); });
+
+      } catch(canvasErr) {
+        console.error('Canvas error:', canvasErr.message);
+        toast('Image processing failed: ' + canvasErr.message, 'err');
+        loading(false);
+      }
+    };
+
+    img.src = ev.target.result;
   };
 
   reader.readAsDataURL(file);
 }
 
-// savePicUrl — saves a manually typed/pasted URL to the sheet
+// savePicUrl — saves a manually typed/pasted URL to column 4
 function savePicUrl(key, i) {
   var el  = document.getElementById('pic-url-' + i);
   var url = el ? el.value.trim() : '';
-  if (!url) { toast('Please enter a URL first', 'err'); return; }
-
-  // Update in-memory state
+  if (!url || url.startsWith('(image')) {
+    toast('Please enter a valid URL', 'err');
+    return;
+  }
   S.adminData[key].data[i].pictureUrl = url;
   loading(true);
-
   gasPost('saveImageUrl', {
     sheetName : S.adminData[key].sheetName,
     rowIndex  : S.adminData[key].data[i]._rowIndex,
-    url       : url,
-    colIndex  : 4
+    colIndex  : 4,
+    url       : url
   })
-  .then(function() {
-    toast('✅ URL saved to spreadsheet', 'ok');
+  .then(function(res) {
+    console.log('savePicUrl response:', JSON.stringify(res));
+    toast('URL saved ✓', 'ok');
     return Promise.all([gasGet('getAdminDropdownData'), gasGet('getDropdownData')]);
   })
   .then(function(results) {
@@ -1212,28 +2717,26 @@ function savePicUrl(key, i) {
     renderAdminTable(key);
     if (S.rows && S.rows.kitAcc) {
       S.rows.kitAcc.forEach(function(r) {
-        var match = (S.dropdowns.kitchenAcc || []).find(function(d){ return d.product===r.product; });
-        if (match && match.pictureUrl) r.pictureUrl = match.pictureUrl;
+        var m = (S.dropdowns.kitchenAcc || []).find(function(d){ return d.product===r.product; });
+        if (m && m.pictureUrl) r.pictureUrl = m.pictureUrl;
       });
       if (S.active && S.active.kitAcc) renderKitAcc();
     }
   })
-  .catch(function(e) { toast('❌ Save failed: ' + e.message, 'err'); })
+  .catch(function(e) { toast('Save failed: ' + e.message, 'err'); })
   .finally(function() { loading(false); });
 }
 
-
 function adminCell(key, i, f, v) {
-  // Update a single field in the in-memory admin data
   if (S.adminData[key] && S.adminData[key].data[i]) {
     S.adminData[key].data[i][f] = v;
   }
 }
 
 function saveAdminRow(key, i) {
-  var sec = S.adminData[key];
-  var row = sec.data[i];
-  var ri  = row._rowIndex;
+  var sec  = S.adminData[key];
+  var row  = sec.data[i];
+  var ri   = row._rowIndex;
   var item = {};
   Object.keys(row)
     .filter(function(k) { return k !== '_rowIndex'; })
@@ -1242,7 +2745,7 @@ function saveAdminRow(key, i) {
   loading(true);
   gasPost('updateDropdownItem', { sheetName: sec.sheetName, rowIndex: ri, item: item })
     .then(function() {
-      toast('✅ Row saved', 'ok');
+      toast('Row saved ✓', 'ok');
       return Promise.all([gasGet('getAdminDropdownData'), gasGet('getDropdownData')]);
     })
     .then(function(results) {
@@ -1250,7 +2753,7 @@ function saveAdminRow(key, i) {
       S.dropdowns = results[1] || { catA:[], catB:[], additionalWorks:[], gypsum:[], kitchenAcc:[] };
       renderAdminTable(key);
     })
-    .catch(function(e) { toast('❌ Save failed: ' + e.message, 'err'); })
+    .catch(function(e) { toast('Save failed: ' + e.message, 'err'); })
     .finally(function() { loading(false); });
 }
 
