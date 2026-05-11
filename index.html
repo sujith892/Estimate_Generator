@@ -15,17 +15,7 @@
   --shadow:0 2px 12px rgba(0,0,0,.08);
 }
 body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-.config-banner{background:var(--navy2);color:#fff;padding:18px 24px;border-bottom:2px solid var(--gold);display:none}
-.config-inner{max-width:700px;margin:0 auto}
-.config-title{font-size:15px;font-weight:700;margin-bottom:6px}
-.config-desc{font-size:13px;opacity:.85;margin-bottom:12px;line-height:1.5}
-.config-row{display:flex;gap:8px}
-.config-row input{flex:1;padding:9px 14px;border-radius:var(--r);border:1px solid #555;background:#111;color:#fff;font-size:13px;font-family:monospace}
-.config-row button{padding:9px 22px;border-radius:var(--r);border:none;background:var(--gold);color:#fff;cursor:pointer;font-weight:700;font-size:13px}
-.config-row button:hover{background:var(--gold-dk)}
-.config-hint{font-size:11px;opacity:.5;margin-top:8px}
-.status-bar{background:#0d1117;color:#8b949e;font-size:12px;padding:5px 24px;border-bottom:1px solid #30363d;font-family:monospace;display:none}
-.status-bar a{color:var(--gold);text-decoration:none}
+/* config-banner and status-bar CSS removed */
 .navbar{display:flex;align-items:center;justify-content:space-between;background:var(--navy);padding:0 20px;height:56px;box-shadow:0 2px 8px rgba(0,0,0,.3);position:sticky;top:0;z-index:200}
 .nav-brand{display:flex;align-items:center;gap:10px}
 .nav-bar{width:6px;height:30px;background:var(--gold);border-radius:3px}
@@ -131,7 +121,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .loading-overlay.show{display:flex}
 .spinner{width:40px;height:40px;border-radius:50%;border:4px solid rgba(183,156,125,.3);border-top-color:var(--gold);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 @media print{
   /* Hide all UI chrome */
   .navbar,.screen-hdr,.config-banner,.status-bar,.toast,.loading-overlay{display:none!important}
@@ -165,7 +154,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 
   @page{size:A4 portrait;margin:0;padding:0}
 }
-
 @media(max-width:768px){
   .nav-tabs .nav-tab{padding:6px 9px;font-size:11px}
   .screen{padding:12px}
@@ -248,16 +236,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
                 font-weight: normal;  
         }
 
-        .sub-header{
-          font-size: 12px;
-          text-align: center;
-          height: 35px;
-          font-weight:6px;
-          padding: 10px 0 0 0;
-
-
-        }  
-
         .first-letter {
             color: #b79c7d;
         }
@@ -296,6 +274,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
             width: 12mm;
             height: 100%;
             background: #b79c7d; /* beige */
+        }
+
+          .sub-header{
+          font-size: 12px;
+          text-align: center;
+          height: 35px;
+          font-weight:6px;
+          padding: 10px 0 0 0;
+
+
         }
 
         /* Right Rectangle */
@@ -1089,18 +1077,8 @@ td{
 </head>
 <body>
 
-<div id="configBanner" class="config-banner">
-  <div class="config-inner">
-    <div class="config-title">⚙️ First-Time Setup</div>
-    <div class="config-desc">Paste your <strong>Google Apps Script Web App URL</strong> below. The Spreadsheet ID is fetched automatically from <code>Code.gs</code>.</div>
-    <div class="config-row">
-      <input type="text" id="gasUrlInput" placeholder="https://script.google.com/macros/s/YOUR_ID/exec"/>
-      <button onclick="saveGasUrl()">Connect →</button>
-    </div>
-    <div class="config-hint">💡 Apps Script → Deploy → Manage deployments → Web App URL</div>
-  </div>
-</div>
-<div id="statusBar" class="status-bar"></div>
+<!-- Config banner removed — GAS_URL is hardcoded in the JS -->
+<!-- Status bar removed -->
 
 <nav class="navbar">
   <div class="nav-brand"><div class="nav-bar"></div><span class="nav-title">DOC <span class="gold">INTERIORS</span></span></div>
@@ -1110,7 +1088,7 @@ td{
     <button class="nav-tab"        onclick="showScreen('preview')">👁 Preview</button>
     <button class="nav-tab"        onclick="showScreen('admin')">⚙️ Admin</button>
   </div>
-  <button class="nav-icon-btn" onclick="toggleConfig()" title="Change GAS URL">🔗</button>
+  
 </nav>
 
 <div id="toast" class="toast"></div>
@@ -1266,13 +1244,14 @@ td{
 <!-- SCREEN 3: PREVIEW -->
 <div id="screen-preview" class="screen">
   <div class="screen-hdr">
+    <div><h2>👁 Estimate Preview</h2><p class="sub">A4 layout — Print to export as PDF</p></div>
     <div class="hdr-btns">
       <button class="btn btn-outline" onclick="showScreen('edit')">← Back</button>
       <button class="btn btn-primary" onclick="window.print()">🖨 Print / PDF</button>
     </div>
   </div>
   <div id="previewWrap" class="preview-wrap">
-    
+    <div class="preview-ph">Open or create an estimate to see the A4 preview.</div>
   </div>
 </div>
 
@@ -1328,6 +1307,12 @@ var PREVIEW_TPL = "<div class=\"page\">\n\n    <div class=\"content\">\n        
 //  attached in renderXxx(). This avoids all HTML-escaping bugs.
 // ════════════════════════════════════════════════════════════════
 
+// ✏️  PASTE YOUR GAS WEB APP URL HERE — only change needed in this file
+// Apps Script → Deploy → Manage deployments → copy the Web App URL
+var GAS_URL   = 'https://script.google.com/macros/s/AKfycbyO8jeUVugUOkcwkDoW9RHdj9wIQ7d1udwqCKIVSohRrAgDvebRcuxF0JSGF03Ev1SXVw/exec';
+
+
+// These keys are kept for backward compatibility but no longer shown in UI
 var GAS_KEY   = 'doc_gas_url';
 var SS_ID_KEY = 'doc_ss_id';
 var SS_URL_KEY= 'doc_ss_url';
@@ -1345,7 +1330,10 @@ var S = {
 };
 
 // ── Utils ────────────────────────────────────────────────────────
-function gasUrl(){ return localStorage.getItem(GAS_KEY)||''; }
+function gasUrl(){
+  // Returns hardcoded URL — no localStorage needed
+  return GAS_URL;
+}
 function h(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function fmt(n){ return Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:0}); }
 function uniq(arr,k){ return[...new Set((arr||[]).map(function(r){return r[k];}).filter(Boolean))]; }
@@ -1380,33 +1368,9 @@ function gasPost(action,payload){
 }
 
 // ── Config ───────────────────────────────────────────────────────
-function saveGasUrl(){
-  var v=document.getElementById('gasUrlInput').value.trim();
-  if(!v.startsWith('https://script.google.com')){toast('Enter a valid GAS Web App URL','err');return;}
-  localStorage.setItem(GAS_KEY,v); loading(true);
-  gasGet('getConfig')
-    .then(function(cfg){
-      localStorage.setItem(SS_ID_KEY,cfg.spreadsheetId);
-      localStorage.setItem(SS_URL_KEY,cfg.spreadsheetUrl);
-      document.getElementById('configBanner').style.display='none';
-      showStatusBar(cfg.spreadsheetId,cfg.spreadsheetUrl);
-      toast('Connected! ✓','ok'); return init();
-    })
-    .catch(function(e){loading(false);toast('Connection failed: '+e.message,'err');});
-}
-function toggleConfig(){
-  var b=document.getElementById('configBanner');
-  var showing=b.style.display==='block';
-  b.style.display=showing?'none':'block';
-  if(!showing) document.getElementById('gasUrlInput').value=gasUrl();
-}
-function showStatusBar(ssId,ssUrl){
-  var bar=document.getElementById('statusBar');
-  if(ssId&&ssId!=='PASTE_YOUR_SPREADSHEET_ID_HERE'){
-    bar.innerHTML='📊 Connected: <a href="'+ssUrl+'" target="_blank">'+ssId.slice(0,30)+'…</a>';
-    bar.style.display='block';
-  }
-}
+// saveGasUrl removed — GAS_URL is hardcoded in the JS constant above
+// toggleConfig removed — no config banner UI
+// showStatusBar removed — status bar UI removed
 
 // ── Screen router ────────────────────────────────────────────────
 function showScreen(name){
@@ -2262,7 +2226,7 @@ function buildEstimateSections(){
     });
     var allRows = [], sl = 1;
     catOrder.forEach(function(cat){
-      allRows.push('<tr class="cat-group-header"><td colspan="10" style="padding-left:14px">' + h(cat) + '</td></tr>');
+      allRows.push('<tr class="cat-group-header"><td colspan="9" style="padding-left:14px">' + h(cat) + '</td></tr>');
       catMap[cat].forEach(function(r){
         allRows.push(
           '<tr>' +
@@ -2275,7 +2239,6 @@ function buildEstimateSections(){
             '<td>' + (r.qtySqft||0) + '</td>' +
             '<td>' + h(r.qty||'0') + '</td>' +
             '<td>&#8377;' + fmt(r.price||0) + '</td>' +
-            '<td>&#8377;' + fmt(r.total||0) + '</td>' +
           '</tr>'
         );
       });
@@ -2283,10 +2246,10 @@ function buildEstimateSections(){
 
     renderTableSpec({
       badge        : 'CATEGORY-A',
-      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>SHUTTER FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>QTY SQFT</th><th>QTY</th><th>PRICE</th><th>TOTAL</th></tr></thead>',
+      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>SHUTTER FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>QTY SQFT</th><th>QTY</th><th>PRICE</th></tr></thead>',
       rows         : allRows,
-      subTotRow    : subTotalRow(10, 'CATEGORY-A SUB TOTAL', sub),
-      quotPriceRow : quotedRow(10, sub),
+      subTotRow    : subTotalRow(9, 'CATEGORY-A SUB TOTAL', sub),
+      quotPriceRow : quotedRow(9, sub),
       notesHtml    : notesBox(S.notes.catA),
       cols         : 10
     });
@@ -2312,16 +2275,15 @@ function buildEstimateSections(){
         '<td>' + h(r.articleNo||'—') + '</td>' +
         '<td>' + h(r.qty||'0') + '</td>' +
         '<td>&#8377;' + fmt(r.price||0) + '</td>' +
-        '<td>&#8377;' + fmt(r.total||0) + '</td>' +
       '</tr>';
     });
 
     renderTableSpec({
       badge        : 'KITCHEN ACCESSORIES WITH INSTALLATION CHARGE',
-      thead        : '<thead><tr><th>SL NO.</th><th>PRODUCT</th><th>PICTURE</th><th>BRAND</th><th>ARTICLE NO.</th><th>QTY</th><th>PRICE</th><th>TOTAL</th></tr></thead>',
+      thead        : '<thead><tr><th>SL NO.</th><th>PRODUCT</th><th>PICTURE</th><th>BRAND</th><th>ARTICLE NO.</th><th>QTY</th><th>PRICE</th></tr></thead>',
       rows         : allRows,
-      subTotRow    : subTotalRow(8, 'KITCHEN ACCESSORIES SUB TOTAL', sub),
-      quotPriceRow : quotedRow(8, sub),
+      subTotRow    : subTotalRow(7, 'KITCHEN ACCESSORIES SUB TOTAL', sub),
+      quotPriceRow : quotedRow(7, sub),
       notesHtml    : notesBox(S.notes.kitAcc),
       cols         : 8
     });
@@ -2343,16 +2305,15 @@ function buildEstimateSections(){
         '<td>' + h(r.unit||'—') + '</td>' +
         '<td>' + h(r.size||'—') + '</td>' +
         '<td>&#8377;' + fmt(r.price||0) + '</td>' +
-        '<td>&#8377;' + fmt(r.total||0) + '</td>' +
       '</tr>';
     });
 
     renderTableSpec({
       badge        : 'ADDITIONAL WORKS',
-      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>SHUTTER FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>PRICE</th><th>TOTAL</th></tr></thead>',
+      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>SHUTTER FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>PRICE</th></tr></thead>',
       rows         : allRows,
-      subTotRow    : subTotalRow(8, 'ADDITIONAL WORKS SUB TOTAL', sub),
-      quotPriceRow : quotedRow(8, sub),
+      subTotRow    : subTotalRow(7, 'ADDITIONAL WORKS SUB TOTAL', sub),
+      quotPriceRow : quotedRow(7, sub),
       notesHtml    : notesBox(S.notes.addWorks),
       cols         : 8
     });
@@ -2374,16 +2335,15 @@ function buildEstimateSections(){
         '<td>' + h(r.unit||'—') + '</td>' +
         '<td>' + h(r.size||'—') + '</td>' +
         '<td>&#8377;' + fmt(r.price||0) + '</td>' +
-        '<td>&#8377;' + fmt(r.total||0) + '</td>' +
       '</tr>';
     });
 
     renderTableSpec({
       badge        : 'CATEGORY-B',
-      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>SHUTTER FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>PRICE</th><th>TOTAL</th></tr></thead>',
+      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>SHUTTER FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>PRICE</th></tr></thead>',
       rows         : allRows,
-      subTotRow    : subTotalRow(8, 'CATEGORY-B SUB TOTAL', sub),
-      quotPriceRow : quotedRow(8, sub),
+      subTotRow    : subTotalRow(7, 'CATEGORY-B SUB TOTAL', sub),
+      quotPriceRow : quotedRow(7, sub),
       notesHtml    : notesBox(S.notes.catB),
       cols         : 8
     });
@@ -2405,16 +2365,15 @@ function buildEstimateSections(){
         '<td>' + h(r.unit||'—') + '</td>' +
         '<td>' + h(r.size||'—') + '</td>' +
         '<td>&#8377;' + fmt(r.price||0) + '</td>' +
-        '<td>&#8377;' + fmt(r.total||0) + '</td>' +
       '</tr>';
     });
 
     renderTableSpec({
       badge        : 'GYPSUM CEILING WORK',
-      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>PRICE</th><th>TOTAL</th></tr></thead>',
+      thead        : '<thead><tr><th>SL NO.</th><th>ITEM</th><th>FINISH</th><th>MATERIAL</th><th>UNIT</th><th>SIZE</th><th>PRICE</th></tr></thead>',
       rows         : allRows,
-      subTotRow    : subTotalRow(8, 'GYPSUM CEILING SUB TOTAL', sub),
-      quotPriceRow : quotedRow(8, sub),
+      subTotRow    : subTotalRow(7, 'GYPSUM CEILING SUB TOTAL', sub),
+      quotPriceRow : quotedRow(7, sub),
       notesHtml    : notesBox(S.notes.gypsum),
       cols         : 8
     });
@@ -2856,21 +2815,15 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.screen').forEach(function(s){s.style.display='none';s.classList.remove('active');});
   var entry=document.getElementById('screen-entries');
   entry.style.display='block';entry.classList.add('active');
-  var url=gasUrl();
-  if(!url){document.getElementById('configBanner').style.display='block';return;}
+  // Auto-connect using hardcoded GAS_URL — no user setup needed
   loading(true);
   gasGet('getConfig')
     .then(function(cfg){
-      localStorage.setItem(SS_ID_KEY,cfg.spreadsheetId);
-      localStorage.setItem(SS_URL_KEY,cfg.spreadsheetUrl);
-      showStatusBar(cfg.spreadsheetId,cfg.spreadsheetUrl);
       return init();
     })
     .catch(function(e){
       loading(false);
-      document.getElementById('configBanner').style.display='block';
-      document.getElementById('gasUrlInput').value=url;
-      toast('Cannot reach backend: '+e.message,'err');
+      toast('Cannot reach backend: '+e.message+'. Check GAS_URL in the code.','err');
     });
 });
 </script>
