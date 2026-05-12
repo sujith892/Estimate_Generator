@@ -1288,9 +1288,9 @@ td{
   <div id="blk-gypsum" class="est-block" style="display:none">
     <div class="blk-hdr"><span>🏠 GYPSUM CEILING WORK</span></div>
     <div class="blk-body"><div class="tbl-scroll"><table class="est-tbl">
-      <thead><tr><th>SL</th><th>Item</th><th>Finish</th><th>Material</th><th>Unit</th><th>Size (free text)</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
+      <thead><tr><th>SL</th><th>Item</th><th>Finish</th><th>Material</th><th>Unit</th><th>Size (free text)</th><th>QTY SQFT</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
       <tbody id="tb-gypsum"></tbody>
-      <tfoot><tr class="tot-row"><td colspan="6" class="tot-label">GYPSUM CEILING SUB TOTAL</td><td id="tot-gypsum">₹0</td><td></td><td></td></tr></tfoot>
+      <tfoot><tr class="tot-row"><td colspan="7" class="tot-label">GYPSUM CEILING SUB TOTAL</td><td id="tot-gypsum">₹0</td><td></td><td></td></tr></tfoot>
     </table></div></div>
     <button class="add-row-btn" onclick="addRow('gypsum')">+ Add Row</button>
   <div style="padding:10px 0 4px;">
@@ -1723,7 +1723,7 @@ var BLANK={
   kitAcc  :function(){return{product:'',brand:'',articleNo:'',pictureUrl:'',qty:'',price:'',total:0};},
   addWorks:function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',sizeX:'',sizeY:'',qtySqft:0,qty:'',price:'',total:0};},
   catB    :function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',sizeX:'',sizeY:'',qtySqft:0,qty:'',price:'',total:0};},
-  gypsum  :function(){return{item:'',finish:'',material:'',unit:'',size:'',price:'',total:0};}
+  gypsum  :function(){return{item:'',finish:'',material:'',unit:'',size:'',qtySqft:'',price:'',total:0};}
 };
 function addRow(key){S.rows[key].push(BLANK[key]());renderTable(key);}
 function delRow(key,i){S.rows[key].splice(i,1);renderTable(key);updateGrand();}
@@ -1960,8 +1960,7 @@ function setSimple(key,i,f,v){
 
 // ── GYPSUM CEILING ───────────────────────────────────────────────
 function renderGypsum(){
-  var dd   = S.dropdowns.gypsum || [];
-  // Build unique option lists from the master dropdown data
+  var dd    = S.dropdowns.gypsum || [];
   var items = uniq(dd, 'item');
   var fins  = uniq(dd, 'finish');
   var mats  = uniq(dd, 'material');
@@ -1972,21 +1971,23 @@ function renderGypsum(){
     return '<tr>' +
       // Col 0: SL
       '<td>' + (i+1) + '</td>' +
-      // Col 1: Item (dropdown) — selecting auto-fills Finish, Material, Unit, Price
+      // Col 1: Item — auto-fills Finish, Material, Unit, Price
       '<td>' + sel(items, r.item, 'handleSelGypsum(' + i + ',this)') + '</td>' +
-      // Col 2: Finish (dropdown)
+      // Col 2: Finish (auto-filled)
       '<td>' + sel(fins,  r.finish,   'handleSelGypsum(' + i + ',this)', 'min-width:100px') + '</td>' +
-      // Col 3: Material (dropdown)
+      // Col 3: Material (auto-filled)
       '<td>' + sel(mats,  r.material, 'handleSelGypsum(' + i + ',this)', 'min-width:100px') + '</td>' +
-      // Col 4: Unit (dropdown)
+      // Col 4: Unit (auto-filled)
       '<td>' + sel(uts,   r.unit,     'handleSelGypsum(' + i + ',this)', 'width:80px') + '</td>' +
-      // Col 5: Size — free text
-      '<td><input class="ti" type="text" data-row="' + i + '" data-field="size"  value="' + h(r.size||'') + '" placeholder="e.g. 10x12 ft" style="width:100px"></td>' +
-      // Col 6: Price — free text entry
-      '<td><input class="ti" type="text" data-row="' + i + '" data-field="price" value="' + h(r.price||'') + '" placeholder="enter price" style="width:90px" inputmode="decimal"></td>' +
-      // Col 7: Total (auto = Price)
+      // Col 5: Size — free text description
+      '<td><input class="ti" type="text" data-row="' + i + '" data-field="size"    value="' + h(r.size||'')    + '" placeholder="e.g. 10x12" style="width:90px"></td>' +
+      // Col 6: QTY SQFT — free text entry (manual)
+      '<td><input class="ti" type="text" data-row="' + i + '" data-field="qtySqft" value="' + h(r.qtySqft||'') + '" placeholder="0" style="width:70px" inputmode="decimal"></td>' +
+      // Col 7: Price — free text entry
+      '<td><input class="ti" type="text" data-row="' + i + '" data-field="price"   value="' + h(r.price||'')   + '" placeholder="0" style="width:80px" inputmode="decimal"></td>' +
+      // Col 8: Total — auto = QTY_SQFT × Price
       '<td><span class="computed" id="tot-gypsum-' + i + '">₹' + fmt(r.total||0) + '</span></td>' +
-      // Col 8: Delete
+      // Col 9: Delete
       '<td><button class="btn-del-row" data-key="gypsum" data-row="' + i + '">✕</button></td>' +
     '</tr>';
   }).join('');
@@ -1994,18 +1995,12 @@ function renderGypsum(){
   attachTableListeners(tb, 'gypsum');
 }
 
-function handleSelGypsum(i, el){
-  // cellIndex is 0-based:
-  // 0=SL, 1=Item, 2=Finish, 3=Material, 4=Unit, 5=Size, 6=Price, 7=Total, 8=Del
-  var colIdx   = el.closest('td').cellIndex;
-  var fieldMap = { 1:'item', 2:'finish', 3:'material', 4:'unit' };
-  var field    = fieldMap[colIdx];
-  if (field) setGypsum(i, field, el.value);
-}
 
 function setGypsum(i, f, v){
   var r = S.rows.gypsum[i];
   r[f] = v;
+
+  // When Item selected — auto-fill Finish, Material, Unit, Price
   if (f === 'item' && v) {
     var m = (S.dropdowns.gypsum || []).find(function(d){ return d.item === v; });
     if (m) {
@@ -2018,12 +2013,16 @@ function setGypsum(i, f, v){
     updateTot('gypsum');
     return;
   }
-  // Total = Price × Size
-  r.total = (parseFloat(r.price)||0) * (parseFloat(r.size)||0);
+
+  // Total = QTY_SQFT × Price  (QTY SQFT is entered manually by user)
+  r.total = (parseFloat(r.qtySqft) || 0) * (parseFloat(r.price) || 0);
+
   var totEl = document.getElementById('tot-gypsum-' + i);
   if (totEl) totEl.textContent = '₹' + fmt(r.total || 0);
+
   updateTot('gypsum');
 }
+
 
 
 // ── Delegated event listener ─────────────────────────────────────
@@ -2075,7 +2074,7 @@ function attachTableListeners(tb, key){
         break;
       case 'gypsum':
         var rg=S.rows.gypsum[row]; rg[field]=val;
-        rg.total=(parseFloat(rg.price)||0)*(parseFloat(rg.size)||0); // Price × Size
+        rg.total=(parseFloat(rg.qtySqft)||0)*(parseFloat(rg.price)||0); // QTY_SQFT × Price
         var tg=document.getElementById('tot-gypsum-'+row);
         if(tg)tg.textContent='₹'+fmt(rg.total||0);
         break;
@@ -2832,10 +2831,10 @@ function buildEstimateSections(){
             var advance  = parseFloat(fin.advance)||0;
             var partPay  = parseFloat(fin.partPayment)||0;
             var finalPay = fin.finalPayment||0;
-            var finWords = numberToWords(Math.abs(Math.round(finalPay)));
+            var payableWords = numberToWords(Math.abs(Math.round(payable)));
             return '<br>' +
               '<div class="category-badge">PAYMENT SUMMARY</div>' +
-              '<table class="estimate-table" style="max-width:420px">' +
+              '<table class="estimate-table" style="width:100%">' +
               '<thead><tr>' +
                 '<th style="text-align:left;padding-left:14px;width:70%">DESCRIPTION</th>' +
                 '<th style="text-align:right;padding-right:14px">AMOUNT</th>' +
@@ -2848,16 +2847,20 @@ function buildEstimateSections(){
                 '<tr><td style="padding:8px 14px">GST @ ' + gstPct + '%</td><td style="text-align:right;padding:8px 14px">&#8377;' + fmt(gstAmt) + '</td></tr>' +
                 '<tr style="background:#f2ede4"><td style="padding:8px 14px;font-weight:700">GRAND TOTAL Including GST</td><td style="text-align:right;padding:8px 14px;font-weight:700">&#8377;' + fmt(totGst) + '</td></tr>' +
                 (disc>0 ? '<tr><td style="padding:8px 14px">Discount</td><td style="text-align:right;padding:8px 14px">&#8377;' + fmt(disc) + '</td></tr>' : '') +
-                '<tr style="background:#0d0d18"><td style="color:#c9a84c;font-weight:700;letter-spacing:2px;padding:10px 14px;border:none">Payable</td><td style="color:#c9a84c;font-weight:700;font-size:13px;text-align:right;padding:10px 14px;border:none">&#8377;' + fmt(payable) + '</td></tr>' +
+                '<tr style="background:#0d0d18"><td style="color:#c9a84c;font-weight:700;letter-spacing:2px;font-size:13px;padding:12px 14px;border:none">Payable</td><td style="color:#c9a84c;font-weight:700;font-size:16px;text-align:right;padding:12px 14px;border:none">&#8377;' + fmt(payable) + '</td></tr>' +
+                '<tr style="background:#c9a84c">' +
+                  '<td colspan="2" style="padding:10px 14px;font-weight:700;font-size:11px;color:#0d0d18;font-style:italic;border:none;line-height:1.5">' +
+                  '(' + payableWords + ')' +
+                  '</td>' +
+                '</tr>' +
                 '<tr><td colspan="2" style="padding:3px;background:#fff;border:none"></td></tr>' +
                 (token>0   ? '<tr><td style="padding:8px 14px">TOKEN</td><td style="text-align:right;padding:8px 14px">&#8377;' + fmt(token) + '</td></tr>' : '') +
                 (advance>0 ? '<tr><td style="padding:8px 14px">ADVANCE</td><td style="text-align:right;padding:8px 14px">&#8377;' + fmt(advance) + '</td></tr>' : '') +
                 (partPay>0 ? '<tr><td style="padding:8px 14px">PART PAYMENT</td><td style="text-align:right;padding:8px 14px">&#8377;' + fmt(partPay) + '</td></tr>' : '') +
-                '<tr style="background:#c9a84c;border-top:3px solid #0d0d18">' +
-                  '<td style="padding:14px 16px;font-weight:700;letter-spacing:2px;font-size:12px;color:#0d0d18;border:none">FINAL PAYMENT</td>' +
-                  '<td style="text-align:right;padding:14px 16px;font-weight:700;font-size:16px;color:#0d0d18;border:none">&#8377;' + fmt(finalPay) + '</td>' +
+                '<tr>' +
+                  '<td style="padding:8px 14px;font-weight:700">FINAL PAYMENT</td>' +
+                  '<td style="text-align:right;padding:8px 14px;font-weight:700">&#8377;' + fmt(finalPay) + '</td>' +
                 '</tr>' +
-                '<tr style="background:#f5f0e8"><td colspan="2" style="padding:8px 14px;font-style:italic;color:#444;font-size:10px;border-top:none">(' + finWords + ')</td></tr>' +
               '</tbody></table>';
           })() +
 
