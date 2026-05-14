@@ -704,7 +704,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     letter-spacing:5px;
     font-weight:700;
     text-transform:uppercase;
-    margin-bottom:4mm;
+    margin-bottom:2mm;
+    margin-top: 20px;
 }
 
 .table-block {
@@ -1496,7 +1497,7 @@ var PREVIEW_TPL = "<div class=\"page\">\n\n    <div class=\"content\">\n        
 
 // ✏️  PASTE YOUR GAS WEB APP URL HERE — only change needed in this file
 // Apps Script → Deploy → Manage deployments → copy the Web App URL
-var GAS_URL   = 'https://script.google.com/macros/s/AKfycbyO8jeUVugUOkcwkDoW9RHdj9wIQ7d1udwqCKIVSohRrAgDvebRcuxF0JSGF03Ev1SXVw/exec';
+var GAS_URL   = 'https://script.google.com/macros/s/AKfycbx0IjogOHL92sJI7GspIeL5NquqzLc-TmKO_W2UcftPNF3Ef-PivncwdnfKftIKSO4WGw/exec';
 
 // These keys are kept for backward compatibility but no longer shown in UI
 var GAS_KEY   = 'doc_gas_url';
@@ -1508,7 +1509,7 @@ var S = {
   dropdowns:{catA:[],catB:[],additionalWorks:[],gypsum:[],kitchenAcc:[]},
   adminData:{},
   currentId:null, delId:null,
-  adminTab:'catA', adminDel:null, modalEdit:null,
+  adminTab:'mCategories', adminDel:null, modalEdit:null,
   active:{catA:false,kitAcc:false,addWorks:false,catB:false,gypsum:false},
   rows:{catA:[],kitAcc:[],addWorks:[],catB:[],gypsum:[]},
   previewTemplate:null,
@@ -1580,7 +1581,11 @@ function showScreen(name){
     document.querySelectorAll('.atab').forEach(function(b){b.classList.remove('active');});
     var ab=document.getElementById('atab-'+at); if(ab)ab.classList.add('active');
     if(typeof MASTER_KEYS!=='undefined'&&MASTER_KEYS[at]){
-      loadMasterData(); renderMasterTable(at);
+      loading(true);
+      loadMasterData(function(){
+        loading(false);
+        renderMasterTable(at);
+      });
     } else {
       loadAdminData();
     }
@@ -1591,10 +1596,22 @@ function showScreen(name){
 // ── Init ─────────────────────────────────────────────────────────
 function init(){
   loading(true);
-  return Promise.all([gasGet('getDropdownData'),gasGet('getAllEstimates')])
+  // Load dropdowns, estimates AND master dropdown lists in parallel
+  return Promise.all([
+    gasGet('getDropdownData'),
+    gasGet('getAllEstimates'),
+    gasGet('getMasterDropdowns')
+  ])
     .then(function(r){
-      S.dropdowns=r[0]||{catA:[],catB:[],additionalWorks:[],gypsum:[],kitchenAcc:[]};
-      S.estimates=r[1]||[];
+      S.dropdowns = r[0]||{catA:[],catB:[],additionalWorks:[],gypsum:[],kitchenAcc:[]};
+      S.estimates = r[1]||[];
+      // Populate S.master so catA/catB/addWorks/gypsum dropdowns work immediately
+      var md = r[2]||{};
+      S.master.categorys      = md.mCategories    || [];
+      S.master.items          = md.mItems          || [];
+      S.master.shutterFinishs = md.mShutterFinish  || [];
+      S.master.materials      = md.mMaterials       || [];
+      S.master.units          = md.mUnits           || [];
       renderEntries(S.estimates);
     })
     .catch(function(e){toast('Init error: '+e.message,'err');})
@@ -2480,7 +2497,7 @@ function buildEstimateSections(){
   var H_NOTES        = 14;
   var H_BADGE        = 14;
   var H_CONTD        = 6;
-  var H_GAP          = 8;     // gap between two tables on same page
+  var H_GAP          = 4;     // gap between two tables on same page
 
   var grand      = 0;
   var subtotals  = [];        // [{label, amount}] for summary table
@@ -2585,11 +2602,13 @@ function buildEstimateSections(){
 
       // All groups placed — write footer
       if (rowsLeft === 0) {
-        if (currentH + footerH + H_GAP <= pageLimit() && currentPage.length > 0) {
+        // Always try to append footer on the current page first
+        if (currentPage.length > 0 && currentH + footerH <= pageLimit()) {
           addFooterToCurrentPage(subTot, quot, notes, spec.cols);
           return;
         } else {
-          commitPage();
+          // Footer doesn't fit — commit current page and put footer on next
+          if (currentPage.length > 0) commitPage();
           addFooterOnNewPage(subTot, quot, notes, spec.cols, badge);
           return;
         }
@@ -2654,7 +2673,12 @@ function buildEstimateSections(){
         );
         gi = tempGi;
         sectionStart = false;
-        commitPage(); // each intermediate chunk gets its own page
+        // Do NOT commitPage() here — let the next group check space naturally.
+        // If the page is now full, addBlock will commit it automatically.
+        // Only force a new page if truly no space remains for even one more row.
+        if (currentH + H_THEAD + H_ROW > pageLimit()) {
+          commitPage();
+        }
       }
     }
   }
@@ -3053,15 +3077,27 @@ var MASTER_KEYS = {
   mUnits        :{ label:'Units',         arrKey:'units'           }
 };
 
-function loadMasterData(){
-  Object.keys(MASTER_KEYS).forEach(function(k){
-    var stored=localStorage.getItem('master_'+k);
-    S.master[MASTER_KEYS[k].arrKey]=stored?JSON.parse(stored):[];
-  });
+function loadMasterData(cb){
+  // Load from Google Sheet via GAS
+  gasGet('getMasterDropdowns')
+    .then(function(data){
+      // data = { mCategories:[...], mItems:[...], mShutterFinish:[...], mMaterials:[...], mUnits:[...] }
+      S.master.categorys       = data.mCategories    || [];
+      S.master.items           = data.mItems          || [];
+      S.master.shutterFinishs  = data.mShutterFinish  || [];
+      S.master.materials       = data.mMaterials       || [];
+      S.master.units           = data.mUnits           || [];
+      if (cb) cb();
+    })
+    .catch(function(e){
+      console.warn('loadMasterData failed:', e.message);
+      if (cb) cb();
+    });
 }
 
-function saveMasterKey(key){
-  localStorage.setItem('master_'+key,JSON.stringify(S.master[MASTER_KEYS[key].arrKey]||[]));
+function saveMasterKey(key, cb){
+  // No-op — individual saves done via saveMasterItem/updateMasterItem/deleteMasterItem
+  if (cb) cb();
 }
 
 function renderMasterTable(key){
@@ -3133,13 +3169,16 @@ function addMasterItem(key){
   var inp=document.getElementById('mi-'+key);
   var val=inp?inp.value.trim():'';
   if(!val){toast('Enter a value','err');return;}
-  var arr=S.master[MASTER_KEYS[key].arrKey]||(S.master[MASTER_KEYS[key].arrKey]=[]);
-  if(arr.indexOf(val)>=0){toast('Already exists','err');return;}
-  arr.push(val);
-  saveMasterKey(key);
-  if(inp)inp.value='';
-  renderMasterTable(key);
-  toast(MASTER_KEYS[key].label+' added ✓','ok');
+  loading(true);
+  gasPost('saveMasterItem',{key:key,value:val})
+    .then(function(res){
+      S.master[MASTER_KEYS[key].arrKey]=res.values||[];
+      if(inp)inp.value='';
+      renderMasterTable(key);
+      toast(MASTER_KEYS[key].label+' added ✓','ok');
+    })
+    .catch(function(e){toast('Save failed: '+e.message,'err');})
+    .finally(function(){loading(false);});
 }
 
 function editMasterItem(key,i){
@@ -3148,12 +3187,31 @@ function editMasterItem(key,i){
   if(nv===null)return;
   nv=nv.trim();
   if(!nv){toast('Cannot be empty','err');return;}
-  arr[i]=nv; saveMasterKey(key); renderMasterTable(key); toast('Updated ✓','ok');
+  // rowIndex = i+2 (row 1 = header, data starts at row 2)
+  var rowIndex=i+2;
+  loading(true);
+  gasPost('updateMasterItem',{key:key,rowIndex:rowIndex,value:nv})
+    .then(function(res){
+      S.master[MASTER_KEYS[key].arrKey]=res.values||[];
+      renderMasterTable(key);
+      toast('Updated ✓','ok');
+    })
+    .catch(function(e){toast('Update failed: '+e.message,'err');})
+    .finally(function(){loading(false);});
 }
 
 function deleteMasterItem(key,i){
-  var arr=S.master[MASTER_KEYS[key].arrKey]||[];
-  arr.splice(i,1); saveMasterKey(key); renderMasterTable(key); toast('Deleted ✓','ok');
+  if(!confirm('Delete this entry?')) return;
+  var rowIndex=i+2;
+  loading(true);
+  gasPost('deleteMasterItem',{key:key,rowIndex:rowIndex})
+    .then(function(res){
+      S.master[MASTER_KEYS[key].arrKey]=res.values||[];
+      renderMasterTable(key);
+      toast('Deleted ✓','ok');
+    })
+    .catch(function(e){toast('Delete failed: '+e.message,'err');})
+    .finally(function(){loading(false);});
 }
 
 function switchAdminTab(key){
@@ -3162,7 +3220,11 @@ function switchAdminTab(key){
   var btn=document.getElementById('atab-'+key);
   if(btn) btn.classList.add('active');
   if(typeof MASTER_KEYS!=='undefined' && MASTER_KEYS[key]){
-    loadMasterData(); renderMasterTable(key);
+    loading(true);
+    loadMasterData(function(){
+      loading(false);
+      renderMasterTable(key);
+    });
   } else {
     loadAdminData();
   }
