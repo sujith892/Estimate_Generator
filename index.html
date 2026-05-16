@@ -224,7 +224,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
             color: white;
             padding: 30px 40px;
             width: 50%;
-            height: 170mm;
+            height: 184mm;
             box-sizing: border-box;
         }
 
@@ -979,7 +979,7 @@ position:absolute;
 top:0;
 left:0;
 width:100%;
-height:3mm;
+height:1mm;
 background:#dbe7f0;
 }
 
@@ -1455,6 +1455,8 @@ td{
     <button class="atab"        id="atab-mShutterFinish" onclick="switchAdminTab('mShutterFinish')" style="background:var(--gold-lt)">🪟 Shutter Finish</button>
     <button class="atab"        id="atab-mMaterials"     onclick="switchAdminTab('mMaterials')" style="background:var(--gold-lt)">🧱 Materials</button>
     <button class="atab"        id="atab-mUnits"         onclick="switchAdminTab('mUnits')" style="background:var(--gold-lt)">📐 Units</button>
+    <button class="atab"        id="atab-mMaterialOptions" onclick="switchAdminTab('mMaterialOptions')" style="background:var(--gold-lt);font-weight:700;border-left:3px solid var(--gold)">📄 Material Options</button>
+    <button class="atab"        id="atab-mTermsConditions" onclick="switchAdminTab('mTermsConditions')" style="background:var(--gold-lt);font-weight:700;border-left:3px solid var(--gold)">📋 Terms & Conditions</button>
   </div>
   <div class="card"><div id="adminContent" class="tbl-scroll"><div class="empty">Loading…</div></div></div>
 </div>
@@ -1485,7 +1487,7 @@ td{
 //  Contains all 7 A4 pages. {{PLACEHOLDERS}} are replaced at runtime.
 //  No separate preview-template.html file needed.
 // ══════════════════════════════════════════════════════════════════
-var PREVIEW_TPL = "<div class=\"page\">\n\n    <div class=\"content\">\n        <div class=\"title-text_1\">\n            {{DOC_TYPE}}\n        </div>\n    </div>\n\n   \n\n    <div class=\"top-header\">\n        <div class=\"left-rect\"></div>\n\n        <div class=\"logo-section\">\n            <img src=\"Logo.png\" class=\"logo\">\n        <div class=\"logo-text\">DOC INTERIORS</div>\n        </div>\n\n        <div class=\"right-rect\"></div>\n    </div>\n\n    \n    <div class=\"header-img\">\n        <div class=\"overlay-text\">\n            <div class=\"title-text\">\n            <span class=\"first-letter\">D</span>EPTH<br>\n            <span class=\"first-letter\">O</span>F<br>\n            <span class=\"first-letter\">C</span>REATION\n            </div>\n        </div>\n    </div>\n\n\n     <div class=\"bottom-section\">\n        <div class=\"left-rect\"></div>\n        <div class=\"bottom-content\">\n            <div class=\"tagline\">\n                100% CUSTOMIZED CONTEMPORARY\n            </div>\n\n            <div class=\"categories\">\n                KITCHEN <span>|</span> BEDROOM <span>|</span> LIVING <span>|</span> DINING\n            </div>\n\n            <div class=\"website\">\n                www.docinteriors.com\n            <div class=\"underline\"></div>\n            </div>\n    </div>\n\n    </div>\n    \n\n</div>\n\n\n\n<div class=\"page\">\n\n    <!-- IMAGE GRID -->\n    <div class=\"image-grid\">\n        <div class=\"left-images\">\n            <div class=\"img top-img\"></div>\n            <div class=\"img bottom-img\"></div>\n        </div>\n        <div class=\"right-image\"></div>\n    </div>\n\n    <!-- TEXT SECTION -->\n    <div class=\"text-section\">\n        <h3>Thank you for considering DOC Interiors.</h3>\n\n        <p class=\"sub-text\">\n            Can't wait for more expert insights?<br>\n            We recommend you to get in touch with us whenever possible. \n            We're always at your service.\n        </p>\n    </div>\n\n    <!-- PROCESS SECTION -->\n    <div class=\"process-section\">\n\n        <div class=\"process-title\">            \n            GET YOUR HOME INTERIOR DONE WITHIN 35-45 WORKING DAYS\n        </div>\n\n        <div class=\"process-steps\">\n\n            <div class=\"step\">\n                <img src=\"Logo_1.png\">\n                <p>SPEAK TO OUR DESIGN CONSULTANT AND</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_2.png\">\n                <p>DETAILED DRAWING AND APPROVAL</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_3.png\">\n                <p>PRODUCTION AT OWN FACTORY</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_4.png\">\n                <p>MATERIAL DELIVERY WITHIN 45 DAYS</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_5.png\">\n                <p>INSTALLATION AT SITE</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_6.png\">\n                <p>ON-TIME PROJECT HANDOVER</p>\n            </div>\n\n        </div>\n    </div>\n\n    <div class=\"website\">\n                www.docinteriors.com\n    <div class=\"underline\"></div>\n    \n\n    </div>\n</div>\n\n\n<div class=\"page\">\n\n  <div class=\"page-inner\">  \n    <!-- HERO IMAGE -->\n  <!-- HERO -->\n        <div class=\"hero-section\">\n            <div class=\"hero-section-inner\">\n                <div class=\"hero-overlay\">\n                    <div class=\"hero-text\">\n                        depth of<br>creation\n                    </div>\n                </div>\n            </div>\n        </div>\n\n    <!-- TABLE SECTION -->\n    <div class=\"table-section\"> \n        <table class=\"info-table-new\">\n\n    <tr>\n        <td>DATE<br><span>{{DATE}}</span></td>\n        <td>ESTIMATION NO.<br><span>{{ESTIMATION_NO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>CLIENT<br><span>{{CLIENT_NAME}}</span></td>\n        <td>BDO<br><span>{{BDO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>SITE ADDRESS<br><span>{{SITE_ADDRESS}}</span></td>\n        <td>MOBILE<br><span>{{MOBILE}}</span></td>\n    </tr>\n\n    <tr>\n        <td>E-MAIL<br><span>{{EMAIL}}</span></td>\n        <td>E-MAIL (BDO)<br><span>{{EMAIL_BDO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>CONTACT NUMBER<br><span>{{CONTACT_NUMBER}}</span></td>\n        <td>INTERIOR DESIGNER<br><span>{{INTERIOR_DESIGNER}}</span></td>\n    </tr>\n\n    <tr>\n        <td class=\"highlight\">CUSTOMER CARE<br><span>{{CUSTOMER_CARE}}</span></td>\n        <td>PREPARED BY<br><span>{{PREPARED_BY}}</span></td>\n    </tr>\n\n        </table>\n    </div>\n    </div>\n\n     <div class=\"website\">\n                www.docinteriors.com\n    <div class=\"underline\"></div>\n\n    \n\n    </div>\n    </div>\n\n\n{{ESTIMATE_SECTIONS}}\n\n\n<div class=\"page\">\n\n<div class=\"page5-wrap\">\n\n    <div class=\"material-title\">\n        MATERIAL OPTIONS\n    </div>\n\n    <div class=\"material-box\">\n\n        <div class=\"section-label\">Shutter Option :</div>\n\n        <ul class=\"material-list\">\n            <li>Laminated shutter on HDHMR Exterior grade HDF(Action Teza HDF,Laminate-GreenLam Merrino, NewMica)</li>\n            <li>Acrylic shutter on HDHMR Exterior grade HDF(Action Teza HDF, Acrylic-Dimond D\u00e9cor)</li>\n            <li>Glass shutter on 16mm Marine plywood (Marine Ply-Famous, Glass-4mm Saint Gobain Planilaque glass)</li>\n            <li>Veneer shutter on 18mm Pvc & Marine Plywood (Veneer-Decowood Greenlam)</li>\n            <li>PU Finish, Glass and Stain Finish</li>\n            <li>PVC Laminate shutter on HDHMR Exterior grade</li>\n            <li>Shutter aristo brand</li>\n        </ul>\n\n        <div class=\"section-label\">Shutter:</div>\n        <ul class=\"material-list\">\n            <li>Both side Laminated HDHMR Exterior grade HDF Board with matching edge banding on sides</li>\n        </ul>\n\n        <div class=\"section-label\">Carcass :</div>\n        <ul class=\"material-list\">\n            <li>Both side cold pressed laminated marine grade plywood BWP(Boiling Water Proof)with water resistance testing after 72hrs of boiling edge banded on the side of 18mm</li>\n        </ul>\n\n        <div class=\"section-label\">Skirting:</div>\n        <ul class=\"material-list\">\n            <li>Laminated skirting</li>\n        </ul>\n\n        <div class=\"section-label\">Fittings:</div>\n        <ul class=\"material-list\">\n            <li>SS</li>\n        </ul>\n\n        <div class=\"section-label\">Accessories:</div>\n        <ul class=\"material-list\">\n            <li>Hettich</li>\n        </ul>\n\n        <div class=\"section-label\">Edge Banding:</div>\n        <ul class=\"material-list\">\n            <li>All four side on the carcass and shutter with corner rounding wherever applicable, premium Edge banding tapes.</li>\n        </ul>\n\n        <div class=\"section-label\">Carcass Back panel:</div>\n        <ul class=\"material-list\">\n            <li>8mm PVC Board</li>\n        </ul>\n\n        <div class=\"section-label\">Sink cabinet & wash counters:</div>\n        <ul class=\"material-list\">\n            <li>17mm PVC Foam board with a smooth matte finish Tolerance +/-1mm</li>\n        </ul>\n\n        <br>\n\n        <div class=\"section-label\">Materials:</div>\n\n        <table class=\"materials-bottom\">\n            <tr>\n                <td>\u27a4 Marine Plywood-</td>\n                <td>Famous.</td>\n            </tr>\n            <tr>\n                <td>\u27a4 Wpc</td>\n                <td>- Demac/Thomson</td>\n            </tr>\n            <tr>\n                <td>\u27a4 Laminate</td>\n                <td>- Greenlam / Newmika/ Merrino</td>\n            </tr>\n            <tr>\n                <td>\u27a4 Accessories</td>\n                <td>- Hettich</td>\n            </tr>\n        </table>\n\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n<div class=\"page\">\n\n<div class=\"page6-wrap\">\n\n    <!-- LEFT TAN PANEL -->\n    <div class=\"warranty-left\">\n\n        <div class=\"warranty-title\">\n            WARRANTY\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 10 Years warranty against avoidable, unnatural defects in\n            material supplied under normal usage.\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 Manufactures warranty for fittings, hardware and accessories.\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 Life time service will be provided up till 1st year two free\n            service after that per visit chargeable at Rs.2000/- plus any\n            replacement charges.\n        </div>\n\n    </div>\n\n\n    <!-- RIGHT PANEL -->\n    <div class=\"warranty-right\">\n\n        <div class=\"quote-icon\">\n            \u275d\n        </div>\n\n        <div class=\"vertical-quote\">\n            THE KEY TO GREATEST DESIGNING IS CAPTURING THE SPIRIT OF THE CLIENT AND THE ESSENCE OF THE SPACE\n        </div>\n\n        <div class=\"sofa-image\"></div>\n\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n<div class=\"page\">\n\n<div class=\"page7-wrap\">\n\n    <div class=\"terms-title\">\n        TERMS AND CONDITIONS\n    </div>\n\n    <ul class=\"terms-list\">\n\n        <li>The estimation and quotation are prepared in accordance with the provided terms and conditions.</li>\n\n        <li>Once the design is finalized, no changes will be permitted in production drawings.</li>\n\n        <li>Two 3D design revisions are provided free of cost; further changes will incur extra charges.</li>\n\n        <li>The 3D design may include elements for aesthetic purposes only; such items are not part of the quotation and will incur extra charges if required.</li>\n\n        <li>The scope of work is limited to interior views only. Exterior, courtyard, and other external views are excluded.</li>\n\n        <li>The quotation does not include appliances such as chimney, hob, sink, or any other accessories.</li>\n\n        <li>The quotation excludes supply and installation of lighting, LED strips, granite, tiles, and related materials, as well as all plumbing, electrical, masonry, fittings, and associated labor charges.</li>\n\n        <li>Any handle\u2019s cost above \u20b9300 per item will be billed additionally in quotation.</li>\n\n        <li>The client shall provide a continuous electricity supply required for operating machinery during execution.</li>\n\n        <li>The client is responsible for ensuring a safe and conducive working environment at the site.</li>\n\n        <li>The client must provide a secure space for storage of materials and machinery brought to the site.</li>\n\n        <li>Any unloading charges exceeding \u20b93,000/- shall be borne directly by the client.</li>\n\n        <li>The client shall obtain all necessary permissions and approvals from building authorities, apartment associations, municipal bodies, electrical boards, and any other relevant authorities required for execution of the work.</li>\n\n        <li>Any changes in design or specifications after finalization will result in a revision of the quotation.</li>\n\n        <li>This quotation is valid for a period of one (1) month from the date of issue.</li>\n\n    </ul>\n\n    <div class=\"terms-tagline\">\n        <span class=\"big-d\">D</span>\n        <div class=\"tagline-text\">\n            ESIGN IS THINKING<br>\n            MADE VISUAL\n        </div>\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n</div>\n\n<div class=\"page\">\n\n<div class=\"page8-wrap\">\n\n    <!-- Top website URL -->\n    <div class=\"page8-website\">www.docinteriors.com</div>\n\n    <!-- Body text -->\n    <div class=\"page8-body\">\n   <span class=\"bottomfootertext\">This is to facilitate the easy and transparent processing of our work deal. <br> We request you to read this carefully and contact us if you need <br>Any further clarification regarding anything mentioned here. Thanks again!     </span>   </div>\n\n    <!-- Bottom contact card -->\n    <div class=\"page8-footer\">\n\n        <!-- DOC logo \u2014 uses the same Logo.png as the cover page -->\n          <!-- Address -->\n        <div class=\"page8-address\">\n      <div class=\"logo-section_1\" style=\"flex-direction:column;align-items:center;justify-content:center;margin-bottom:6px\">\n            <img src=\"Logo.png\" class=\"logo\">\n            <div class=\"logo-text\">DOC INTERIORS</div>\n        </div>\n\n      <span class=\"page8-pin\">&#128205;</span>\n            CHAPPARA | KODUNGALLUR | THRISSUR\n            <span class=\"page8-pin\">&#128205;</span>\n        </div>\n        <div class=\"page8-phones\">\n            +91 8943807777, +91 8943837777, +91 8943847777\n        </div>\n\n        <!-- Contact row -->\n             </div>\n\n        <!-- Contact row -->\n        <div class=\"page8-contacts\">\n            <span>&#9993; interiorsdoc@gmail.com</span>\n            <span>&#127760; www.docinteriors.com</span>\n            <span>&#128247; &#128100; DOC Interiors</span>\n        </div>\n\n    </div>\n\n</div>\n\n</div>\n\n";
+var PREVIEW_TPL = "<div class=\"page\">\n\n    <div class=\"content\">\n        <div class=\"title-text_1\">\n            {{DOC_TYPE}}\n        </div>\n    </div>\n\n   \n\n    <div class=\"top-header\">\n        <div class=\"left-rect\"></div>\n\n        <div class=\"logo-section\">\n            <img src=\"Logo.png\" class=\"logo\">\n        <div class=\"logo-text\">DOC INTERIORS</div>\n        </div>\n\n        <div class=\"right-rect\"></div>\n    </div>\n\n    \n    <div class=\"header-img\">\n        <div class=\"overlay-text\">\n            <div class=\"title-text\">\n            <span class=\"first-letter\">D</span>EPTH<br>\n            <span class=\"first-letter\">O</span>F<br>\n            <span class=\"first-letter\">C</span>REATION\n            </div>\n        </div>\n    </div>\n\n\n     <div class=\"bottom-section\">\n        <div class=\"left-rect\"></div>\n        <div class=\"bottom-content\">\n            <div class=\"tagline\">\n                100% CUSTOMIZED CONTEMPORARY\n            </div>\n\n            <div class=\"categories\">\n                KITCHEN <span>|</span> BEDROOM <span>|</span> LIVING <span>|</span> DINING\n            </div>\n\n            <div class=\"website\">\n                www.docinteriors.com\n            <div class=\"underline\"></div>\n            </div>\n    </div>\n\n    </div>\n    \n\n</div>\n\n\n\n<div class=\"page\">\n\n    <!-- IMAGE GRID -->\n    <div class=\"image-grid\">\n        <div class=\"left-images\">\n            <div class=\"img top-img\"></div>\n            <div class=\"img bottom-img\"></div>\n        </div>\n        <div class=\"right-image\"></div>\n    </div>\n\n    <!-- TEXT SECTION -->\n    <div class=\"text-section\">\n        <h3>Thank you for considering DOC Interiors.</h3>\n\n        <p class=\"sub-text\">\n            Can't wait for more expert insights?<br>\n            We recommend you to get in touch with us whenever possible. \n            We're always at your service.\n        </p>\n    </div>\n\n    <!-- PROCESS SECTION -->\n    <div class=\"process-section\">\n\n        <div class=\"process-title\">            \n            GET YOUR HOME INTERIOR DONE WITHIN 35-45 WORKING DAYS\n        </div>\n\n        <div class=\"process-steps\">\n\n            <div class=\"step\">\n                <img src=\"Logo_1.png\">\n                <p>SPEAK TO OUR DESIGN CONSULTANT AND</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_2.png\">\n                <p>DETAILED DRAWING AND APPROVAL</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_3.png\">\n                <p>PRODUCTION AT OWN FACTORY</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_4.png\">\n                <p>MATERIAL DELIVERY WITHIN 45 DAYS</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_5.png\">\n                <p>INSTALLATION AT SITE</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_6.png\">\n                <p>ON-TIME PROJECT HANDOVER</p>\n            </div>\n\n        </div>\n    </div>\n\n    <div class=\"website\">\n                www.docinteriors.com\n    <div class=\"underline\"></div>\n    \n\n    </div>\n</div>\n\n\n<div class=\"page\">\n\n  <div class=\"page-inner\">  \n    <!-- HERO IMAGE -->\n  <!-- HERO -->\n        <div class=\"hero-section\">\n            <div class=\"hero-section-inner\">\n                <div class=\"hero-overlay\">\n                    <div class=\"hero-text\">\n                        depth of<br>creation\n                    </div>\n                </div>\n            </div>\n        </div>\n\n    <!-- TABLE SECTION -->\n    <div class=\"table-section\"> \n        <table class=\"info-table-new\">\n\n    <tr>\n        <td>DATE<br><span>{{DATE}}</span></td>\n        <td>ESTIMATION NO.<br><span>{{ESTIMATION_NO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>CLIENT<br><span>{{CLIENT_NAME}}</span></td>\n        <td>BDO<br><span>{{BDO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>SITE ADDRESS<br><span>{{SITE_ADDRESS}}</span></td>\n        <td>MOBILE<br><span>{{MOBILE}}</span></td>\n    </tr>\n\n    <tr>\n        <td>E-MAIL<br><span>{{EMAIL}}</span></td>\n        <td>E-MAIL (BDO)<br><span>{{EMAIL_BDO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>CONTACT NUMBER<br><span>{{CONTACT_NUMBER}}</span></td>\n        <td>INTERIOR DESIGNER<br><span>{{INTERIOR_DESIGNER}}</span></td>\n    </tr>\n\n    <tr>\n        <td class=\"highlight\">CUSTOMER CARE<br><span>{{CUSTOMER_CARE}}</span></td>\n        <td>PREPARED BY<br><span>{{PREPARED_BY}}</span></td>\n    </tr>\n\n        </table>\n    </div>\n    </div>\n\n     <div class=\"website\">\n                www.docinteriors.com\n    <div class=\"underline\"></div>\n\n    \n\n    </div>\n    </div>\n\n\n{{ESTIMATE_SECTIONS}}\n\n\n<div class=\"page\">\n\n<div class=\"page5-wrap\">\n\n    <div class=\"material-title\">\n        MATERIAL OPTIONS\n    </div>\n\n    <div class=\"material-box\">{{MATERIAL_CONTENT}}</div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n<div class=\"page\">\n\n<div class=\"page6-wrap\">\n\n    <!-- LEFT TAN PANEL -->\n    <div class=\"warranty-left\">\n\n        <div class=\"warranty-title\">\n            WARRANTY\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 10 Years warranty against avoidable, unnatural defects in\n            material supplied under normal usage.\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 Manufactures warranty for fittings, hardware and accessories.\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 Life time service will be provided up till 1st year two free\n            service after that per visit chargeable at Rs.2000/- plus any\n            replacement charges.\n        </div>\n\n    </div>\n\n\n    <!-- RIGHT PANEL -->\n    <div class=\"warranty-right\">\n\n        <div class=\"quote-icon\">\n            \u275d\n        </div>\n\n        <div class=\"vertical-quote\">\n            THE KEY TO GREATEST DESIGNING IS CAPTURING THE SPIRIT OF THE CLIENT AND THE ESSENCE OF THE SPACE\n        </div>\n\n        <div class=\"sofa-image\"></div>\n\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n<div class=\"page\">\n\n<div class=\"page7-wrap\">\n\n    <div class=\"terms-title\">\n        TERMS AND CONDITIONS\n    </div>\n\n    <ul class=\"terms-list\">{{TERMS_CONTENT}}</ul>\n\n    <div class=\"terms-tagline\">\n        <span class=\"big-d\">D</span>\n        <div class=\"tagline-text\">\n            ESIGN IS THINKING<br>\n            MADE VISUAL\n        </div>\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n</div>\n\n<div class=\"page\">\n\n<div class=\"page8-wrap\">\n\n    <!-- Top website URL -->\n    <div class=\"page8-website\">www.docinteriors.com</div>\n\n    <!-- Body text -->\n    <div class=\"page8-body\">\n   <span class=\"bottomfootertext\">This is to facilitate the easy and transparent processing of our work deal. <br> We request you to read this carefully and contact us if you need <br>Any further clarification regarding anything mentioned here. Thanks again!     </span>   </div>\n\n    <!-- Bottom contact card -->\n    <div class=\"page8-footer\">\n\n        <!-- DOC logo \u2014 uses the same Logo.png as the cover page -->\n          <!-- Address -->\n        <div class=\"page8-address\">\n      <div class=\"logo-section_1\" style=\"flex-direction:column;align-items:center;justify-content:center;margin-bottom:6px\">\n            <img src=\"Logo.png\" class=\"logo\">\n            <div class=\"logo-text\">DOC INTERIORS</div>\n        </div>\n\n      <span class=\"page8-pin\">&#128205;</span>\n            CHAPPARA | KODUNGALLUR | THRISSUR\n            <span class=\"page8-pin\">&#128205;</span>\n        </div>\n        <div class=\"page8-phones\">\n            +91 8943807777, +91 8943837777, +91 8943847777\n        </div>\n\n        <!-- Contact row -->\n             </div>\n\n        <!-- Contact row -->\n        <div class=\"page8-contacts\">\n            <span>&#9993; interiorsdoc@gmail.com</span>\n            <span>&#127760; www.docinteriors.com</span>\n            <span>&#128247; &#128100; DOC Interiors</span>\n        </div>\n\n    </div>\n\n</div>\n\n</div>\n\n";
 
 
 // ════════════════════════════════════════════════════════════════
@@ -1497,7 +1499,7 @@ var PREVIEW_TPL = "<div class=\"page\">\n\n    <div class=\"content\">\n        
 
 // ✏️  PASTE YOUR GAS WEB APP URL HERE — only change needed in this file
 // Apps Script → Deploy → Manage deployments → copy the Web App URL
-var GAS_URL   = 'https://script.google.com/macros/s/AKfycbx0IjogOHL92sJI7GspIeL5NquqzLc-TmKO_W2UcftPNF3Ef-PivncwdnfKftIKSO4WGw/exec';
+var GAS_URL   = 'https://script.google.com/macros/s/AKfycbydx0Mci6OWv8p2d-cXxmiFAgXdQUD0aU1xP_rlm_6xjB_COfIz-QObxOtFlc3joAftmg/exec';
 
 // These keys are kept for backward compatibility but no longer shown in UI
 var GAS_KEY   = 'doc_gas_url';
@@ -1513,7 +1515,7 @@ var S = {
   active:{catA:false,kitAcc:false,addWorks:false,catB:false,gypsum:false},
   rows:{catA:[],kitAcc:[],addWorks:[],catB:[],gypsum:[]},
   previewTemplate:null,
-  master:{categorys:[],items:[],shutterFinishs:[],materials:[],units:[]},  // master dropdowns
+  master:{categorys:[],items:[],shutterFinishs:[],materials:[],units:[],materialOptions:[],termsConditions:[]},    // master dropdowns
   notes:{catA:'',kitAcc:'',addWorks:'',catB:'',gypsum:''},  // per-table notes
   docType:'ESTIMATE',  // 'ESTIMATE' or 'QUOTATION' shown on cover
   fin:{
@@ -1575,7 +1577,10 @@ function showScreen(name){
   var tabs=document.querySelectorAll('.nav-tab');
   var map={entries:0,edit:1,preview:2,admin:3};
   if(map[name]!==undefined) tabs[map[name]].classList.add('active');
-  if(name==='preview') renderPreview();
+  if(name==='preview'){
+    // Refresh master data (including materialOptions) before rendering preview
+    loadMasterData(function(){ renderPreview(); });
+  }
   if(name==='admin'){
     var at=S.adminTab||'mCategories';
     document.querySelectorAll('.atab').forEach(function(b){b.classList.remove('active');});
@@ -1611,7 +1616,9 @@ function init(){
       S.master.items          = md.mItems          || [];
       S.master.shutterFinishs = md.mShutterFinish  || [];
       S.master.materials      = md.mMaterials       || [];
-      S.master.units          = md.mUnits           || [];
+      S.master.units           = md.mUnits            || [];
+      S.master.materialOptions  = md.mMaterialOptions   || [];
+      S.master.termsConditions  = md.mTermsConditions   || [];
       renderEntries(S.estimates);
     })
     .catch(function(e){toast('Init error: '+e.message,'err');})
@@ -2067,7 +2074,7 @@ function setSimple(key,i,f,v){
 function renderGypsum(){
   var dd     = S.dropdowns.gypsum || [];
   // Use S.master independent dropdowns — fall back to Sheets data if master is empty
-  var mItems = (S.master.items         ||[]).length ? S.master.items          : uniq(dd,'item');
+  var mItems = (S.master.items         ||[]).length ? S.master.categorys       : uniq(dd,'category');
   var mFins  = (S.master.shutterFinishs||[]).length ? S.master.shutterFinishs  : uniq(dd,'finish');
   var mMats  = (S.master.materials     ||[]).length ? S.master.materials       : uniq(dd,'material');
   var mUnits = (S.master.units         ||[]).length ? S.master.units           : uniq(dd,'unit');
@@ -2385,6 +2392,87 @@ function renderPreview(){
   injectPreview(wrap);
 }
 
+// buildMaterialHtml: converts S.master.materialOptions array to HTML
+// Each item is rendered as a <li> inside the material-box structure
+function buildMaterialHtml(items) {
+  if (!items || !items.length) {
+    return '<p style="color:#888;font-size:13px">No material options added yet.</p>';
+  }
+
+  // Parse lines into structured HTML:
+  //   Line ending with ':' (after trim)  → section-label header
+  //   Line starting with '|'             → table row  |Col1 | Col2
+  //   Blank line                         → close current list + spacer
+  //   Anything else                      → bullet <li> in current material-list
+
+  var html        = '';
+  var inList      = false;   // currently inside a <ul class="material-list">
+  var inTable     = false;   // currently inside a <table class="materials-bottom">
+
+  function closeList()  { if (inList)  { html += '</ul>';    inList  = false; } }
+  function closeTable() { if (inTable) { html += '</table>'; inTable = false; } }
+  function closeBoth()  { closeList(); closeTable(); }
+
+  items.forEach(function(rawLine) {
+    var line = rawLine.trim();
+
+    // ── Blank line → close current block ───────────────────────
+    if (!line) {
+      closeBoth();
+      return;
+    }
+
+    // ── Table row: line starts with '|' ─────────────────────────
+    // Format: |Left text | Right text
+    if (line.charAt(0) === '|') {
+      closeList();
+      if (!inTable) {
+        html += '<table class="materials-bottom"><tr>' +
+                '<td style="padding-bottom:2px">&#10148; <strong>Materials:</strong></td>' +
+                '<td></td></tr>';
+        inTable = true;
+      }
+      var parts = line.slice(1).split('|');
+      var col1  = h((parts[0] || '').trim());
+      var col2  = h((parts[1] || '').trim());
+      html += '<tr>' +
+              '<td>&#10148; ' + col1 + '</td>' +
+              '<td>' + (col2 ? '- ' + col2 : '') + '</td>' +
+              '</tr>';
+      return;
+    }
+
+    // ── Section header: line ends with ':' ──────────────────────
+    if (line.slice(-1) === ':') {
+      closeBoth();
+      html += '<div class="section-label">' + h(line) + '</div>';
+      return;
+    }
+
+    // ── Bullet point ─────────────────────────────────────────────
+    closeTable();
+    if (!inList) {
+      html += '<ul class="material-list">';
+      inList = true;
+    }
+    html += '<li>' + h(line) + '</li>';
+  });
+
+  closeBoth();
+  return html;
+}
+
+// buildTermsHtml: converts termsConditions array to <li> items
+function buildTermsHtml(items) {
+  if (!items || !items.length) {
+    return '<li>No terms added yet.</li>';
+  }
+  return items
+    .filter(function(l){ return l.trim(); })
+    .map(function(l){ return '<li>' + h(l.trim()) + '</li>'; })
+    .join('');
+}
+
 function injectPreview(wrap){
   var html = S.previewTemplate;
 
@@ -2404,6 +2492,13 @@ function injectPreview(wrap){
     CUSTOMER_CARE    : gv('f_customerCare')     || '+91 8943807777',
     PREPARED_BY      : gv('f_preparedBy')       || '—'
   };
+
+  // Inject material options (raw HTML — not escaped)
+  var matHtml   = buildMaterialHtml(S.master.materialOptions);
+  html = html.split('{{MATERIAL_CONTENT}}').join(matHtml);
+  var termsHtml = buildTermsHtml(S.master.termsConditions);
+  html = html.split('{{TERMS_CONTENT}}').join(termsHtml);
+
 
   Object.keys(fields).forEach(function(k){
     // split+join replaces ALL occurrences (unlike .replace which only replaces first)
@@ -2488,9 +2583,9 @@ function buildEstimateSections(){
   // ════════════════════════════════════════════════════════════
 
   var H_PAGE_FIRST   = 140;   // usable mm on page1 (hero takes ~42mm)
-  var H_PAGE_NORMAL  = 210;   // usable mm on pages without hero
+  var H_PAGE_NORMAL  = 205;   // conservative: accounts for block gap divs between tables
   var H_THEAD        = 10;
-  var H_ROW          = 8;
+  var H_ROW          = 10;  // increased to account for multi-line cell content
   var H_CAT_HDR      = 8;
   var H_SUBTOTAL     = 10;
   var H_QUOTED       = 20;
@@ -2591,12 +2686,25 @@ function buildEstimateSections(){
     // Flatten back to rows but track group boundaries
     // We paginate by group: a group must start on a new chunk if it doesn't fit
     var sectionStart = true;
-    var footerH = H_SUBTOTAL + H_QUOTED + (notes ? H_NOTES : 0);
+    var footerH = H_SUBTOTAL + (quot ? H_QUOTED : 0) + (notes ? H_NOTES : 0);
+
+    // ── Pre-check: if remaining space on current page can't fit
+    // badge + thead + at least one full group, start a new page now.
+    // This prevents a table starting with 1 row then immediately
+    // continuing on the next page.
+    if (currentPage.length > 0 && groups.length > 0) {
+      var firstGrpH  = groups[0].length * H_ROW;
+      // minNeeded: badge + thead + first group + footer + gap (conservative)
+      var minNeeded  = H_BADGE + H_THEAD + firstGrpH + footerH + H_GAP;
+      if (currentH + minNeeded > pageLimit()) {
+        commitPage(); // start the table fresh on a new page
+      }
+    }
 
     var gi = 0; // group index
     while (gi <= groups.length) {
 
-      var headerH = sectionStart ? H_BADGE + H_THEAD : H_CONTD + H_THEAD;
+      var headerH = sectionStart ? H_BADGE + H_THEAD : H_CONTD; // no thead on continuation
       var available = pageLimit() - currentH - headerH - H_GAP;
       var rowsLeft = groups.length - gi;
 
@@ -2646,14 +2754,17 @@ function buildEstimateSections(){
 
       if (isLast) {
         // Last chunk — include footer
+        // Only show thead on the very first chunk of this table (sectionStart=true)
+        var lastTable = sectionStart
+          ? '<table class="estimate-table">' + thead + '<tbody>' + rowsInChunk.join('') + subTot + quot + '</tbody></table>'
+          : '<table class="estimate-table"><tbody>' + rowsInChunk.join('') + subTot + quot + '</tbody></table>';
         var chunkH = headerH + chunkH_rows + footerH + H_GAP;
         if (currentPage.length > 0 && currentH + chunkH > pageLimit()) {
           commitPage();
         }
         addBlock(
           headerHtml +
-          '<table class="estimate-table">' + thead +
-          '<tbody>' + rowsInChunk.join('') + subTot + quot + '</tbody></table>' +
+          lastTable +
           (notes || ''),
           headerH + chunkH_rows + footerH
         );
@@ -2664,10 +2775,13 @@ function buildEstimateSections(){
         if (currentPage.length > 0 && currentH + chunkH2 > pageLimit()) {
           commitPage();
         }
+        // Continuation pages: show badge label only (no repeated thead)
+        var continuationTable = sectionStart
+          ? '<table class="estimate-table">' + thead + '<tbody>' + rowsInChunk.join('') + '</tbody></table>'
+          : '<table class="estimate-table"><tbody>' + rowsInChunk.join('') + '</tbody></table>';
         addBlock(
           headerHtml +
-          '<table class="estimate-table">' + thead +
-          '<tbody>' + rowsInChunk.join('') + '</tbody></table>' +
+          continuationTable +
           '<div style="font-family:Arial;font-size:9px;color:#888;text-align:right;padding:2px 0">(continued on next page…)</div>',
           chunkH2
         );
@@ -3070,11 +3184,13 @@ function loadAdminData(){
 
 // ── Master Dropdown Tables ─────────────────────────────────────────────
 var MASTER_KEYS = {
-  mCategories   :{ label:'Categories',    arrKey:'categorys'       },
-  mItems        :{ label:'Items',         arrKey:'items'           },
-  mShutterFinish:{ label:'Shutter Finish',arrKey:'shutterFinishs'  },
-  mMaterials    :{ label:'Materials',     arrKey:'materials'       },
-  mUnits        :{ label:'Units',         arrKey:'units'           }
+  mCategories    :{ label:'Categories',       arrKey:'categorys'        },
+  mItems         :{ label:'Items',            arrKey:'items'            },
+  mShutterFinish :{ label:'Shutter Finish',   arrKey:'shutterFinishs'   },
+  mMaterials     :{ label:'Materials',        arrKey:'materials'        },
+  mUnits         :{ label:'Units',            arrKey:'units'            },
+  mMaterialOptions:{ label:'Material Options',arrKey:'materialOptions'  },
+  mTermsConditions:{ label:'Terms & Conditions',arrKey:'termsConditions'}
 };
 
 function loadMasterData(cb){
@@ -3087,6 +3203,8 @@ function loadMasterData(cb){
       S.master.shutterFinishs  = data.mShutterFinish  || [];
       S.master.materials       = data.mMaterials       || [];
       S.master.units           = data.mUnits           || [];
+      S.master.materialOptions  = data.mMaterialOptions   || [];
+      S.master.termsConditions  = data.mTermsConditions   || [];
       if (cb) cb();
     })
     .catch(function(e){
@@ -3103,6 +3221,43 @@ function saveMasterKey(key, cb){
 function renderMasterTable(key){
   var el   = document.getElementById('adminContent');
   var meta = MASTER_KEYS[key];
+
+  // ── Textarea editors: Material Options and Terms & Conditions ──────────────
+  if (key === 'mMaterialOptions' || key === 'mTermsConditions') {
+    var arrKey = MASTER_KEYS[key].arrKey;
+    var arr    = S.master[arrKey] || [];
+    var currentText = arr.join('\n');
+
+    el.innerHTML =
+      '<div style="margin-bottom:10px">' +
+        '<p style="font-size:12px;color:var(--muted);margin-bottom:8px">' +
+          (key === 'mMaterialOptions'
+            ? '<strong>Formatting:</strong> Line ending <code>:</code>=header, normal line=bullet, <code>|Col1|Col2</code>=table row, blank line=section break'
+            : 'Each line = one bullet point (&#10022;) in the Terms and Conditions page.') +
+          '<br>Edit freely, then click <strong>Save</strong>.' +
+        '</p>' +
+        '<textarea id="matopt-textarea" rows="18"' +
+          ' style="width:100%;border:1.5px solid var(--border);border-radius:var(--r);' +
+                  'padding:10px 12px;font-size:13px;font-family:inherit;' +
+                  'resize:vertical;line-height:1.8"' +
+          ' placeholder="Enter each material option on a new line...">' +
+          h(currentText) +
+        '</textarea>' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;align-items:center">' +
+        '<button class="btn btn-primary" id="matopt-save-btn">&#128190; Save ' + MASTER_KEYS[key].label + '</button>' +
+        '<span id="matopt-status" style="font-size:12px;color:var(--muted)"></span>' +
+      '</div>';
+
+    // Attach save handler
+    var saveBtn = document.getElementById('matopt-save-btn');
+    if (saveBtn) {
+      saveBtn.onclick = (function(k){ return function(){ saveTextareaContent(k); }; })(key);
+    }
+    return;
+  }
+
+  // ── All other master tables: line-by-line add/edit/delete ─────────────────
   var arr  = S.master[meta.arrKey] || [];
 
   var rows = arr.map(function(val, i){
@@ -3110,9 +3265,9 @@ function renderMasterTable(key){
       '<td style="padding:10px 14px;font-size:13px">' + h(val) + '</td>' +
       '<td style="padding:8px 6px;white-space:nowrap;text-align:right">' +
         '<button class="btn btn-outline btn-sm master-edit-btn"' +
-                ' data-key="' + key + '" data-idx="' + i + '">✏️ Edit</button> ' +
+                ' data-key="' + key + '" data-idx="' + i + '">&#9999;&#65039; Edit</button> ' +
         '<button class="btn btn-danger btn-sm master-del-btn"' +
-                ' data-key="' + key + '" data-idx="' + i + '">🗑</button>' +
+                ' data-key="' + key + '" data-idx="' + i + '">&#128465;</button>' +
       '</td>' +
     '</tr>';
   }).join('');
@@ -3120,7 +3275,7 @@ function renderMasterTable(key){
   el.innerHTML =
     '<div style="margin-bottom:14px;display:flex;gap:8px;align-items:center">' +
       '<input id="mi-' + key + '" class="fc"' +
-             ' placeholder="New ' + h(meta.label) + ' value…"' +
+             ' placeholder="New ' + h(meta.label) + ' value\u2026"' +
              ' style="max-width:340px;padding:8px 12px"' +
              ' data-key="' + key + '">' +
       '<button class="btn btn-success master-add-btn" data-key="' + key + '">+ Add</button>' +
@@ -3132,30 +3287,24 @@ function renderMasterTable(key){
           '<tbody id="master-tbody-' + key + '">' + rows + '</tbody></table>'
       : '<div class="empty" id="master-tbody-' + key + '">No ' + h(meta.label) + ' added yet. Type above and click Add.</div>');
 
-  // ── Delegated listeners — no inline string args ──────────────────────────
-  var wrap = el;
-
-  // Enter key in input → add
+  // Enter key in input
   var inp = document.getElementById('mi-' + key);
   if (inp) {
     inp.onkeydown = function(ev){
       if (ev.key === 'Enter') addMasterItem(key);
     };
   }
-
   // Add button
   var addBtn = el.querySelector('.master-add-btn');
   if (addBtn) {
     addBtn.onclick = function(){ addMasterItem(this.dataset.key); }.bind(addBtn);
   }
-
   // Edit buttons
   el.querySelectorAll('.master-edit-btn').forEach(function(btn){
     btn.onclick = function(){
       editMasterItem(this.dataset.key, parseInt(this.dataset.idx, 10));
     }.bind(btn);
   });
-
   // Delete buttons
   el.querySelectorAll('.master-del-btn').forEach(function(btn){
     btn.onclick = function(){
@@ -3163,6 +3312,35 @@ function renderMasterTable(key){
     }.bind(btn);
   });
 }
+
+
+function saveTextareaContent(key){
+  var ta  = document.getElementById('matopt-textarea');
+  var st  = document.getElementById('matopt-status');
+  if (!ta) return;
+  var arrKey = MASTER_KEYS[key].arrKey;
+  // Preserve blank lines as section separators
+  var lines = ta.value.split('\n').map(function(l){ return l.trim(); });
+  while (lines.length && !lines[0])              lines.shift();
+  while (lines.length && !lines[lines.length-1]) lines.pop();
+  if (st) st.textContent = 'Saving\u2026';
+  loading(true);
+  gasPost('replaceAllMasterItems', { key: key, values: lines })
+    .then(function(res){
+      S.master[arrKey] = res.values || lines;
+      if (st) st.textContent = 'Saved \u2713 (' + lines.length + ' lines)';
+      toast(MASTER_KEYS[key].label + ' saved \u2713', 'ok');
+      setTimeout(function(){ if(st) st.textContent=''; }, 3000);
+    })
+    .catch(function(e){
+      if (st) st.textContent = 'Save failed';
+      toast('Save failed: ' + e.message, 'err');
+    })
+    .finally(function(){ loading(false); });
+}
+
+// Legacy alias
+function saveMaterialOptions(){ saveTextareaContent('mMaterialOptions'); }
 
 
 function addMasterItem(key){
