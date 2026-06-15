@@ -1226,7 +1226,7 @@ td{
       <span class="blk-hint">Select Category → Item to auto-fill fields. SIZE_X × SIZE_Y ÷ 915 = QTY SQFT | Total = QTY SQFT × Price</span>
     </div>
     <div class="blk-body"><div class="tbl-scroll"><table class="est-tbl">
-      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Shutter Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>Size X</th><th>Size Y</th><th>QTY SQFT</th><th>QTY</th><th>Price (₹)</th><th>Commission (₹)</th><th>Total (₹)</th><th></th></tr></thead>
+      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Shutter Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>Size X</th><th>Size Y</th><th>QTY SQFT</th><th>QTY</th><th>Price (₹)</th><th>Commission (%)</th><th>Total (₹)</th><th></th></tr></thead>
       <tbody id="tb-catA"></tbody>
       <tfoot><tr class="tot-row"><td colspan="13" class="tot-label">CATEGORY-A SUB TOTAL</td><td id="tot-catA">₹0</td><td></td></tr></tfoot>
     </table></div></div>
@@ -1259,9 +1259,9 @@ td{
   <div id="blk-addWorks" class="est-block" style="display:none">
     <div class="blk-hdr"><span>🔧 ADDITIONAL WORKS</span></div>
     <div class="blk-body"><div class="tbl-scroll"><table class="est-tbl">
-      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Shutter Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>Size X</th><th>Size Y</th><th>QTY SQFT</th><th>QTY</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
+      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Shutter Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>Size X</th><th>Size Y</th><th>QTY SQFT</th><th>QTY</th><th>Price (₹)</th><th>Commission (%)</th><th>Total (₹)</th><th></th></tr></thead>
       <tbody id="tb-addWorks"></tbody>
-      <tfoot><tr class="tot-row"><td colspan="12" class="tot-label">ADDITIONAL WORKS SUB TOTAL</td><td id="tot-addWorks">₹0</td><td></td></tr></tfoot>
+      <tfoot><tr class="tot-row"><td colspan="13" class="tot-label">ADDITIONAL WORKS SUB TOTAL</td><td id="tot-addWorks">₹0</td><td></td></tr></tfoot>
     </table></div></div>
     <button class="add-row-btn" onclick="addRow('addWorks')">+ Add Row</button>
   <div style="padding:10px 0 4px;">
@@ -1274,9 +1274,9 @@ td{
   <div id="blk-catB" class="est-block" style="display:none">
     <div class="blk-hdr"><span>📦 CATEGORY – B</span></div>
     <div class="blk-body"><div class="tbl-scroll"><table class="est-tbl">
-      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Shutter Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>Size X</th><th>Size Y</th><th>QTY SQFT</th><th>QTY</th><th>Price (₹)</th><th>Total (₹)</th><th></th></tr></thead>
+      <thead><tr><th>SL</th><th>Category</th><th>Item</th><th>Shutter Finish</th><th>Material</th><th>Unit</th><th>Size</th><th>Size X</th><th>Size Y</th><th>QTY SQFT</th><th>QTY</th><th>Price (₹)</th><th>Commission (%)</th><th>Total (₹)</th><th></th></tr></thead>
       <tbody id="tb-catB"></tbody>
-      <tfoot><tr class="tot-row"><td colspan="12" class="tot-label">CATEGORY-B SUB TOTAL</td><td id="tot-catB">₹0</td><td></td></tr></tfoot>
+      <tfoot><tr class="tot-row"><td colspan="13" class="tot-label">CATEGORY-B SUB TOTAL</td><td id="tot-catB">₹0</td><td></td></tr></tfoot>
     </table></div></div>
     <button class="add-row-btn" onclick="addRow('catB')">+ Add Row</button>
   <div style="padding:10px 0 4px;">
@@ -1734,6 +1734,10 @@ function editEstimate(id){
     if (k === 'catA') {
       S.rows[k].forEach(function(r){ if (r.commission === undefined) r.commission = 0; });
     }
+    // Backward-compat: ensure addWorks and catB rows always have a commission field
+    if (k === 'addWorks' || k === 'catB') {
+      S.rows[k].forEach(function(r){ if (r.commission === undefined) r.commission = 0; });
+    }
     togTable(k,S.active[k]);
   });
   renderAll(); showScreen('edit');
@@ -1775,8 +1779,8 @@ function toggleTable(key){
 var BLANK={
   catA    :function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',sizeX:'',sizeY:'',qtySqft:0,qty:'',price:'',commission:0,total:0};},
   kitAcc  :function(){return{product:'',brand:'',articleNo:'',pictureUrl:'',qty:'',price:'',total:0};},
-  addWorks:function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',sizeX:'',sizeY:'',qtySqft:0,qty:'',price:'',total:0};},
-  catB    :function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',sizeX:'',sizeY:'',qtySqft:0,qty:'',price:'',total:0};},
+  addWorks:function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',sizeX:'',sizeY:'',qtySqft:0,qty:'',price:'',commission:0,total:0};},
+  catB    :function(){return{category:'',item:'',shutterFinish:'',material:'',unit:'',size:'',sizeX:'',sizeY:'',qtySqft:0,qty:'',price:'',commission:0,total:0};},
   gypsum  :function(){return{item:'',finish:'',material:'',unit:'',size:'',qtySqft:'',price:'',total:0};}
 };
 function addRow(key){S.rows[key].push(BLANK[key]());renderTable(key);}
@@ -1836,7 +1840,7 @@ function renderCatA(){
       '<td><span class="computed" id="sqft-catA-' + i + '">' + (r.qtySqft||0) + '</span></td>' +
       '<td><input class="ti" type="text" data-row="' + i + '" data-field="qty"   value="' + h(r.qty||'')   + '" placeholder="0" style="width:52px" inputmode="decimal"></td>' +
       '<td><input class="ti" type="text" data-row="' + i + '" data-field="price" value="' + h(r.price||'') + '" placeholder="0" style="width:75px" inputmode="decimal"></td>' +
-      '<td><input class="ti catA-commission" type="text" data-row="' + i + '" data-field="commission" value="' + h((r.commission||0) === 0 ? '0' : r.commission) + '" placeholder="0" style="width:75px;background:#fffbe6" inputmode="decimal"></td>' +
+      '<td><input class="ti catA-commission" type="text" data-row="' + i + '" data-field="commission" value="' + h((r.commission||0) === 0 ? '0' : r.commission) + '" placeholder="0" style="width:55px;background:#fffbe6;text-align:center" inputmode="decimal"><span style="font-size:11px;color:#888;margin-left:2px">%</span></td>' +
       '<td><span class="computed" id="tot-catA-' + i + '">₹' + fmt(r.total||0) + '</span></td>' +
       '<td><button class="btn-del-row" data-key="catA" data-row="' + i + '">✕</button></td>' +
     '</tr>';
@@ -1869,7 +1873,7 @@ function renderCatA(){
     r.qtySqft = (sx&&sy) ? Math.round((sx*sy)/915) : 0;
     var price = parseFloat(r.price)||0, qty = parseFloat(r.qty)||0;
     var baseTotal = r.qtySqft > 0 ? r.qtySqft*price : qty*price;
-    r.total = baseTotal + (parseFloat(r.commission)||0);
+    r.total = baseTotal + (baseTotal * (parseFloat(r.commission)||0) / 100);
     var sqftEl = document.getElementById('sqft-catA-' + row);
     var totEl  = document.getElementById('tot-catA-'  + row);
     if (sqftEl) sqftEl.textContent = r.qtySqft || 0;
@@ -1929,7 +1933,7 @@ function setCatA(i, f, v){
   r.qtySqft = (sx&&sy) ? Math.round((sx*sy)/915) : 0;
   var price = parseFloat(r.price)||0, qty = parseFloat(r.qty)||0;
   var baseTotal = r.qtySqft > 0 ? r.qtySqft*price : qty*price;
-  r.total   = baseTotal + (parseFloat(r.commission)||0);
+  r.total   = baseTotal + (baseTotal * (parseFloat(r.commission)||0) / 100);
 
   // Update computed cells in-place — NO full table re-render
   var sqftEl = document.getElementById('sqft-catA-' + i);
@@ -2009,6 +2013,7 @@ function renderSimple(key){
       '<td><span class="computed" id="sqft-'+key+'-'+i+'">'+(r.qtySqft||0)+'</span></td>'+
       '<td><input class="ti" type="text" data-row="'+i+'" data-field="qty"   value="'+h(r.qty||'')+'" placeholder="0" style="width:52px" inputmode="decimal"></td>'+
       '<td><input class="ti" type="text" data-row="'+i+'" data-field="price" value="'+h(r.price||'')+'" placeholder="0" style="width:75px" inputmode="decimal"></td>'+
+      '<td><input class="ti" type="text" data-row="'+i+'" data-field="commission" value="'+h((r.commission||0)===0?'0':r.commission)+'" placeholder="0" style="width:55px;background:#fffbe6;text-align:center" inputmode="decimal"><span style="font-size:11px;color:#888;margin-left:2px">%</span></td>'+
       '<td><span class="computed" id="tot-'+key+'-'+i+'">₹'+fmt(r.total||0)+'</span></td>'+
       '<td><button class="btn-del-row" data-key="'+key+'" data-row="'+i+'">✕</button></td>'+
     '</tr>';
@@ -2030,7 +2035,8 @@ function renderSimple(key){
     var rsx=parseFloat(rs2.sizeX)||0,rsy=parseFloat(rs2.sizeY)||0;
     rs2.qtySqft=(rsx&&rsy)?Math.round((rsx*rsy)/915):0;
     var pr=parseFloat(rs2.price)||0,qty=parseFloat(rs2.qty)||0;
-    rs2.total=rs2.qtySqft>0?rs2.qtySqft*pr:qty*pr;
+    var baseTotal=rs2.qtySqft>0?rs2.qtySqft*pr:qty*pr;
+    rs2.total=baseTotal+(baseTotal*(parseFloat(rs2.commission)||0)/100);
     var sqEl=document.getElementById('sqft-'+key+'-'+row);
     var totEl=document.getElementById('tot-'+key+'-'+row);
     if(sqEl)sqEl.textContent=rs2.qtySqft||0;
@@ -2384,7 +2390,7 @@ function previewById(id){
     if(el)el.value=S.notes[k];
   });
   Object.keys(S.active).forEach(function(k){S.active[k]=!!(tables[k]&&tables[k].length);S.rows[k]=tables[k]||[];
-    if (k === 'catA') { S.rows[k].forEach(function(r){ if (r.commission === undefined) r.commission = 0; }); }
+    if (k === 'catA' || k === 'addWorks' || k === 'catB') { S.rows[k].forEach(function(r){ if (r.commission === undefined) r.commission = 0; }); }
   });
   ['clientName','estimationNo','estimateDate','siteAddress','mobile','contactNumber',
    'email','bdo','interiorDesigner','customerCare','preparedBy'].forEach(function(k){
