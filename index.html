@@ -594,8 +594,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 
             /* TABLE SECTION */
             .table-section {
-                padding: 0;   /* 🔴 remove 15mm */
-                margin-top: 10mm; /* optional spacing between image & table */
+                padding: 0 0 16mm 0;
+                margin-top: 10mm;
             }
 
             /* TABLE STYLE */
@@ -626,12 +626,13 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     border-collapse: collapse;
     table-layout: fixed;
     font-family: Arial, sans-serif;
+    outline: 1px solid #d6d1c9;
 }
 
 /* CELL STYLE */
 .info-table-new td {
     border: 1px solid #d6d1c9;
-    padding: 10px 12px;
+    padding: 6px 10px;
     vertical-align: top;
 
     /* 🔴 makes label look like design */
@@ -643,8 +644,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 /* VALUE (second line) */
 .info-table-new td span {
     display: block;
-    margin-top: 4px;
-    font-size: 14px;
+    margin-top: 2px;
+    font-size: 13px;
     color: #000;
     letter-spacing: normal;
 }
@@ -1204,6 +1205,10 @@ td{
       <div class="fg"><label>Interior Designer</label><input class="fc" id="f_interiorDesigner" type="text"/></div>
       <div class="fg"><label>Customer Care</label><input class="fc" id="f_customerCare" type="text"/></div>
       <div class="fg"><label>Prepared By</label><input class="fc" id="f_preparedBy" type="text"/></div>
+      <div class="fg" id="fg-agreementPayment" style="display:none">
+        <label style="color:var(--gold);font-weight:700">Agreement Payment</label>
+        <input class="fc" id="f_agreementPayment" type="text" inputmode="decimal" placeholder="Enter agreement payment amount" oninput="recalcFin()"/>
+      </div>
     </div>
   </div>
 
@@ -1451,17 +1456,17 @@ td{
     <div style="display:flex;gap:16px;align-items:center">
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;font-weight:600">
         <input type="radio" name="docType" id="docType-estimate" value="ESTIMATE" checked
-          onchange="S.docType=this.value" style="accent-color:var(--gold);width:16px;height:16px">
+          onchange="S.docType=this.value;syncAgreementField()" style="accent-color:var(--gold);width:16px;height:16px">
         ESTIMATE
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;font-weight:600">
         <input type="radio" name="docType" id="docType-quotation" value="QUOTATION"
-          onchange="S.docType=this.value" style="accent-color:var(--gold);width:16px;height:16px">
+          onchange="S.docType=this.value;syncAgreementField()" style="accent-color:var(--gold);width:16px;height:16px">
         QUOTATION
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;font-weight:600">
         <input type="radio" name="docType" id="docType-agreement" value="AGREEMENT"
-          onchange="S.docType=this.value" style="accent-color:var(--gold);width:16px;height:16px">
+          onchange="S.docType=this.value;syncAgreementField()" style="accent-color:var(--gold);width:16px;height:16px">
         AGREEMENT
       </label>
     </div>
@@ -1529,7 +1534,7 @@ td{
 //  Contains all 7 A4 pages. {{PLACEHOLDERS}} are replaced at runtime.
 //  No separate preview-template.html file needed.
 // ══════════════════════════════════════════════════════════════════
-var PREVIEW_TPL = "<div class=\"page\">\n\n    <div class=\"content\">\n        <div class=\"title-text_1\">\n            {{DOC_TYPE}}\n        </div>\n    </div>\n\n   \n\n    <div class=\"top-header\">\n        <div class=\"left-rect\"></div>\n\n        <div class=\"logo-section\">\n            <img src=\"Logo.png\" class=\"logo\">\n        <div class=\"logo-text\">DOC INTERIORS</div>\n        </div>\n\n        <div class=\"right-rect\"></div>\n    </div>\n\n    \n    <div class=\"header-img\">\n        <div class=\"overlay-text\">\n            <div class=\"title-text\">\n            <span class=\"first-letter\">D</span>EPTH<br>\n            <span class=\"first-letter\">O</span>F<br>\n            <span class=\"first-letter\">C</span>REATION\n            </div>\n        </div>\n    </div>\n\n\n     <div class=\"bottom-section\">\n        <div class=\"left-rect\"></div>\n        <div class=\"bottom-content\">\n            <div class=\"tagline\">\n                100% CUSTOMIZED CONTEMPORARY\n            </div>\n\n            <div class=\"categories\">\n                KITCHEN <span>|</span> BEDROOM <span>|</span> LIVING <span>|</span> DINING\n            </div>\n\n            <div class=\"website\">\n                www.docinteriors.com\n            <div class=\"underline\"></div>\n            </div>\n    </div>\n\n    </div>\n    \n\n</div>\n\n\n\n<div class=\"page\">\n\n    <!-- IMAGE GRID -->\n    <div class=\"image-grid\">\n        <div class=\"left-images\">\n            <div class=\"img top-img\"></div>\n            <div class=\"img bottom-img\"></div>\n        </div>\n        <div class=\"right-image\"></div>\n    </div>\n\n    <!-- TEXT SECTION -->\n    <div class=\"text-section\">\n        <h3>Thank you for considering DOC Interiors.</h3>\n\n        <p class=\"sub-text\">\n            Can't wait for more expert insights?<br>\n            We recommend you to get in touch with us whenever possible. \n            We're always at your service.\n        </p>\n    </div>\n\n    <!-- PROCESS SECTION -->\n    <div class=\"process-section\">\n\n        <div class=\"process-title\">            \n            GET YOUR HOME INTERIOR DONE WITHIN 35-45 WORKING DAYS\n        </div>\n\n        <div class=\"process-steps\">\n\n            <div class=\"step\">\n                <img src=\"Logo_1.png\">\n                <p>SPEAK TO OUR DESIGN CONSULTANT AND</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_2.png\">\n                <p>DETAILED DRAWING AND APPROVAL</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_3.png\">\n                <p>PRODUCTION AT OWN FACTORY</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_4.png\">\n                <p>MATERIAL DELIVERY WITHIN 45 DAYS</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_5.png\">\n                <p>INSTALLATION AT SITE</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_6.png\">\n                <p>ON-TIME PROJECT HANDOVER</p>\n            </div>\n\n        </div>\n    </div>\n\n    <div class=\"website\">\n                www.docinteriors.com\n    <div class=\"underline\"></div>\n    \n\n    </div>\n</div>\n\n\n<div class=\"page\">\n\n  <div class=\"page-inner\">  \n    <!-- HERO IMAGE -->\n  <!-- HERO -->\n        <div class=\"hero-section\">\n            <div class=\"hero-section-inner\">\n                <div class=\"hero-overlay\">\n                    <div class=\"hero-text\">\n                        depth of<br>creation\n                    </div>\n                </div>\n            </div>\n        </div>\n\n    <!-- TABLE SECTION -->\n    <div class=\"table-section\"> \n        <table class=\"info-table-new\">\n\n    <tr>\n        <td>DATE<br><span>{{DATE}}</span></td>\n        <td>ESTIMATION NO.<br><span>{{ESTIMATION_NO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>CLIENT<br><span>{{CLIENT_NAME}}</span></td>\n        <td>BDO<br><span>{{BDO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>SITE ADDRESS<br><span>{{SITE_ADDRESS}}</span></td>\n        <td>MOBILE<br><span>{{MOBILE}}</span></td>\n    </tr>\n\n    <tr>\n        <td>E-MAIL<br><span>{{EMAIL}}</span></td>\n        <td>E-MAIL (BDO)<br><span>{{EMAIL_BDO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>CONTACT NUMBER<br><span>{{CONTACT_NUMBER}}</span></td>\n        <td>INTERIOR DESIGNER<br><span>{{INTERIOR_DESIGNER}}</span></td>\n    </tr>\n\n    <tr>\n        <td class=\"highlight\">CUSTOMER CARE<br><span>{{CUSTOMER_CARE}}</span></td>\n        <td>PREPARED BY<br><span>{{PREPARED_BY}}</span></td>\n    </tr>\n\n        </table>\n    </div>\n    </div>\n\n     <div class=\"website\">\n                www.docinteriors.com\n    <div class=\"underline\"></div>\n\n    \n\n    </div>\n    </div>\n\n\n{{ESTIMATE_SECTIONS}}\n\n\n{{MATERIAL_PAGE_START}}<div class=\"page\">\n\n<div class=\"page5-wrap\">\n\n    <div class=\"material-title\">\n        MATERIAL OPTIONS\n    </div>\n\n    <div class=\"material-box\">{{MATERIAL_CONTENT}}</div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>{{MATERIAL_PAGE_END}}\n\n\n<div class=\"page\">\n\n<div class=\"page6-wrap\">\n\n    <!-- LEFT TAN PANEL -->\n    <div class=\"warranty-left\">\n\n        <div class=\"warranty-title\">\n            WARRANTY\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 10 Years warranty against avoidable, unnatural defects in\n            material supplied under normal usage.\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 Manufactures warranty for fittings, hardware and accessories.\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 Life time service will be provided up till 1st year two free\n            service after that per visit chargeable at Rs.2000/- plus any\n            replacement charges.\n        </div>\n\n    </div>\n\n\n    <!-- RIGHT PANEL -->\n    <div class=\"warranty-right\">\n\n        <div class=\"quote-icon\">\n            \u275d\n        </div>\n\n        <div class=\"vertical-quote\">\n            THE KEY TO GREATEST DESIGNING IS CAPTURING THE SPIRIT OF THE CLIENT AND THE ESSENCE OF THE SPACE\n        </div>\n\n        <div class=\"sofa-image\"></div>\n\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n<div class=\"page\">\n\n<div class=\"page7-wrap\">\n\n    <div class=\"terms-title\">\n        TERMS AND CONDITIONS\n    </div>\n\n    <ul class=\"terms-list\">{{TERMS_CONTENT}}</ul>\n\n    <div class=\"terms-tagline\">\n        <span class=\"big-d\">D</span>\n        <div class=\"tagline-text\">\n            ESIGN IS THINKING<br>\n            MADE VISUAL\n        </div>\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n</div>\n\n<div class=\"page\">\n\n<div class=\"page8-wrap\">\n\n    <!-- Top website URL -->\n    <div class=\"page8-website\">www.docinteriors.com</div>\n\n    <!-- Body text -->\n    <div class=\"page8-body\">\n   <span class=\"bottomfootertext\">This is to facilitate the easy and transparent processing of our work deal. <br> We request you to read this carefully and contact us if you need <br>Any further clarification regarding anything mentioned here. Thanks again!     </span>   </div>\n\n    <!-- Bottom contact card -->\n    <div class=\"page8-footer\">\n\n        <!-- DOC logo \u2014 uses the same Logo.png as the cover page -->\n          <!-- Address -->\n        <div class=\"page8-address\">\n      <div class=\"logo-section_1\" style=\"flex-direction:column;align-items:center;justify-content:center;margin-bottom:6px\">\n            <img src=\"Logo.png\" class=\"logo\">\n            <div class=\"logo-text\">DOC INTERIORS</div>\n        </div>\n\n      <span class=\"page8-pin\">&#128205;</span>\n            CHAPPARA | KODUNGALLUR | THRISSUR\n            <span class=\"page8-pin\">&#128205;</span>\n        </div>\n        <div class=\"page8-phones\">\n            +91 8943807777, +91 8943837777, +91 8943847777\n        </div>\n\n        <!-- Contact row -->\n             </div>\n\n        <!-- Contact row -->\n        <div class=\"page8-contacts\">\n            <span>&#9993; interiorsdoc@gmail.com</span>\n            <span>&#127760; www.docinteriors.com</span>\n            <span>&#128247; &#128100; DOC Interiors</span>\n        </div>\n\n    </div>\n\n</div>\n\n</div>\n\n";
+var PREVIEW_TPL = "<div class=\"page\">\n\n    <div class=\"content\">\n        <div class=\"title-text_1\">\n            {{DOC_TYPE}}\n        </div>\n    </div>\n\n   \n\n    <div class=\"top-header\">\n        <div class=\"left-rect\"></div>\n\n        <div class=\"logo-section\">\n            <img src=\"Logo.png\" class=\"logo\">\n        <div class=\"logo-text\">DOC INTERIORS</div>\n        </div>\n\n        <div class=\"right-rect\"></div>\n    </div>\n\n    \n    <div class=\"header-img\">\n        <div class=\"overlay-text\">\n            <div class=\"title-text\">\n            <span class=\"first-letter\">D</span>EPTH<br>\n            <span class=\"first-letter\">O</span>F<br>\n            <span class=\"first-letter\">C</span>REATION\n            </div>\n        </div>\n    </div>\n\n\n     <div class=\"bottom-section\">\n        <div class=\"left-rect\"></div>\n        <div class=\"bottom-content\">\n            <div class=\"tagline\">\n                100% CUSTOMIZED CONTEMPORARY\n            </div>\n\n            <div class=\"categories\">\n                KITCHEN <span>|</span> BEDROOM <span>|</span> LIVING <span>|</span> DINING\n            </div>\n\n            <div class=\"website\">\n                www.docinteriors.com\n            <div class=\"underline\"></div>\n            </div>\n    </div>\n\n    </div>\n    \n\n</div>\n\n\n\n<div class=\"page\">\n\n    <!-- IMAGE GRID -->\n    <div class=\"image-grid\">\n        <div class=\"left-images\">\n            <div class=\"img top-img\"></div>\n            <div class=\"img bottom-img\"></div>\n        </div>\n        <div class=\"right-image\"></div>\n    </div>\n\n    <!-- TEXT SECTION -->\n    <div class=\"text-section\">\n        <h3>Thank you for considering DOC Interiors.</h3>\n\n        <p class=\"sub-text\">\n            Can't wait for more expert insights?<br>\n            We recommend you to get in touch with us whenever possible. \n            We're always at your service.\n        </p>\n    </div>\n\n    <!-- PROCESS SECTION -->\n    <div class=\"process-section\">\n\n        <div class=\"process-title\">            \n            GET YOUR HOME INTERIOR DONE WITHIN 35-45 WORKING DAYS\n        </div>\n\n        <div class=\"process-steps\">\n\n            <div class=\"step\">\n                <img src=\"Logo_1.png\">\n                <p>SPEAK TO OUR DESIGN CONSULTANT AND</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_2.png\">\n                <p>DETAILED DRAWING AND APPROVAL</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_3.png\">\n                <p>PRODUCTION AT OWN FACTORY</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_4.png\">\n                <p>MATERIAL DELIVERY WITHIN 45 DAYS</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_5.png\">\n                <p>INSTALLATION AT SITE</p>\n            </div>\n\n            <div class=\"step\">\n                <img src=\"Logo_6.png\">\n                <p>ON-TIME PROJECT HANDOVER</p>\n            </div>\n\n        </div>\n    </div>\n\n    <div class=\"website\">\n                www.docinteriors.com\n    <div class=\"underline\"></div>\n    \n\n    </div>\n</div>\n\n\n<div class=\"page\">\n\n  <div class=\"page-inner\">  \n    <!-- HERO IMAGE -->\n  <!-- HERO -->\n        <div class=\"hero-section\">\n            <div class=\"hero-section-inner\">\n                <div class=\"hero-overlay\">\n                    <div class=\"hero-text\">\n                        depth of<br>creation\n                    </div>\n                </div>\n            </div>\n        </div>\n\n    <!-- TABLE SECTION -->\n    <div class=\"table-section\"> \n        <table class=\"info-table-new\">\n\n    <tr>\n        <td>DATE<br><span>{{DATE}}</span></td>\n        <td>ESTIMATION NO.<br><span>{{ESTIMATION_NO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>CLIENT<br><span>{{CLIENT_NAME}}</span></td>\n        <td>BDO<br><span>{{BDO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>SITE ADDRESS<br><span>{{SITE_ADDRESS}}</span></td>\n        <td>MOBILE<br><span>{{MOBILE}}</span></td>\n    </tr>\n\n    <tr>\n        <td>E-MAIL<br><span>{{EMAIL}}</span></td>\n        <td>E-MAIL (BDO)<br><span>{{EMAIL_BDO}}</span></td>\n    </tr>\n\n    <tr>\n        <td>CONTACT NUMBER<br><span>{{CONTACT_NUMBER}}</span></td>\n        <td>INTERIOR DESIGNER<br><span>{{INTERIOR_DESIGNER}}</span></td>\n    </tr>\n\n{{AGREEMENT_PAYMENT_ROW}}    <tr>\n        <td class=\"highlight\">CUSTOMER CARE<br><span>{{CUSTOMER_CARE}}</span></td>\n        <td>PREPARED BY<br><span>{{PREPARED_BY}}</span></td>\n    </tr>\n\n        </table>\n    </div>\n    </div>\n\n     <div class=\"website\">\n                www.docinteriors.com\n    <div class=\"underline\"></div>\n\n    \n\n    </div>\n    </div>\n\n\n{{ESTIMATE_SECTIONS}}\n\n\n{{MATERIAL_PAGE_START}}<div class=\"page\">\n\n<div class=\"page5-wrap\">\n\n    <div class=\"material-title\">\n        MATERIAL OPTIONS\n    </div>\n\n    <div class=\"material-box\">{{MATERIAL_CONTENT}}</div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>{{MATERIAL_PAGE_END}}\n\n\n<div class=\"page\">\n\n<div class=\"page6-wrap\">\n\n    <!-- LEFT TAN PANEL -->\n    <div class=\"warranty-left\">\n\n        <div class=\"warranty-title\">\n            WARRANTY\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 10 Years warranty against avoidable, unnatural defects in\n            material supplied under normal usage.\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 Manufactures warranty for fittings, hardware and accessories.\n        </div>\n\n        <div class=\"warranty-item\">\n            \u2756 Life time service will be provided up till 1st year two free\n            service after that per visit chargeable at Rs.2000/- plus any\n            replacement charges.\n        </div>\n\n    </div>\n\n\n    <!-- RIGHT PANEL -->\n    <div class=\"warranty-right\">\n\n        <div class=\"quote-icon\">\n            \u275d\n        </div>\n\n        <div class=\"vertical-quote\">\n            THE KEY TO GREATEST DESIGNING IS CAPTURING THE SPIRIT OF THE CLIENT AND THE ESSENCE OF THE SPACE\n        </div>\n\n        <div class=\"sofa-image\"></div>\n\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n<div class=\"page\">\n\n<div class=\"page7-wrap\">\n\n    <div class=\"terms-title\">\n        TERMS AND CONDITIONS\n    </div>\n\n    <ul class=\"terms-list\">{{TERMS_CONTENT}}</ul>\n\n    <div class=\"terms-tagline\">\n        <span class=\"big-d\">D</span>\n        <div class=\"tagline-text\">\n            ESIGN IS THINKING<br>\n            MADE VISUAL\n        </div>\n    </div>\n\n</div>\n\n<div class=\"website\">\nwww.docinteriors.com\n<div class=\"underline\"></div>\n</div>\n\n</div>\n\n\n</div>\n\n<div class=\"page\">\n\n<div class=\"page8-wrap\">\n\n    <!-- Top website URL -->\n    <div class=\"page8-website\">www.docinteriors.com</div>\n\n    <!-- Body text -->\n    <div class=\"page8-body\">\n   <span class=\"bottomfootertext\">This is to facilitate the easy and transparent processing of our work deal. <br> We request you to read this carefully and contact us if you need <br>Any further clarification regarding anything mentioned here. Thanks again!     </span>   </div>\n\n    <!-- Bottom contact card -->\n    <div class=\"page8-footer\">\n\n        <!-- DOC logo \u2014 uses the same Logo.png as the cover page -->\n          <!-- Address -->\n        <div class=\"page8-address\">\n      <div class=\"logo-section_1\" style=\"flex-direction:column;align-items:center;justify-content:center;margin-bottom:6px\">\n            <img src=\"Logo.png\" class=\"logo\">\n            <div class=\"logo-text\">DOC INTERIORS</div>\n        </div>\n\n      <span class=\"page8-pin\">&#128205;</span>\n            CHAPPARA | KODUNGALLUR | THRISSUR\n            <span class=\"page8-pin\">&#128205;</span>\n        </div>\n        <div class=\"page8-phones\">\n            +91 8943807777, +91 8943837777, +91 8943847777\n        </div>\n\n        <!-- Contact row -->\n             </div>\n\n        <!-- Contact row -->\n        <div class=\"page8-contacts\">\n            <span>&#9993; interiorsdoc@gmail.com</span>\n            <span>&#127760; www.docinteriors.com</span>\n            <span>&#128247; &#128100; DOC Interiors</span>\n        </div>\n\n    </div>\n\n</div>\n\n</div>\n\n";
 
 
 // ════════════════════════════════════════════════════════════════
@@ -1778,6 +1783,10 @@ function editEstimate(id){
   // Restore material toggle
   S.showMaterial = (savedFin.showMaterial !== undefined) ? savedFin.showMaterial : true;
   syncMatToggle();
+  // Restore agreement payment from _fin blob and sync field visibility
+  var apFld = document.getElementById('f_agreementPayment');
+  if(apFld) apFld.value = savedFin.agreementPayment || '';
+  syncAgreementField();
   recalcFin();
   Object.keys(S.notes).forEach(function(k){
     S.notes[k]=savedNotes[k]||'';
@@ -1798,6 +1807,11 @@ function editEstimate(id){
     togTable(k,S.active[k]);
   });
   renderAll(); showScreen('edit');
+}
+// ── Agreement Payment field visibility ───────────────────────────
+function syncAgreementField(){
+  var fg = document.getElementById('fg-agreementPayment');
+  if(fg) fg.style.display = (S.docType === 'AGREEMENT') ? '' : 'none';
 }
 // ── Material Options toggle ───────────────────────────────────────
 function toggleShowMaterial(){
@@ -1828,10 +1842,12 @@ function clearForm(){
   // Reset financial summary
   S.fin={}; S.docType='ESTIMATE';
   ['fin-gstPct','fin-discount','fin-token','fin-advance','fin-partPayment',
-   'fin-tokenDesc','fin-advanceDesc','fin-partPaymentDesc','fin-finalPaymentDesc']
+   'fin-tokenDesc','fin-advanceDesc','fin-partPaymentDesc','fin-finalPaymentDesc',
+   'f_agreementPayment']
     .forEach(function(id){
       var el=document.getElementById(id); if(el)el.value='';
     });
+  syncAgreementField();
   // Reset labels to defaults
   var labelDefaults={tokenLabel:'TOKEN',advanceLabel:'ADVANCE',
                      partPaymentLabel:'PART PAYMENT',finalPaymentLabel:'FINAL PAYMENT'};
@@ -2405,7 +2421,8 @@ function recalcFin(){
     finalPayment: finalPay,
     finalPaymentLabel: (document.getElementById('fin-finalPaymentLabel')||{value:'FINAL PAYMENT'}).value || 'FINAL PAYMENT',
     finalPaymentDesc : (document.getElementById('fin-finalPaymentDesc')||{value:''}).value || '',
-    showMaterial: S.showMaterial
+    showMaterial: S.showMaterial,
+    agreementPayment: (document.getElementById('f_agreementPayment')||{value:''}).value || ''
   };
 }
 
@@ -2606,6 +2623,13 @@ function injectPreview(wrap){
     CUSTOMER_CARE    : gv('f_customerCare')     || '+91 8943807777',
     PREPARED_BY      : gv('f_preparedBy')       || '—'
   };
+
+  // Agreement Payment row — reads from S.fin (saved in _fin blob), not client fields
+  var agreeAmt = (S.fin && S.fin.agreementPayment) ? S.fin.agreementPayment : '';
+  var agreeRow = (S.docType === 'AGREEMENT' && agreeAmt)
+    ? '    <tr>\n        <td>AGREEMENT PAYMENT<br><span>' + h(agreeAmt) + '</span></td>\n        <td></td>\n    </tr>\n'
+    : '';
+  html = html.split('{{AGREEMENT_PAYMENT_ROW}}').join(agreeRow);
 
   // Inject material options (raw HTML — not escaped)
   var matHtml   = buildMaterialHtml(S.master.materialOptions);
@@ -3852,6 +3876,7 @@ function confirmAdminDelete(){
     .finally(function(){loading(false);S.adminDel=null;});
 }
 
+// TEST CODES
 // ── Bootstrap ────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('f_estimateDate').value=new Date().toISOString().split('T')[0];
@@ -3869,7 +3894,6 @@ document.addEventListener('DOMContentLoaded',function(){
       toast('Cannot reach backend: '+e.message+'. Check GAS_URL in the code.','err');
     });
 });
-// TEST COMMENTS
 </script>
 </body>
 </html>
