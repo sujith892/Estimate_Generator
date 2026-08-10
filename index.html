@@ -1643,7 +1643,6 @@ var PREVIEW_TPL = "<div class=\"page\">\n\n    <div class=\"content\">\n        
 //var GAS_URL   = 'https://script.google.com/macros/s/AKfycbydx0Mci6OWv8p2d-cXxmiFAgXdQUD0aU1xP_rlm_6xjB_COfIz-QObxOtFlc3joAftmg/exec';
 var GAS_URL   = 'https://script.google.com/macros/s/AKfycbxuu3aznT8jixnqJ7eOl_wiQWRpy61vvcUgb54BeIEsa48xd1ckYYGDadhl6p-KF4n9wg/exec';
 
-
 // These keys are kept for backward compatibility but no longer shown in UI
 var GAS_KEY   = 'doc_gas_url';
 var SS_ID_KEY = 'doc_ss_id';
@@ -1858,7 +1857,7 @@ function doLogin(){
       // Show Admin tab only for ADMIN role
       var adminTab = document.getElementById('nav-admin-tab');
       if(adminTab) adminTab.style.display = (d.role==='ADMIN') ? '' : 'none';
-      return init();
+      return init().then(function(){ showScreen('entries'); });
     })
     .catch(function(e){
       errEl.textContent = e.message || 'Login failed.';
@@ -1877,23 +1876,26 @@ function doLogout(){
 
 // ── User Management (Admin tab) ───────────────────────────────────
 var userModalMode = 'add'; var userModalRow = null;
+var _usersCache = {};   // rowIndex → user object, used by edit/delete buttons
 function loadUsersTab(){
   var content = document.getElementById('adminContent');
   content.innerHTML='<div class="empty">Loading users…</div>';
   gasGet('getUsers').then(function(users){
     users = users||[];
+    _usersCache = {};
     var html = '<div style="display:flex;justify-content:flex-end;margin-bottom:12px">' +
-      '<button class="btn btn-primary btn-sm" onclick="openUserModal()">+ Add User</button></div>' +
+      '<button class="btn btn-primary btn-sm" onclick="openUserModal(null)">+ Add User</button></div>' +
       '<table class="data-tbl"><thead><tr><th>#</th><th>Username</th><th>Role</th><th>Created</th><th>Actions</th></tr></thead><tbody>';
     if(!users.length){ html+='<tr><td colspan="5" class="empty">No users found.</td></tr>'; }
     users.forEach(function(u,i){
+      _usersCache[u.rowIndex] = u;   // store full object by rowIndex
       html+='<tr>'+
         '<td style="color:var(--muted);font-size:11px">'+(i+1)+'</td>'+
         '<td><strong>'+h(u.username)+'</strong></td>'+
-        '<td><span class="badge-active" style="'+(u.role==='ADMIN'?'background:#1a1a2e;color:#b79c7d':'')+'">'+h(u.role)+'</span></td>'+
+        '<td><span class="badge-active" style="'+(u.role==='ADMIN'?'background:var(--navy);color:var(--gold)':'')+'">'+h(u.role)+'</span></td>'+
         '<td style="font-size:12px;color:var(--muted)">'+h(u.created?new Date(u.created).toLocaleDateString('en-IN'):'—')+'</td>'+
         '<td style="white-space:nowrap">'+
-          '<button class="btn btn-outline btn-sm" onclick="openUserModal('+JSON.stringify(u)+')">✏️ Edit</button> '+
+          '<button class="btn btn-outline btn-sm" onclick="openUserModal('+u.rowIndex+')">✏️ Edit</button> '+
           '<button class="btn btn-danger btn-sm" onclick="promptDeleteUser('+u.rowIndex+',\''+h(u.username)+'\')">🗑</button>'+
         '</td></tr>';
     });
@@ -1901,7 +1903,8 @@ function loadUsersTab(){
     content.innerHTML=html;
   }).catch(function(e){ content.innerHTML='<div class="empty">Error: '+h(e.message)+'</div>'; });
 }
-function openUserModal(user){
+function openUserModal(rowIndex){
+  var user = rowIndex ? (_usersCache[rowIndex] || null) : null;
   userModalMode = user ? 'edit' : 'add';
   userModalRow  = user || null;
   document.getElementById('userModalTitle').textContent = user ? '✏️ Edit User' : '👤 Add User';
