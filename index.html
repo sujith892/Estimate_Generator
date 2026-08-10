@@ -224,7 +224,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
             color: white;
             padding: 30px 40px;
             width: 50%;
-            height: 170mm;
+            height: 184mm;
             box-sizing: border-box;
         }
 
@@ -796,7 +796,32 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 
 
 
-/* ===== EXACT IMAGE STYLE PAGE 5 ===== */
+/* ── Login Screen ────────────────────────────────────────────── */
+#screen-login {
+  display:flex; align-items:center; justify-content:center;
+  min-height:100vh; background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);
+  position:fixed; inset:0; z-index:9999;
+}
+.login-card {
+  background:#fff; border-radius:8px; padding:44px 40px 36px;
+  width:100%; max-width:380px; box-shadow:0 24px 80px rgba(0,0,0,.5);
+  text-align:center;
+}
+.login-logo { font-family:'Georgia',serif; font-size:26px; font-weight:700; color:#1a1a2e; letter-spacing:2px; margin-bottom:4px; }
+.login-logo span { color:#b79c7d; }
+.login-sub  { font-size:12px; color:#999; letter-spacing:2px; text-transform:uppercase; margin-bottom:28px; }
+.login-err  { background:#ffeaea; color:#c0392b; border-radius:4px; padding:8px 12px; font-size:13px; margin-bottom:14px; display:none; }
+.login-field{ text-align:left; margin-bottom:14px; }
+.login-field label { display:block; font-size:11px; font-weight:700; letter-spacing:1px; color:#666; text-transform:uppercase; margin-bottom:5px; }
+.login-field input { width:100%; padding:10px 12px; border:1.5px solid #ddd; border-radius:4px; font-size:14px; outline:none; transition:border .15s; }
+.login-field input:focus { border-color:#b79c7d; }
+.login-btn  { width:100%; padding:12px; background:#1a1a2e; color:#b79c7d; border:none; border-radius:4px; font-size:15px; font-weight:700; letter-spacing:1px; cursor:pointer; margin-top:6px; transition:background .15s; }
+.login-btn:hover { background:#b79c7d; color:#fff; }
+/* Nav user badge */
+.nav-user { display:flex; align-items:center; gap:10px; margin-left:auto; }
+.nav-user-badge { background:#b79c7d; color:#fff; border-radius:20px; padding:4px 12px; font-size:12px; font-weight:700; }
+.nav-logout { background:none; border:1px solid #b79c7d; color:#b79c7d; border-radius:4px; padding:4px 10px; font-size:12px; cursor:pointer; }
+.nav-logout:hover { background:#b79c7d; color:#fff; }
 
 .page5-wrap{
 padding:7mm 10mm 18mm 10mm;
@@ -1143,6 +1168,24 @@ td{
 </head>
 <body>
 
+<!-- LOGIN SCREEN -->
+<div id="screen-login">
+  <div class="login-card">
+    <div class="login-logo">DOC <span>INTERIORS</span></div>
+    <div class="login-sub">Estimation App</div>
+    <div class="login-err" id="login-err"></div>
+    <div class="login-field">
+      <label>Username</label>
+      <input type="text" id="login-username" placeholder="Enter username" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+  </div>
+</div>
+
 <!-- Config banner removed — GAS_URL is hardcoded in the JS -->
 <!-- Status bar removed -->
 
@@ -1152,9 +1195,12 @@ td{
     <button class="nav-tab active" onclick="showScreen('entries')">📋 Entries</button>
     <button class="nav-tab"        onclick="showScreen('edit')">✏️ New / Edit</button>
     <button class="nav-tab"        onclick="showScreen('preview')">👁 Preview</button>
-    <button class="nav-tab"        onclick="showScreen('admin')">⚙️ Admin</button>
+    <button class="nav-tab" id="nav-admin-tab" onclick="showScreen('admin')" style="display:none">⚙️ Admin</button>
   </div>
-  
+  <div class="nav-user">
+    <span class="nav-user-badge" id="nav-username"></span>
+    <button class="nav-logout" onclick="doLogout()">Sign Out</button>
+  </div>
 </nav>
 
 <div id="toast" class="toast"></div>
@@ -1165,9 +1211,20 @@ td{
   <div class="screen-hdr">
     <div><h2>📋 All Estimates</h2><p class="sub">Saved entries from Google Sheets</p></div>
     <div class="hdr-btns">
-      <input id="searchInput" type="text" class="search-box" placeholder="🔍 Search…" oninput="filterEntries()"/>
       <button class="btn btn-primary" onclick="startNew()">+ New Estimate</button>
       <button class="btn btn-outline btn-sm" onclick="loadEntries()">↻ Refresh</button>
+    </div>
+  </div>
+  <!-- Filter bar -->
+  <div class="card" style="margin-bottom:10px;padding:10px 16px">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+      <input id="searchInput" type="text" class="fc" placeholder="🔍 Search client / estimate no / address…"
+             style="flex:2;min-width:200px;padding:7px 10px;font-size:13px" oninput="applyFilters()"/>
+      <label style="font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;margin:0">From</label>
+      <input type="date" id="filterFrom" class="fc" style="flex:1;min-width:130px;padding:7px 8px;font-size:13px" onchange="applyFilters()"/>
+      <label style="font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;margin:0">To</label>
+      <input type="date" id="filterTo"   class="fc" style="flex:1;min-width:130px;padding:7px 8px;font-size:13px" onchange="applyFilters()"/>
+      <button class="btn btn-outline btn-sm" style="white-space:nowrap;padding:7px 14px;font-size:13px" onclick="clearFilters()">✕ Clear</button>
     </div>
   </div>
   <div class="card">
@@ -1504,6 +1561,7 @@ td{
     <button class="atab"        id="atab-mUnits"         onclick="switchAdminTab('mUnits')" style="background:var(--gold-lt)">📐 Units</button>
     <button class="atab"        id="atab-mMaterialOptions" onclick="switchAdminTab('mMaterialOptions')" style="background:var(--gold-lt);font-weight:700;border-left:3px solid var(--gold)">📄 Material Options</button>
     <button class="atab"        id="atab-mTermsConditions" onclick="switchAdminTab('mTermsConditions')" style="background:var(--gold-lt);font-weight:700;border-left:3px solid var(--gold)">📋 Terms & Conditions</button>
+    <button class="atab" id="atab-users" onclick="switchAdminTab('users')" style="background:var(--gold-lt);color:var(--navy);font-weight:700;border-left:3px solid var(--gold)">👤 Users</button>
   </div>
   <div class="card"><div id="adminContent" class="tbl-scroll"><div class="empty">Loading…</div></div></div>
 </div>
@@ -1523,6 +1581,42 @@ td{
 <div id="adminDelModal" class="modal-overlay">
   <div class="modal"><h3>🗑 Delete Item?</h3><p>Removes the option from all menus.</p>
     <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal('adminDelModal')">Cancel</button><button class="btn btn-danger" onclick="confirmAdminDelete()">Delete</button></div>
+  </div>
+</div>
+<!-- User modal -->
+<div id="userModal" class="modal-overlay">
+  <div class="modal" style="max-width:420px">
+    <h3 id="userModalTitle">👤 Add User</h3>
+    <div class="modal-fields">
+      <div class="fg" style="margin-bottom:10px" id="userModalUsernameWrap">
+        <label style="font-size:11px;font-weight:700;letter-spacing:1px;color:#666;text-transform:uppercase">Username</label>
+        <input class="fc" id="um-username" type="text" placeholder="e.g. john" style="margin-top:4px"/>
+      </div>
+      <div class="fg" style="margin-bottom:10px">
+        <label style="font-size:11px;font-weight:700;letter-spacing:1px;color:#666;text-transform:uppercase">Password</label>
+        <input class="fc" id="um-password" type="text" placeholder="Enter password" style="margin-top:4px"/>
+      </div>
+      <div class="fg" style="margin-bottom:10px">
+        <label style="font-size:11px;font-weight:700;letter-spacing:1px;color:#666;text-transform:uppercase">Role</label>
+        <select class="fc" id="um-role" style="margin-top:4px;padding:8px">
+          <option value="USER">USER</option>
+          <option value="ADMIN">ADMIN</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('userModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitUserModal()">Save</button>
+    </div>
+  </div>
+</div>
+<!-- User delete modal -->
+<div id="userDelModal" class="modal-overlay">
+  <div class="modal"><h3>🗑 Delete User?</h3><p>This will permanently remove the user account.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('userDelModal')">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDeleteUser()">Delete</button>
+    </div>
   </div>
 </div>
 
@@ -1546,7 +1640,8 @@ var PREVIEW_TPL = "<div class=\"page\">\n\n    <div class=\"content\">\n        
 
 // ✏️  PASTE YOUR GAS WEB APP URL HERE — only change needed in this file
 // Apps Script → Deploy → Manage deployments → copy the Web App URL
-var GAS_URL   = 'https://script.google.com/macros/s/AKfycbydx0Mci6OWv8p2d-cXxmiFAgXdQUD0aU1xP_rlm_6xjB_COfIz-QObxOtFlc3joAftmg/exec';
+//var GAS_URL   = 'https://script.google.com/macros/s/AKfycbydx0Mci6OWv8p2d-cXxmiFAgXdQUD0aU1xP_rlm_6xjB_COfIz-QObxOtFlc3joAftmg/exec';
+var GAS_URL   = 'https://script.google.com/macros/s/AKfycbxuu3aznT8jixnqJ7eOl_wiQWRpy61vvcUgb54BeIEsa48xd1ckYYGDadhl6p-KF4n9wg/exec';
 
 
 // These keys are kept for backward compatibility but no longer shown in UI
@@ -1555,6 +1650,7 @@ var SS_ID_KEY = 'doc_ss_id';
 var SS_URL_KEY= 'doc_ss_url';
 
 var S = {
+  currentUser: null,   // { username, role }
   estimates:[],
   dropdowns:{catA:[],catB:[],additionalWorks:[],gypsum:[],kitchenAcc:[]},
   adminData:{},
@@ -1671,7 +1767,7 @@ function init(){
       S.master.units           = md.mUnits            || [];
       S.master.materialOptions  = md.mMaterialOptions   || [];
       S.master.termsConditions  = md.mTermsConditions   || [];
-      renderEntries(S.estimates);
+      applyFilters();
     })
     .catch(function(e){toast('Init error: '+e.message,'err');})
     .finally(function(){loading(false);});
@@ -1683,7 +1779,7 @@ function init(){
 function loadEntries(){
   loading(true);
   gasGet('getAllEstimates')
-    .then(function(d){S.estimates=d||[];renderEntries(S.estimates);})
+    .then(function(d){S.estimates=d||[];applyFilters();})
     .catch(function(e){toast('Load error: '+e.message,'err');})
     .finally(function(){loading(false);});
 }
@@ -1710,13 +1806,139 @@ function renderEntries(list){
       '</td></tr>';
   }).join('');
 }
-function filterEntries(){
-  var q=document.getElementById('searchInput').value.toLowerCase();
+function filterEntries(){applyFilters();}
+function applyFilters(){
+  var q    = (document.getElementById('searchInput').value||'').toLowerCase();
+  var from = document.getElementById('filterFrom').value;
+  var to   = document.getElementById('filterTo').value;
+  var fromD = from ? new Date(from) : null;
+  var toD   = to   ? new Date(to + 'T23:59:59') : null;
   renderEntries(S.estimates.filter(function(e){
-    return (e.clientName||'').toLowerCase().includes(q)||
-           (e.estimationNo||'').toLowerCase().includes(q)||
-           (e.siteAddress||'').toLowerCase().includes(q);
+    var textOk = !q ||
+      (e.clientName||'').toLowerCase().includes(q)||
+      (e.estimationNo||'').toLowerCase().includes(q)||
+      (e.siteAddress||'').toLowerCase().includes(q);
+    var dateStr = e.estimateDate || e.dateCreated;
+    var dateOk  = true;
+    if(dateStr && (fromD||toD)){
+      var d = new Date(dateStr);
+      if(fromD && d < fromD) dateOk = false;
+      if(toD   && d > toD)   dateOk = false;
+    }
+    return textOk && dateOk;
   }));
+}
+function clearFilters(){
+  document.getElementById('searchInput').value='';
+  document.getElementById('filterFrom').value='';
+  document.getElementById('filterTo').value='';
+  applyFilters();
+}
+function setDefaultDateRange(){
+  var to   = new Date();
+  var from = new Date(); from.setDate(from.getDate()-7);
+  var fmt  = function(d){ return d.toISOString().split('T')[0]; };
+  document.getElementById('filterFrom').value = fmt(from);
+  document.getElementById('filterTo').value   = fmt(to);
+}
+
+// ── Auth ─────────────────────────────────────────────────────────
+function doLogin(){
+  var u = (document.getElementById('login-username').value||'').trim();
+  var p = (document.getElementById('login-password').value||'').trim();
+  var errEl = document.getElementById('login-err');
+  errEl.style.display='none';
+  if(!u||!p){ errEl.textContent='Please enter username and password.'; errEl.style.display='block'; return; }
+  loading(true);
+  gasGet('loginUser', { username: u, password: p })
+    .then(function(d){
+      S.currentUser = d; // { username, role }
+      document.getElementById('screen-login').style.display='none';
+      document.getElementById('nav-username').textContent = d.username + ' (' + d.role + ')';
+      // Show Admin tab only for ADMIN role
+      var adminTab = document.getElementById('nav-admin-tab');
+      if(adminTab) adminTab.style.display = (d.role==='ADMIN') ? '' : 'none';
+      return init();
+    })
+    .catch(function(e){
+      errEl.textContent = e.message || 'Login failed.';
+      errEl.style.display='block';
+    })
+    .finally(function(){ loading(false); });
+}
+function doLogout(){
+  S.currentUser=null;
+  document.getElementById('screen-login').style.display='flex';
+  document.getElementById('login-username').value='';
+  document.getElementById('login-password').value='';
+  document.getElementById('login-err').style.display='none';
+  document.getElementById('nav-username').textContent='';
+}
+
+// ── User Management (Admin tab) ───────────────────────────────────
+var userModalMode = 'add'; var userModalRow = null;
+function loadUsersTab(){
+  var content = document.getElementById('adminContent');
+  content.innerHTML='<div class="empty">Loading users…</div>';
+  gasGet('getUsers').then(function(users){
+    users = users||[];
+    var html = '<div style="display:flex;justify-content:flex-end;margin-bottom:12px">' +
+      '<button class="btn btn-primary btn-sm" onclick="openUserModal()">+ Add User</button></div>' +
+      '<table class="data-tbl"><thead><tr><th>#</th><th>Username</th><th>Role</th><th>Created</th><th>Actions</th></tr></thead><tbody>';
+    if(!users.length){ html+='<tr><td colspan="5" class="empty">No users found.</td></tr>'; }
+    users.forEach(function(u,i){
+      html+='<tr>'+
+        '<td style="color:var(--muted);font-size:11px">'+(i+1)+'</td>'+
+        '<td><strong>'+h(u.username)+'</strong></td>'+
+        '<td><span class="badge-active" style="'+(u.role==='ADMIN'?'background:#1a1a2e;color:#b79c7d':'')+'">'+h(u.role)+'</span></td>'+
+        '<td style="font-size:12px;color:var(--muted)">'+h(u.created?new Date(u.created).toLocaleDateString('en-IN'):'—')+'</td>'+
+        '<td style="white-space:nowrap">'+
+          '<button class="btn btn-outline btn-sm" onclick="openUserModal('+JSON.stringify(u)+')">✏️ Edit</button> '+
+          '<button class="btn btn-danger btn-sm" onclick="promptDeleteUser('+u.rowIndex+',\''+h(u.username)+'\')">🗑</button>'+
+        '</td></tr>';
+    });
+    html+='</tbody></table>';
+    content.innerHTML=html;
+  }).catch(function(e){ content.innerHTML='<div class="empty">Error: '+h(e.message)+'</div>'; });
+}
+function openUserModal(user){
+  userModalMode = user ? 'edit' : 'add';
+  userModalRow  = user || null;
+  document.getElementById('userModalTitle').textContent = user ? '✏️ Edit User' : '👤 Add User';
+  document.getElementById('um-username').value  = user ? user.username : '';
+  document.getElementById('um-password').value  = user ? user.password : '';
+  document.getElementById('um-role').value      = user ? user.role : 'USER';
+  document.getElementById('userModalUsernameWrap').style.opacity = user ? '0.6' : '1';
+  document.getElementById('um-username').readOnly = !!user;
+  document.getElementById('userModal').style.display='flex';
+}
+function submitUserModal(){
+  var u = document.getElementById('um-username').value.trim();
+  var p = document.getElementById('um-password').value.trim();
+  var r = document.getElementById('um-role').value;
+  if(!u||!p){ toast('Username and password are required.','err'); return; }
+  loading(true);
+  var action = userModalMode==='edit' ? 'updateUser' : 'saveUser';
+  var payload = userModalMode==='edit'
+    ? { rowIndex: userModalRow.rowIndex, password: p, role: r }
+    : { username: u, password: p, role: r };
+  gasPost(action, payload)
+    .then(function(){ closeModal('userModal'); toast(userModalMode==='edit'?'User updated!':'User added!','ok'); loadUsersTab(); })
+    .catch(function(e){ toast('Error: '+e.message,'err'); })
+    .finally(function(){ loading(false); });
+}
+var _delUserRow=null;
+function promptDeleteUser(rowIndex,username){
+  _delUserRow=rowIndex;
+  document.querySelector('#userDelModal p').textContent='Delete user "'+username+'"? This cannot be undone.';
+  document.getElementById('userDelModal').style.display='flex';
+}
+function confirmDeleteUser(){
+  if(!_delUserRow)return; loading(true);
+  gasPost('deleteUser',{rowIndex:_delUserRow})
+    .then(function(){ closeModal('userDelModal'); toast('User deleted','ok'); loadUsersTab(); })
+    .catch(function(e){ toast('Error: '+e.message,'err'); })
+    .finally(function(){ loading(false); _delUserRow=null; });
 }
 function fmtDate(d){if(!d)return'—';try{return new Date(d).toLocaleDateString('en-IN');}catch(e){return d;}}
 function showDelModal(id){S.delId=id;document.getElementById('delModal').style.display='flex';}
@@ -3543,7 +3765,9 @@ function switchAdminTab(key){
   document.querySelectorAll('.atab').forEach(function(t){t.classList.remove('active');});
   var btn=document.getElementById('atab-'+key);
   if(btn) btn.classList.add('active');
-  if(typeof MASTER_KEYS!=='undefined' && MASTER_KEYS[key]){
+  if(key==='users'){
+    loadUsersTab();
+  } else if(typeof MASTER_KEYS!=='undefined' && MASTER_KEYS[key]){
     loading(true);
     loadMasterData(function(){
       loading(false);
@@ -3876,24 +4100,18 @@ function confirmAdminDelete(){
     .catch(function(e){toast('Error: '+e.message,'err');})
     .finally(function(){loading(false);S.adminDel=null;});
 }
-// new line changed again this is it
-//one more line added
+
 // ── Bootstrap ────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('f_estimateDate').value=new Date().toISOString().split('T')[0];
+  // Hide all screens — login screen covers everything via fixed overlay
   document.querySelectorAll('.screen').forEach(function(s){s.style.display='none';s.classList.remove('active');});
   var entry=document.getElementById('screen-entries');
   entry.style.display='block';entry.classList.add('active');
-  // Auto-connect using hardcoded GAS_URL — no user setup needed
-  loading(true);
-  gasGet('getConfig')
-    .then(function(cfg){
-      return init();
-    })
-    .catch(function(e){
-      loading(false);
-      toast('Cannot reach backend: '+e.message+'. Check GAS_URL in the code.','err');
-    });
+  // Set default date range (last 7 days)
+  setDefaultDateRange();
+  // Show login screen — user must authenticate before init()
+  document.getElementById('screen-login').style.display='flex';
 });
 </script>
 </body>
